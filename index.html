@@ -650,7 +650,7 @@
       <span class="sub"> (Coil: $<span class="v-s1-coil2">80</span> + 95% Dust: $<span class="v-s1-dust">23.75</span> + Gem EV: $<span class="v-s1-gem-ev2">4.25</span>)</span>
     </div>
     <div class="transport-tip">
-      🚂 <strong>Transport:</strong> Simple linear layout. Conveyor from Unloader → Cleaner → Polisher → Smelter. Use a <strong>Filter</strong> after Smelter to separate bars (→ Coiler) from stones (→ Prospector → Crusher). One splitter is enough.
+      🚂 <strong>Transport:</strong> Simple linear layout. Conveyor from Unloader → Cleaner → Polisher → Smelter. The Smelter splits output automatically — bars go one direction (→ Coiler → Seller), stones go the other (→ Topaz Prospector). Use a <strong>Filter</strong> after the Prospector to separate gems (→ Polisher → Seller) from surviving stones (→ Crusher → Seller).
     </div>
   </div>
 
@@ -711,7 +711,7 @@
       <span class="sub"> (Pipe: $<span class="v-s2-pipe2">100</span> + 90.25% Brick: $<span class="v-s2-brick">27.08</span> + Gem EV: $<span class="v-s2-gem-ev2">14.25</span>)</span>
     </div>
     <div class="transport-tip">
-      🚂 <strong>Transport:</strong> After the Filter (bars vs stones), the bar line goes: Plate Stamper → Pipe Maker → Seller. Stone line: Topaz Prosp → Emerald Prosp → Crusher → Brick Mold → Seller. Use a <strong>second Filter</strong> after Prospectors to catch gems (→ Polisher → Seller).
+      🚂 <strong>Transport:</strong> Smelter splits bars and stones automatically. Bar line: Plate Stamper → Pipe Maker → Seller. Stone line: Topaz Prosp → Emerald Prosp → <strong>Filter</strong> to separate gems (→ Polisher → Seller) from surviving stones (→ Crusher → Brick Mold → Seller).
     </div>
   </div>
 
@@ -763,7 +763,7 @@
       <span class="sub"> (Pipe: $<span class="v-s3-pipe2">100</span> + 85.7% Fired Brick: $<span class="v-s3-brick">30.87</span> + Gem EV: $<span class="v-s3-gem-ev2">25.98</span>)</span>
     </div>
     <div class="transport-tip">
-      🚂 <strong>Transport:</strong> Extend the prospector chain: …→ Sapphire Prosp → Crusher → Brick Mold → <strong>Kiln</strong> → Seller. Same layout as Stage 2, just longer stone processing line.
+      🚂 <strong>Transport:</strong> Same as Stage 2 but extend the prospector chain: …→ Sapphire Prosp → <strong>Filter</strong> (gems → Polisher → Seller). Surviving stones → Crusher → Brick Mold → <strong>Kiln</strong> → Seller.
     </div>
   </div>
 
@@ -813,7 +813,7 @@
       <span class="sub"> (Mech Parts: $<span class="v-s4-mech2">110</span> + 81.45% Fired Brick: $<span class="v-s4-brick">29.32</span> + Gem EV: $<span class="v-s4-gem-ev2">38.84</span>)</span>
     </div>
     <div class="transport-tip">
-      🚂 <strong>Transport:</strong> Bar line switches from Pipe to: Plate → Mech Parts → Seller. The Pipe Maker is now unused for the main line — keep it for later (Engines need pipes). <strong>Overflow Splitter</strong> recommended if switching between products.
+      🚂 <strong>Transport:</strong> Bar line switches from Pipe to: Plate → Mech Parts → Seller. Stone line adds Ruby Prosp → <strong>Filter</strong> (gems → Polisher → Seller), surviving stones → Crusher → Brick Mold → Kiln → Seller. The Pipe Maker is now unused for the main line — keep it for later (Engines need pipes). <strong>Overflow Splitter</strong> recommended if switching between products.
     </div>
   </div>
 
@@ -875,7 +875,7 @@
       <br><span class="per-ore">📈 Concrete bricks + prospectors = massive byproduct income!</span>
     </div>
     <div class="transport-tip">
-      🚂 <strong>Transport (COMPLEX):</strong> Stone line now needs <strong>pairing logic</strong>. After prospectors, surviving stones must be split: one goes to Crusher (→ Dust → Cement Mixer), the other goes straight to Cement Mixer. Use a <strong>Left/Right Splitter</strong> to alternate stones. The cement then goes to Brick Mold → Kiln → Seller. Consider building vertically with <strong>Elevators</strong> to save floor space.
+      🚂 <strong>Transport (COMPLEX):</strong> After all prospectors, use a <strong>Filter</strong> to separate gems (→ Polisher → Seller) from surviving stones. Stone line now needs <strong>pairing logic</strong>: surviving stones must be split — one goes to Crusher (→ Dust → Cement Mixer), the other goes straight to Cement Mixer. Use a <strong>Left/Right Splitter</strong> to alternate stones. The cement then goes to Brick Mold → Kiln → Seller. Consider building vertically with <strong>Elevators</strong> to save floor space.
     </div>
   </div>
 
@@ -935,7 +935,7 @@
       <br><span class="per-ore">📈 Gem income now rivals the concrete brick income!</span>
     </div>
     <div class="transport-tip">
-      🚂 <strong>Transport:</strong> Insert <strong>Tempering Forge</strong> right after Smelter (before Plate). Add 5th prospector (Diamond) to the stone chain. Gem output now needs: Filter → Polisher → Gem Cutter → Seller. <strong>Upgrade Unloader to Lv 3+</strong> — throughput becomes critical with this many machines.
+      🚂 <strong>Transport:</strong> Insert <strong>Tempering Forge</strong> on the bar line right after Smelter (before Plate). Add 5th prospector (Diamond) to the stone chain. Use a <strong>Filter</strong> after all 5 prospectors to separate gems (→ Polisher → Gem Cutter → Seller) from surviving stones (→ pairing logic for concrete bricks). <strong>Upgrade Unloader to Lv 3+</strong> — throughput becomes critical with this many machines.
     </div>
   </div>
 
@@ -988,7 +988,7 @@
       <span class="sub"> from 4 ores | Per ore (with prospected byproducts): $<span class="v-s7-perore">289</span></span>
     </div>
     <div class="transport-tip">
-      🚂 <strong>Transport (VERY COMPLEX):</strong> 4 ore lines must merge. Use <strong>Splitters</strong> to route: Ore #1 → Bar line, Ore #2+#3 → Bolt line, Ore #4 → Plate line. Then Frame Maker takes Bar+Bolt, Casing Machine takes Frame+Bolt+Plate. Use <strong>Overflow Splitters</strong> on every junction to prevent jams. <strong>Elevators</strong> highly recommended — stack the casing assembly on a separate floor.
+      🚂 <strong>Transport (VERY COMPLEX):</strong> 4 ore lines must merge. Use <strong>Splitters</strong> to route: Ore #1 → Bar line, Ore #2+#3 → Bolt line, Ore #4 → Plate line. Then Frame Maker takes Bar+Bolt, Casing Machine takes Frame+Bolt+Plate. All 4 smelters output stones automatically — feed all stones into the prospector chain → <strong>Filter</strong> (gems → Polisher → Gem Cutter → Seller), surviving stones → concrete brick pairing. Use <strong>Overflow Splitters</strong> on every junction to prevent jams. <strong>Elevators</strong> highly recommended — stack the casing assembly on a separate floor.
     </div>
   </div>
 
@@ -1042,7 +1042,7 @@
       <span class="sub"> from 2 ores | Per ore (with gem EV): $<span class="v-s8-sc-perore2">1,025</span></span>
     </div>
     <div class="transport-tip">
-      🚂 <strong>Transport:</strong> Alloy Furnace takes 2 tempered bars (use Splitter to feed 2 bars in). For ceramic: 2 surviving stones → Crusher → Clay Mixer → Ceramic Furnace. Then SC Constructor takes Alloy+Ceramic. <strong>Gate Belts</strong> useful here to synchronize inputs so items arrive at the right time.
+      🚂 <strong>Transport:</strong> Alloy Furnace takes 2 tempered bars (use Splitter to feed 2 bars in). All stones go through 5 prospectors first → <strong>Filter</strong> (gems → Polisher → Gem Cutter → Seller). For ceramic: 2 surviving stones → Crusher → Clay Mixer → Ceramic Furnace. Then SC Constructor takes Alloy+Ceramic. <strong>Gate Belts</strong> useful here to synchronize inputs so items arrive at the right time.
     </div>
   </div>
 
@@ -1665,8 +1665,8 @@
 
     <div class="byprod-card">
       <h4>🔍 Filters</h4>
-      <p>Route specific item types onto certain conveyor paths. Critical for separating ores, gems, stones, and processed products in multi-line factories.</p>
-      <p class="sub" style="margin-top: 6px;">Use filters after smelters to separate bars from stones → different processing chains.</p>
+      <p>Route specific item types onto certain conveyor paths. Critical for separating gems from surviving stones after prospectors, and for routing different products in multi-line factories.</p>
+      <p class="sub" style="margin-top: 6px;">Use filters after prospectors to separate gems from surviving stones → different processing chains. Smelters already split bars and stones automatically.</p>
     </div>
 
     <div class="byprod-card">
@@ -1690,7 +1690,8 @@
 
   <div class="tip-box" style="margin-top: 16px;">
     <strong>🏗️ Factory Layout Tips:</strong><br>
-    • <strong>Filter after every smelter</strong> — separate bars from stones immediately<br>
+    • <strong>Smelters split bars and stones automatically</strong> — no filter needed after smelting<br>
+    • <strong>Filter after prospectors</strong> — separate gems from surviving stones for different processing<br>
     • <strong>Prospect stones before any other processing</strong> — use a separate line for the 5 prospectors<br>
     • <strong>Overflow splitters prevent jams</strong> — always have a "drain" path so items don't clog<br>
     • <strong>Build vertically</strong> — 100 block height means you can stack 3-4 full processing floors<br>
