@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Factory Optimization Guide — Ultimate Mining Tycoon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg: #0f1117;
@@ -20,61 +23,90 @@
     --cyan: #22d3ee;
     --purple: #c084fc;
     --pink: #f472b6;
+    --radius: 12px;
+    --shadow: 0 4px 24px rgba(0,0,0,0.25);
+    --transition: 0.25s cubic-bezier(0.4,0,0.2,1);
   }
+  html { scroll-behavior: smooth; scroll-padding-top: 70px; }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
     background: var(--bg);
     color: var(--text);
-    line-height: 1.6;
-    padding: 0 0 80px;
+    line-height: 1.65;
+    padding: 0 0 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
   .hero {
     background: linear-gradient(135deg, #1a1d27 0%, #242836 50%, #1a1d27 100%);
     border-bottom: 1px solid var(--border);
-    padding: 60px 20px 50px;
+    padding: 72px 20px 56px;
     text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%; width: 200%; height: 200%;
+    background: radial-gradient(circle at 30% 50%, rgba(108,140,255,0.06) 0%, transparent 50%),
+                radial-gradient(circle at 70% 80%, rgba(245,197,66,0.04) 0%, transparent 40%);
+    pointer-events: none;
   }
   .hero h1 {
-    font-size: 2.5em;
+    font-size: 2.8em;
+    font-weight: 800;
     background: linear-gradient(135deg, var(--gold), var(--orange));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
+    letter-spacing: -0.02em;
+    position: relative;
   }
-  .hero p { color: var(--muted); font-size: 1.1em; max-width: 700px; margin: 0 auto; }
-  .hero .src { color: var(--muted); font-size: 0.8em; margin-top: 12px; }
-  .hero .src a { color: var(--accent); }
+  .hero p { color: var(--muted); font-size: 1.1em; max-width: 700px; margin: 0 auto; position: relative; }
+  .hero .src { color: var(--muted); font-size: 0.8em; margin-top: 14px; position: relative; }
+  .hero .src a { color: var(--accent); text-decoration: none; }
+  .hero .src a:hover { text-decoration: underline; }
   .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
   .nav {
     position: sticky; top: 0; z-index: 100;
-    background: rgba(15, 17, 23, 0.92);
-    backdrop-filter: blur(12px);
+    background: rgba(15, 17, 23, 0.88);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     border-bottom: 1px solid var(--border);
-    padding: 12px 20px;
-    display: flex; gap: 8px; flex-wrap: wrap; justify-content: center;
+    padding: 10px 20px;
+    display: flex; gap: 6px; flex-wrap: wrap; justify-content: center;
   }
   .nav a {
-    color: var(--muted); text-decoration: none; font-size: 0.85em;
-    padding: 6px 14px; border-radius: 6px; transition: all 0.2s;
-    border: 1px solid transparent;
+    color: var(--muted); text-decoration: none; font-size: 0.82em;
+    padding: 6px 14px; border-radius: 8px; transition: all var(--transition);
+    border: 1px solid transparent; font-weight: 500;
+    white-space: nowrap;
   }
-  .nav a:hover { color: var(--text); background: var(--surface2); border-color: var(--border); }
-  section { margin-top: 50px; }
+  .nav a:hover, .nav a.active {
+    color: var(--text); background: var(--surface2); border-color: var(--border);
+  }
+  .nav a.active {
+    color: var(--accent); border-color: var(--accent); background: rgba(108,140,255,0.08);
+  }
+  section { margin-top: 56px; }
   section h2 {
-    font-size: 1.8em; margin-bottom: 8px;
+    font-size: 1.8em; margin-bottom: 8px; font-weight: 700;
     display: flex; align-items: center; gap: 12px;
+    letter-spacing: -0.01em;
   }
   section h2 .icon { font-size: 1.2em; }
-  section > .desc { color: var(--muted); margin-bottom: 24px; }
+  section > .desc { color: var(--muted); margin-bottom: 24px; line-height: 1.5; }
 
   .calc-box {
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 12px;
+    border-radius: var(--radius);
     padding: 24px;
-    margin-bottom: 30px;
+    margin-bottom: 24px;
+    box-shadow: var(--shadow);
   }
   .calc-box label { font-weight: 600; margin-right: 10px; }
   .calc-box input[type=number], .calc-box select {
@@ -82,46 +114,74 @@
     border: 1px solid var(--border);
     color: var(--gold);
     font-size: 1.1em;
-    padding: 8px 14px;
+    padding: 10px 14px;
     border-radius: 8px;
     text-align: center;
+    transition: border-color var(--transition), box-shadow var(--transition);
   }
-  .calc-box input[type=number] { width: 120px; }
-  .calc-box select { width: 220px; cursor: pointer; }
-  .calc-box input:focus, .calc-box select:focus { outline: none; border-color: var(--accent); }
+  .calc-box input[type=number] { width: 130px; }
+  .calc-box select { width: 240px; cursor: pointer; }
+  .calc-box input:focus, .calc-box select:focus {
+    outline: none; border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(108,140,255,0.15);
+  }
   .calc-note { color: var(--muted); font-size: 0.85em; margin-top: 8px; }
   .calc-row { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 12px; }
 
   .stage-card {
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 12px;
+    border-radius: var(--radius);
     padding: 28px;
     margin-bottom: 24px;
-    transition: border-color 0.3s;
+    transition: border-color var(--transition), box-shadow var(--transition);
+    box-shadow: var(--shadow);
+    position: relative;
+    overflow: hidden;
   }
-  .stage-card:hover { border-color: var(--accent); }
-  .stage-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px; margin-bottom: 16px; }
-  .stage-title { font-size: 1.35em; font-weight: 700; }
+  .stage-card:hover { border-color: rgba(108,140,255,0.4); box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
+  .stage-header {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    flex-wrap: wrap; gap: 12px; margin-bottom: 16px;
+  }
+  .stage-title { font-size: 1.35em; font-weight: 700; letter-spacing: -0.01em; }
   .stage-cost {
     background: var(--surface2);
-    padding: 4px 14px;
+    padding: 5px 16px;
     border-radius: 20px;
-    font-size: 0.9em;
+    font-size: 0.85em;
     color: var(--gold);
     white-space: nowrap;
+    font-weight: 600;
   }
   .stage-buildings { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
   .building-tag {
     background: var(--surface2);
     border: 1px solid var(--border);
-    padding: 3px 10px;
+    padding: 4px 10px;
     border-radius: 6px;
-    font-size: 0.8em;
+    font-size: 0.78em;
     color: var(--cyan);
+    font-weight: 500;
+    transition: transform var(--transition);
   }
+  .building-tag:hover { transform: translateY(-1px); }
   .building-tag.new { border-color: var(--green); color: var(--green); }
   .building-tag.gem { border-color: var(--purple); color: var(--purple); }
+
+  .stage-collapse-btn {
+    position: absolute; top: 16px; right: 16px;
+    background: var(--surface2); border: 1px solid var(--border);
+    color: var(--muted); cursor: pointer;
+    width: 32px; height: 32px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1em; transition: all var(--transition);
+    z-index: 2;
+  }
+  .stage-collapse-btn:hover { color: var(--text); border-color: var(--accent); background: rgba(108,140,255,0.1); }
+  .stage-card .collapsible { transition: max-height 0.4s ease, opacity 0.3s ease; overflow: hidden; }
+  .stage-card.collapsed .collapsible { max-height: 0 !important; opacity: 0; }
+  .stage-card.collapsed .stage-collapse-btn { transform: rotate(180deg); }
   .flow-diagram {
     background: var(--bg);
     border: 1px solid var(--border);
@@ -129,6 +189,7 @@
     padding: 20px;
     margin: 16px 0;
     overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
   }
   .flow-row {
     display: flex;
@@ -139,18 +200,21 @@
     min-width: fit-content;
   }
   .flow-item {
-    padding: 6px 14px;
+    padding: 7px 14px;
     border-radius: 8px;
-    font-size: 0.85em;
+    font-size: 0.83em;
     font-weight: 600;
     white-space: nowrap;
     border: 1px solid;
+    transition: transform var(--transition);
   }
+  .flow-item:hover { transform: scale(1.03); }
   .flow-arrow {
     color: var(--muted);
     font-size: 1.2em;
     margin: 0 4px;
     flex-shrink: 0;
+    opacity: 0.6;
   }
   .fi-ore { background: #3b2a1a; border-color: #7a5c3a; color: #e0b070; }
   .fi-machine { background: #1a2a3b; border-color: #3a5c7a; color: #70b0e0; }
@@ -163,18 +227,19 @@
     background: linear-gradient(135deg, #1a2a1a, #1a3b2a);
     border: 1px solid #3a7a5c;
     border-radius: 10px;
-    padding: 16px 20px;
-    margin-top: 12px;
+    padding: 18px 22px;
+    margin-top: 14px;
     font-size: 1.05em;
+    box-shadow: 0 2px 12px rgba(74,222,128,0.06);
   }
   .value-result .val { color: var(--gold); font-weight: 700; font-size: 1.15em; }
-  .value-result .per-ore { color: var(--green); font-size: 0.95em; }
+  .value-result .per-ore { color: var(--green); font-size: 0.95em; font-weight: 600; }
 
   .comp-table {
     width: 100%;
     border-collapse: collapse;
     margin: 16px 0;
-    font-size: 0.9em;
+    font-size: 0.88em;
   }
   .comp-table th, .comp-table td {
     padding: 12px 16px;
@@ -186,9 +251,11 @@
     color: var(--muted);
     font-weight: 600;
     text-transform: uppercase;
-    font-size: 0.8em;
-    letter-spacing: 0.5px;
+    font-size: 0.78em;
+    letter-spacing: 0.6px;
+    position: sticky; top: 0;
   }
+  .comp-table tr { transition: background var(--transition); }
   .comp-table tr:hover td { background: rgba(108, 140, 255, 0.05); }
   .comp-table .rank-1 { color: var(--gold); font-weight: 700; }
   .comp-table .rank-2 { color: #c0c0c0; font-weight: 600; }
@@ -197,11 +264,14 @@
   .tip-box {
     background: var(--surface);
     border-left: 4px solid var(--accent);
-    border-radius: 0 10px 10px 0;
+    border-radius: 0 var(--radius) var(--radius) 0;
     padding: 16px 20px;
     margin: 16px 0;
     font-size: 0.95em;
+    box-shadow: var(--shadow);
+    transition: transform var(--transition);
   }
+  .tip-box:hover { transform: translateX(2px); }
   .tip-box.warn { border-left-color: var(--orange); }
   .tip-box.good { border-left-color: var(--green); }
   .tip-box.gem { border-left-color: var(--purple); }
@@ -216,10 +286,13 @@
   .byprod-card {
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 10px;
+    border-radius: var(--radius);
     padding: 20px;
+    box-shadow: var(--shadow);
+    transition: border-color var(--transition), transform var(--transition);
   }
-  .byprod-card h4 { color: var(--cyan); margin-bottom: 8px; }
+  .byprod-card:hover { border-color: rgba(108,140,255,0.3); transform: translateY(-2px); }
+  .byprod-card h4 { color: var(--cyan); margin-bottom: 8px; font-weight: 700; }
   .byprod-card .val { color: var(--gold); font-weight: 700; }
   .sub { color: var(--muted); font-size: 0.85em; }
   .gem-ev-box {
@@ -231,11 +304,106 @@
     font-size: 0.95em;
   }
   .gem-ev-box .val { color: var(--purple); font-weight: 700; }
+
+  /* Toggle switches for prestige */
+  .toggle-label {
+    display: flex; align-items: flex-start; gap: 12px; cursor: pointer;
+    padding: 10px 14px; border-radius: 10px;
+    transition: background var(--transition);
+    border: 1px solid transparent;
+  }
+  .toggle-label:hover { background: rgba(251,146,60,0.06); border-color: rgba(251,146,60,0.15); }
+  .toggle-switch {
+    position: relative; width: 44px; height: 24px; flex-shrink: 0; margin-top: 2px;
+  }
+  .toggle-switch input { opacity: 0; width: 0; height: 0; position: absolute; }
+  .toggle-track {
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 12px; transition: all var(--transition); cursor: pointer;
+  }
+  .toggle-track::after {
+    content: ''; position: absolute; left: 2px; top: 2px;
+    width: 18px; height: 18px; border-radius: 50%;
+    background: var(--muted); transition: all var(--transition);
+  }
+  .toggle-switch input:checked + .toggle-track {
+    background: var(--orange); border-color: var(--orange);
+  }
+  .toggle-switch input:checked + .toggle-track::after {
+    transform: translateX(20px); background: white;
+  }
+  .toggle-switch input:focus-visible + .toggle-track {
+    box-shadow: 0 0 0 3px rgba(251,146,60,0.3);
+  }
+  .toggle-text strong { font-size: 0.95em; }
+  .toggle-text .sub { font-size: 0.8em; display: block; margin-top: 2px; }
+
+  /* Back to top button */
+  .back-to-top {
+    position: fixed; bottom: 28px; right: 28px; z-index: 200;
+    width: 48px; height: 48px; border-radius: 50%;
+    background: var(--accent); color: white; border: none;
+    font-size: 1.4em; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 16px rgba(108,140,255,0.3);
+    opacity: 0; transform: translateY(20px);
+    transition: all var(--transition);
+    pointer-events: none;
+  }
+  .back-to-top.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+  .back-to-top:hover { transform: translateY(-3px); box-shadow: 0 6px 24px rgba(108,140,255,0.4); }
+
+  /* Section reveal animation */
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* Footer */
+  .site-footer {
+    margin-top: 80px; padding: 40px 20px;
+    border-top: 1px solid var(--border);
+    text-align: center; color: var(--muted); font-size: 0.85em;
+    background: var(--surface);
+  }
+  .site-footer a { color: var(--accent); text-decoration: none; }
+  .site-footer a:hover { text-decoration: underline; }
+  .site-footer .footer-links { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-bottom: 12px; }
+
+  /* Improved mobile styles */
   @media (max-width: 768px) {
     .hero h1 { font-size: 1.8em; }
+    .hero { padding: 48px 16px 36px; }
     .stage-card { padding: 18px; }
-    .flow-diagram { padding: 12px; }
+    .flow-diagram { padding: 12px; font-size: 0.9em; }
+    .nav { padding: 8px 12px; gap: 4px; }
+    .nav a { padding: 5px 10px; font-size: 0.75em; }
+    .byprod-grid { grid-template-columns: 1fr; }
+    .comp-table th, .comp-table td { padding: 8px 10px; font-size: 0.8em; }
+    .calc-box { padding: 16px; }
+    .calc-box select { width: 100%; }
+    .calc-box input[type=number] { width: 100%; }
+    .calc-row { flex-direction: column; align-items: stretch; gap: 8px; }
+    .back-to-top { bottom: 16px; right: 16px; width: 42px; height: 42px; font-size: 1.2em; }
+    .toggle-label { padding: 8px 10px; }
+    .stage-collapse-btn { top: 12px; right: 12px; }
+    .site-footer .footer-links { flex-direction: column; gap: 8px; }
   }
+
+  @media (max-width: 480px) {
+    .hero h1 { font-size: 1.4em; }
+    .stage-title { font-size: 1.1em; }
+    section h2 { font-size: 1.4em; }
+    .flow-item { padding: 5px 8px; font-size: 0.75em; }
+  }
+
+  /* Focus styles for accessibility */
+  a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  /* Selection color */
+  ::selection { background: rgba(108,140,255,0.3); color: var(--text); }
 </style>
 </head>
 <body>
@@ -317,30 +485,48 @@
 
   <div class="calc-box" style="border-color: var(--orange);">
     <h3 style="color: var(--orange); margin-bottom: 12px;">⭐ Prestige Machines (toggles affect all calculations)</h3>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px;">
-      <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
-        <input type="checkbox" id="hasPhilosopher" onchange="recalc()" style="width:18px;height:18px;accent-color:var(--orange);">
-        <span><strong>Philosopher's Stone</strong> <span style="color:var(--muted);">(3 Medals)</span><br><span style="color:var(--muted);font-size:0.85em;">×1.25 ore value before processing</span></span>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 8px;">
+      <label class="toggle-label">
+        <span class="toggle-switch">
+          <input type="checkbox" id="hasPhilosopher" onchange="recalc()">
+          <span class="toggle-track"></span>
+        </span>
+        <span class="toggle-text"><strong>Philosopher's Stone</strong> <span style="color:var(--muted);">(3 Medals)</span><span class="sub">×1.25 ore value before processing</span></span>
       </label>
-      <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
-        <input type="checkbox" id="hasOreUpgrader" onchange="recalc()" style="width:18px;height:18px;accent-color:var(--orange);">
-        <span><strong>Ore Upgrader</strong> <span style="color:var(--muted);">(3 Medals)</span><br><span style="color:var(--muted);font-size:0.85em;">Upgrades ore to next tier (max Mithril)</span></span>
+      <label class="toggle-label">
+        <span class="toggle-switch">
+          <input type="checkbox" id="hasOreUpgrader" onchange="recalc()">
+          <span class="toggle-track"></span>
+        </span>
+        <span class="toggle-text"><strong>Ore Upgrader</strong> <span style="color:var(--muted);">(3 Medals)</span><span class="sub">Upgrades ore to next tier (max Mithril)</span></span>
       </label>
-      <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
-        <input type="checkbox" id="hasNanoSifter" onchange="recalc()" style="width:18px;height:18px;accent-color:var(--orange);">
-        <span><strong>Nano Sifter</strong> <span style="color:var(--muted);">(1 Medal)</span><br><span style="color:var(--muted);font-size:0.85em;">16.6% sift rate (vs regular 10%)</span></span>
+      <label class="toggle-label">
+        <span class="toggle-switch">
+          <input type="checkbox" id="hasNanoSifter" onchange="recalc()">
+          <span class="toggle-track"></span>
+        </span>
+        <span class="toggle-text"><strong>Nano Sifter</strong> <span style="color:var(--muted);">(1 Medal)</span><span class="sub">16.6% sift rate (vs regular 10%)</span></span>
       </label>
-      <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
-        <input type="checkbox" id="hasDuplicator" onchange="recalc()" style="width:18px;height:18px;accent-color:var(--orange);">
-        <span><strong>Duplicator</strong> <span style="color:var(--muted);">(8 Medals)</span><br><span style="color:var(--muted);font-size:0.85em;">Duplicates items at half value</span></span>
+      <label class="toggle-label">
+        <span class="toggle-switch">
+          <input type="checkbox" id="hasDuplicator" onchange="recalc()">
+          <span class="toggle-track"></span>
+        </span>
+        <span class="toggle-text"><strong>Duplicator</strong> <span style="color:var(--muted);">(8 Medals)</span><span class="sub">Duplicates items at half value</span></span>
       </label>
-      <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
-        <input type="checkbox" id="hasGemToBar" onchange="recalc()" style="width:18px;height:18px;accent-color:var(--orange);">
-        <span><strong>Gem→Bar Transmuter</strong> <span style="color:var(--muted);">(4 Medals)</span><br><span style="color:var(--muted);font-size:0.85em;">Convert gems to bars for metalwork chains</span></span>
+      <label class="toggle-label">
+        <span class="toggle-switch">
+          <input type="checkbox" id="hasGemToBar" onchange="recalc()">
+          <span class="toggle-track"></span>
+        </span>
+        <span class="toggle-text"><strong>Gem→Bar Transmuter</strong> <span style="color:var(--muted);">(4 Medals)</span><span class="sub">Convert gems to bars for metalwork chains</span></span>
       </label>
-      <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
-        <input type="checkbox" id="hasBarToGem" onchange="recalc()" style="width:18px;height:18px;accent-color:var(--orange);">
-        <span><strong>Bar→Gem Transmuter</strong> <span style="color:var(--muted);">(4 Medals)</span><br><span style="color:var(--muted);font-size:0.85em;">Convert bars to gems for jewelcrafting</span></span>
+      <label class="toggle-label">
+        <span class="toggle-switch">
+          <input type="checkbox" id="hasBarToGem" onchange="recalc()">
+          <span class="toggle-track"></span>
+        </span>
+        <span class="toggle-text"><strong>Bar→Gem Transmuter</strong> <span style="color:var(--muted);">(4 Medals)</span><span class="sub">Convert bars to gems for jewelcrafting</span></span>
       </label>
     </div>
     <div class="calc-note" style="margin-top: 12px;">⭐ Prestige machines are permanent — kept after each prestige reset. Toggle them to see how they affect your factory output.</div>
@@ -1392,6 +1578,20 @@
 
 </div>
 
+<footer class="site-footer">
+  <div class="footer-links">
+    <a href="https://umt.miraheze.org/wiki/Ultimate_Mining_Tycoon_Wiki" target="_blank">📖 UMT Wiki</a>
+    <a href="https://umt.miraheze.org/wiki/Machines" target="_blank">🏭 Machines</a>
+    <a href="https://umt.miraheze.org/wiki/Ores" target="_blank">⛏️ Ores</a>
+    <a href="https://umt.miraheze.org/wiki/Gems" target="_blank">💎 Gems</a>
+    <a href="https://umt.miraheze.org/wiki/Prestige" target="_blank">⭐ Prestige</a>
+  </div>
+  <p>Factory Optimization Guide for Ultimate Mining Tycoon. All data sourced from the <a href="https://umt.miraheze.org/wiki/Ultimate_Mining_Tycoon_Wiki" target="_blank">UMT Wiki</a>.</p>
+  <p style="margin-top: 6px; opacity: 0.6;">Calculations update live — change ore type or toggle prestige machines above.</p>
+</footer>
+
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0})" aria-label="Back to top">↑</button>
+
 <script>
 // === GEM DATA (from UMT Wiki) ===
 const GEMS = [
@@ -1859,6 +2059,106 @@ function recalc() {
 
 // Initial calc
 recalc();
+
+// === UI/UX ENHANCEMENTS ===
+
+// Back to top button visibility
+(function() {
+  var btn = document.getElementById('backToTop');
+  if (!btn) return;
+  var ticking = false;
+  window.addEventListener('scroll', function() {
+    if (!ticking) {
+      requestAnimationFrame(function() {
+        btn.classList.toggle('visible', window.scrollY > 400);
+        ticking = false;
+      });
+      ticking = true;
+    }
+  });
+})();
+
+// Scroll spy for nav highlighting
+(function() {
+  var sections = document.querySelectorAll('section[id]');
+  var navLinks = document.querySelectorAll('.nav a[href^="#"]');
+  if (!sections.length || !navLinks.length) return;
+  var ticking = false;
+  function updateNav() {
+    var scrollPos = window.scrollY + 120;
+    var current = '';
+    sections.forEach(function(s) {
+      if (s.offsetTop <= scrollPos) current = s.id;
+    });
+    navLinks.forEach(function(a) {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+    });
+  }
+  window.addEventListener('scroll', function() {
+    if (!ticking) {
+      requestAnimationFrame(function() { updateNav(); ticking = false; });
+      ticking = true;
+    }
+  });
+  updateNav();
+})();
+
+// Section reveal on scroll
+(function() {
+  var reveals = document.querySelectorAll('section, .stage-card, .byprod-card, .tip-box');
+  if (!reveals.length || !('IntersectionObserver' in window)) return;
+  reveals.forEach(function(el) { el.classList.add('reveal'); });
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.05, rootMargin: '0px 0px -40px 0px' });
+  reveals.forEach(function(el) { observer.observe(el); });
+})();
+
+// Collapsible stage cards
+(function() {
+  var stageSection = document.getElementById('stages');
+  if (!stageSection) return;
+  var cards = stageSection.querySelectorAll('.stage-card');
+  cards.forEach(function(card) {
+    // Wrap card contents (except header) in a collapsible div
+    var header = card.querySelector('.stage-header');
+    if (!header) return;
+    var children = Array.from(card.children);
+    var collDiv = document.createElement('div');
+    collDiv.className = 'collapsible';
+    var afterHeader = false;
+    children.forEach(function(child) {
+      if (child === header) { afterHeader = true; return; }
+      // Keep first <p> after header visible (description)
+      if (afterHeader && child.tagName === 'P' && !collDiv.children.length) {
+        collDiv.appendChild(child);
+        return;
+      }
+      if (afterHeader) collDiv.appendChild(child);
+    });
+    card.appendChild(collDiv);
+    // Set max-height for animation
+    collDiv.style.maxHeight = collDiv.scrollHeight + 'px';
+    // Add collapse button
+    var btn = document.createElement('button');
+    btn.className = 'stage-collapse-btn';
+    btn.innerHTML = '▲';
+    btn.setAttribute('aria-label', 'Toggle stage details');
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      var isCollapsed = card.classList.toggle('collapsed');
+      if (!isCollapsed) {
+        collDiv.style.maxHeight = collDiv.scrollHeight + 'px';
+      }
+    });
+    card.appendChild(btn);
+  });
+})();
 </script>
 
 </body>
