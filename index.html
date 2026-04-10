@@ -2376,6 +2376,65 @@ function recalc() {
   setAll('.v-eng-gem-total', fmtDollar(totalGemEV6));
   setAll('.v-eng-perore', fmtDollar(engPerOre));
 
+  // === LASER ===
+  var lens = glass + 50; // Glass ($30) → Lens (+$50) = $80
+  var optics = (lens + pipe) * 1.25;
+  // Laser uses: 1 ore (pipe via plate), 1 ore (coil), 2 surviving stones (glass for lens + glass for circuit), 1 gem consumed
+  // Total: 2 ores. Gem consumed = average cut gem from prospectors (opportunity cost)
+  var avgCutGem = s6AvgGem; // already calculated: weighted avg of polished+cut gems
+  var laser = (optics + avgCutGem + circuit) * 2.75;
+  var laserQA = laser * 1.2;
+  var laserOres = 2;
+  var totalGemEVLaser = laserOres * gem5.ev;
+  // One gem consumed by laser recipe, reducing sellable gem EV
+  // Approximate: reduce total gem EV by one average gem occurrence
+  var laserGemConsumed = avgCutGem; // opportunity cost of using gem in laser
+  var laserNetGemEV = Math.max(0, totalGemEVLaser - laserGemConsumed);
+  var laserSurvivors = laserOres * gem5.survivalRate;
+  var laserForBricks = Math.max(0, laserSurvivors - 2); // 2 survivors for glass
+  var laserBrickPairs = Math.floor(laserForBricks / 2);
+  var laserOdd = laserForBricks - laserBrickPairs * 2;
+  var laserBrickValue = laserBrickPairs * concreteBrickPairQA + (laserOdd > 0.5 ? firedBrickQA : 0);
+  var laserGrand = laserQA + laserBrickValue + laserNetGemEV;
+  var laserPerOre = laserGrand / laserOres;
+
+  // === AMULET ===
+  // Ring (metal dust + coil, ×1.75) + Frame (bar + bolts, ×1.25) + Prismatic Gem (2 cut gems merged, ×1.25)
+  // Ring: need 1 ore crushed to dust + 1 coil ore = 2 ores
+  // Frame: 1 bar ore + 1 bolt ore = 2 ores
+  // Prismatic Gem: 2 cut gems from prospectors
+  // Total: 4 ores
+  var metalDust = 25; // Crushing a tempered bar back to dust sets value to $25
+  var ring = (metalDust + coil) * 1.75;
+  var prismaticGem = (avgCutGem + avgCutGem) * 1.25;
+  var amulet = (ring + frame + prismaticGem) * 2.0;
+  var amuletQA = amulet * 1.2;
+  var amuletOres = 4;
+  var totalGemEVAmulet = amuletOres * gem5.ev;
+  var amuletGemConsumed = 2 * avgCutGem; // 2 gems used for prismatic
+  var amuletNetGemEV = Math.max(0, totalGemEVAmulet - amuletGemConsumed);
+  var amuletSurvivors = amuletOres * gem5.survivalRate;
+  var amuletBrickPairs = Math.floor(amuletSurvivors / 2);
+  var amuletOdd = amuletSurvivors - amuletBrickPairs * 2;
+  var amuletBrickValue = amuletBrickPairs * concreteBrickPairQA + (amuletOdd > 0.5 ? firedBrickQA : 0);
+  var amuletGrand = amuletQA + amuletBrickValue + amuletNetGemEV;
+  var amuletPerOre = amuletGrand / amuletOres;
+
+  // === GLIDER (Filigree + Amulet, ×1.5) ===
+  var filigree = plate * 1.2; // Plate → Filigree (+20% value)
+  var glider = (filigree + amulet) * 1.5;
+  var gliderQA = glider * 1.2;
+  var gliderOres = 5; // 4 for amulet + 1 for filigree plate
+  var totalGemEVGlider = gliderOres * gem5.ev;
+  var gliderGemConsumed = 2 * avgCutGem;
+  var gliderNetGemEV = Math.max(0, totalGemEVGlider - gliderGemConsumed);
+  var gliderSurvivors = gliderOres * gem5.survivalRate;
+  var gliderBrickPairs = Math.floor(gliderSurvivors / 2);
+  var gliderOdd = gliderSurvivors - gliderBrickPairs * 2;
+  var gliderBrickValue = gliderBrickPairs * concreteBrickPairQA + (gliderOdd > 0.5 ? firedBrickQA : 0);
+  var gliderGrand = gliderQA + gliderBrickValue + gliderNetGemEV;
+  var gliderPerOre = gliderGrand / gliderOres;
+
   // Gem EV display
   setAll('.v-gem-ev-total', fmtD(gem5.ev));
   setAll('.v-tip-gem-ev', fmtDollar(gem5.ev));
@@ -2384,10 +2443,13 @@ function recalc() {
   var compData = [
     { name: "Power Core + QA", ores: 11, product: pcQA, gems: totalGemEV11, bricks: brickValue, total: pcGrand },
     { name: "Tablet + Tuner + QA", ores: 5, product: tabletQA, gems: totalGemEV5, bricks: tabBrickValue, total: tabGrand },
-    { name: "Superconductor + QA", ores: 2, product: sc * 1.2, gems: 2 * gem5.ev, bricks: 0, total: sc * 1.2 + 2 * gem5.ev },
+    { name: "Superconductor + QA", ores: 2, product: sc * 1.2, gems: s8Gem2Stones, bricks: s8BrickValue, total: sc * 1.2 + s8Gem2Stones + s8BrickValue },
     { name: "Engine + QA", ores: 6, product: engineQA, gems: totalGemEV6, bricks: engBrickValue, total: engGrand },
     { name: "Electromagnet + QA", ores: 5, product: em * 1.2, gems: 5 * gem5.ev, bricks: 1 * concreteBrickPairQA, total: em * 1.2 + 5 * gem5.ev + concreteBrickPairQA },
     { name: "Tempered Mech Parts + QA", ores: 1, product: mech * 1.2, gems: gem5.ev, bricks: gem5.survivalRate * concreteBrickPairValue / 2, total: mech * 1.2 + gem5.ev + gem5.survivalRate * concreteBrickPairValue / 2 },
+    { name: "Laser + QA", ores: laserOres, product: laserQA, gems: laserNetGemEV, bricks: laserBrickValue, total: laserGrand },
+    { name: "Amulet + QA", ores: amuletOres, product: amuletQA, gems: amuletNetGemEV, bricks: amuletBrickValue, total: amuletGrand },
+    { name: "Glider + QA", ores: gliderOres, product: gliderQA, gems: gliderNetGemEV, bricks: gliderBrickValue, total: gliderGrand },
   ];
 
   compData.sort(function(a, b) { return (b.total / b.ores) - (a.total / a.ores); });
