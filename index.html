@@ -34,7 +34,7 @@
     background: var(--bg);
     color: var(--text);
     line-height: 1.65;
-    padding: 0 0 0;
+    padding: 0;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -1605,6 +1605,9 @@ const PROSPECT_CHANCE = 0.05;
 
 // === ORE TIER DATA (from UMT Wiki) ===
 // Used by Ore Upgrader to determine next tier. Max upgradeable tier: Mithril ($2,000).
+// Index: 0=Tin, 1=Iron, 2=Lead, 3=Cobalt, 4=Aluminium, 5=Silver, 6=Uranium,
+//        7=Vanadium, 8=Tungsten, 9=Gold, 10=Titanium, 11=Molybdenum,
+//        12=Plutonium, 13=Palladium, 14=Mithril
 const ORE_TIERS = [10, 20, 30, 50, 65, 150, 180, 240, 300, 350, 400, 600, 1000, 1200, 2000];
 
 // Calculate expected gem value per stone given number of active prospectors (1-5)
