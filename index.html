@@ -2438,7 +2438,7 @@ recalc();
       });
       ticking = true;
     }
-  });
+  }, { passive: true });
 })();
 
 // Scroll spy for nav highlighting
@@ -2462,7 +2462,7 @@ recalc();
       requestAnimationFrame(function() { updateNav(); ticking = false; });
       ticking = true;
     }
-  });
+  }, { passive: true });
   updateNav();
 })();
 
