@@ -1014,7 +1014,7 @@
       <p>Duplicates any item, but each copy is worth <strong class="val">half value</strong>. Items can only be duplicated once. Derived items from duplicated inputs can't be duplicated again.</p>
       <p class="sub" style="margin-top: 8px;">📐 Most expensive prestige machine. Best used to duplicate high-value ores/bars early in the chain. Since v0.5.4, duplicated dust returns to $1 value (not $0.5).</p>
       <div class="tip-box" style="margin-top: 8px;">
-        <strong>💡 Optimal Duplicator placement:</strong> Duplicate the ore BEFORE processing. You get 2 ores at half value each, but both go through the full processing chain. Net result: ~100% more output at ~50% value = ~100% more total dollars vs not duplicating.
+        <strong>💡 Optimal Duplicator placement:</strong> Duplicate the ore BEFORE processing. You get 2 ores at half value each, but both go through the full processing chain separately. Net result: 2 items at 50% value each = 100% of original value, but doubled throughput through your factory — effectively 2× the output rate.
       </div>
     </div>
 
@@ -1403,6 +1403,10 @@ const GEMS = [
 ];
 const PROSPECT_CHANCE = 0.05;
 
+// === ORE TIER DATA (from UMT Wiki) ===
+// Used by Ore Upgrader to determine next tier. Max upgradeable tier: Mithril ($2,000).
+const ORE_TIERS = [10, 20, 30, 50, 65, 150, 180, 240, 300, 350, 400, 600, 1000, 1200, 2000];
+
 // Calculate expected gem value per stone given number of active prospectors (1-5)
 // and whether gems are polished (+$10) and/or cut (×1.4)
 function gemEVPerStone(numProspectors, hasPolish, hasCut) {
@@ -1532,13 +1536,13 @@ function recalc() {
   var hasDup = document.getElementById('hasDuplicator') && document.getElementById('hasDuplicator').checked;
 
   // Ore Upgrader: upgrade to next tier
-  var ORE_TIERS = [10, 20, 30, 50, 65, 150, 180, 240, 300, 350, 400, 600, 1000, 1200, 2000];
   var effectiveV = V;
   if (hasUpgrader) {
     for (var t = 0; t < ORE_TIERS.length - 1; t++) {
       if (V <= ORE_TIERS[t]) { effectiveV = ORE_TIERS[t + 1]; break; }
     }
-    if (V > ORE_TIERS[ORE_TIERS.length - 2]) effectiveV = V; // Already at/above Mithril
+    // Already at or above Mithril (max upgradeable tier) — no upgrade possible
+    if (V >= ORE_TIERS[ORE_TIERS.length - 1]) effectiveV = V;
   }
   // Philosopher's Stone: ×1.25
   if (hasPhil) effectiveV = effectiveV * 1.25;
