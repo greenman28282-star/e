@@ -1020,12 +1020,12 @@
     </div>
     <div class="transport-tip">
       🚂 <strong>Transport (VERY COMPLEX):</strong><br>
-      • 4 ore lines must merge — use <strong>Splitters</strong> to route: Ore #1 → Bar, Ore #2+#3 → Bolts, Ore #4 → Plate<br>
-      • Frame Maker takes Bar + Bolt; Casing Machine takes Frame + Bolt + Plate<br>
+      • <strong>Bar routing:</strong> Use a <strong>3-Way Splitter</strong> after Tempering Forge to split tempered bars into 3 paths: Bolt line, Plate line, and a pass-through for Frame Maker<br>
+      • Frame Maker takes Bar + Bolt; Casing Machine takes Frame + Bolt + Plate — use Overflow Splitters to buffer components<br>
       • All 4 smelters output stones automatically → feed into prospector chain → <strong>Filter</strong> (gems → Polisher → Gem Cutter → Seller)<br>
-      • Surviving stones → concrete brick pairing<br>
-      • Use <strong>Overflow Splitters</strong> on every junction to prevent jams<br>
-      • <strong>Elevators</strong> highly recommended — stack casing assembly on a separate floor
+      • Surviving stones → concrete brick pairing (L/R Splitter → Crusher/Cement → Brick Mold → Kiln → Polisher → Seller)<br>
+      • <strong>Elevators</strong> highly recommended — put bar processing on Floor 1, stone/gem on Floor 2, assembly on Floor 3<br>
+      • Consider <strong>multiple sellers</strong>: one for casings, one for gems, one for bricks
     </div>
   </div>
 
@@ -1080,11 +1080,12 @@
     </div>
     <div class="transport-tip">
       🚂 <strong>Transport:</strong><br>
-      • Alloy Furnace takes 2 tempered bars — use a Splitter to feed 2 bars in<br>
+      • Alloy Furnace takes 2 tempered bars — use a <strong>L/R Splitter</strong> to alternate bars: one to Alloy, one to Coiler (for Electromagnet)<br>
       • All stones → 5 prospectors → <strong>Filter</strong> (gems → Polisher → Gem Cutter → Seller)<br>
-      • For ceramic: 2 surviving stones → Crusher → Clay Mixer → Ceramic Furnace<br>
-      • SC Constructor takes Alloy + Ceramic<br>
-      • <strong>Gate Belts</strong> useful here to synchronize inputs so items arrive at the right time
+      • For ceramic: 2 surviving stones → Crusher → Clay Mixer → Ceramic Furnace. Use a <strong>dedicated splitter</strong> to route exactly 2 stones per ceramic batch<br>
+      • Remaining surviving stones → concrete brick pairing (Crusher → Cement Mixer → Brick Mold → Kiln → Polisher → Seller)<br>
+      • SC Constructor takes Alloy + Ceramic — use <strong>Gate Belts</strong> to synchronize both inputs arriving together<br>
+      • <strong>Three-floor layout:</strong> Floor 1: Bar processing + Alloy. Floor 2: Stone prospecting + ceramic/brick. Floor 3: Assembly (SC, Electromagnet, Power Core prep)
     </div>
   </div>
 
@@ -1785,6 +1786,93 @@
     • <strong>Build vertically</strong> — 100 block height means you can stack 3-4 full processing floors<br>
     • <strong>Upgrade unloader output belts</strong> — the #1 throughput bottleneck is usually the unloader
   </div>
+
+  <div class="stage-card" style="margin-top: 20px; border-color: var(--accent);">
+    <h3 style="color: var(--accent); margin-bottom: 12px;">🏭 Optimal Factory Layouts by Stage</h3>
+    <p class="sub" style="margin-bottom: 12px;">Your factory plot is <strong>30×30 blocks</strong> with <strong>100 block height</strong> and a <strong>4,000 complexity limit</strong>. Use vertical space aggressively—each floor is roughly 3-4 blocks high with conveyors.</p>
+
+    <div class="machine-card" style="margin-bottom: 12px;">
+      <h4>Early Game (Stages 1-4): Single-Floor Linear</h4>
+      <p>Everything fits on one floor. Simple left-to-right layout:</p>
+      <pre style="background:var(--card);padding:10px;border-radius:6px;font-size:0.8em;overflow-x:auto;color:var(--muted);line-height:1.5;">
+Unloader → Cleaner → Polisher → Smelter ─┬─→ Bar Line: Coil/Plate/Pipe/Mech → Seller
+                                          └─→ Stone Line: Prosp×2-4 → Filter ─┬→ Gems: Polisher → Seller
+                                                                                └→ Stones: Crusher → Brick Mold → (Kiln) → Polisher → Seller</pre>
+      <p class="sub"><strong>Machines needed:</strong> 7-13 processing + 2-4 prospectors + 1 seller + conveyors/filters<br>
+      <strong>Transport cost:</strong> ~$500-$1,000 in conveyors + $50 per splitter/filter<br>
+      <strong>Key transport:</strong> 1 Filter after last prospector (gem vs stone), 1 Left/Right Splitter if using Sifter</p>
+    </div>
+
+    <div class="machine-card" style="margin-bottom: 12px;">
+      <h4>Mid Game (Stage 5-6): Two-Floor Split</h4>
+      <p>Concrete bricks require stone pairing. Split bar processing and stone processing onto separate floors:</p>
+      <pre style="background:var(--card);padding:10px;border-radius:6px;font-size:0.8em;overflow-x:auto;color:var(--muted);line-height:1.5;">
+<strong>Floor 1 — Bar Processing:</strong>
+Unloader → Cleaner → Polisher → Smelter → (Tempering Forge) → Plate → Mech Parts → Seller
+
+<strong>Floor 2 — Stone Processing (via Elevator from Smelter):</strong>
+Smelter Stone Out → Elevator ↓
+→ Topaz → Emerald → Sapphire → Ruby → (Diamond) → Filter ─┬→ Gems: Polisher → Gem Cutter → Seller
+                                                            └→ Surviving Stones: L/R Splitter ─┬→ Crusher → (Sifter) → Cement Mixer ─┐
+                                                                                                └→ Hold Stone ──────────────────────────┘
+                                                                                                     → Cement → Brick Mold → Kiln → Polisher → Seller</pre>
+      <p class="sub"><strong>Key transport for concrete brick pairing:</strong><br>
+      Use a <strong>Left/Right Splitter</strong> after the gem filter: odd stones go to Crusher (→ Dust → Cement Mixer), even stones go directly to Cement Mixer as the stone input. The Cement Mixer needs both dust AND stone simultaneously — the splitter ensures one of each arrives.<br>
+      <strong>Overflow Splitter</strong> after the Cement Mixer catches any unpaired stones → route to Crusher → Brick Mold (fired bricks as fallback).</p>
+    </div>
+
+    <div class="machine-card" style="margin-bottom: 12px;">
+      <h4>Late Game (Stages 7-8): Three-Floor Multi-Line</h4>
+      <p>Casings, Alloys, and Superconductors require multiple bar inputs. Use parallel bar lines:</p>
+      <pre style="background:var(--card);padding:10px;border-radius:6px;font-size:0.8em;overflow-x:auto;color:var(--muted);line-height:1.5;">
+<strong>Floor 1 — Bar Processing (4 parallel lines from Tempered Bars):</strong>
+Tempered Bar → 3-Way Splitter ─┬→ Line A: Bolt Machine → (wait for frame)
+                                ├→ Line B: Plate Stamper → Mech Parts Maker
+                                └→ Line C: Coiler → (Circuit Maker with Glass)
+Frame Maker ← Bar + Bolt | Casing Machine ← Frame + Bolt + Plate
+
+<strong>Floor 2 — Stone + Gem + Ceramic Processing:</strong>
+Stones → 5 Prospectors → Filter → Gem Line / Stone Pairing Line / Ceramic Line
+
+<strong>Floor 3 — End-Game Assembly:</strong>
+Alloy Furnace (2 bars) → Superconductor Constructor (+ Ceramic)
+Casing + SC + Electromagnet → Power Core Assembler → QA → Seller</pre>
+      <p class="sub"><strong>Machine counts for Power Core (per ore cycle):</strong> Each Power Core needs 11 ores (4 bars for casing components, 2 for alloy, 2 for electromagnet coil+casing, 1 for circuit coil, 1 for mech parts pipe, 1 for glass lens pipe). Plan conveyor throughput accordingly—you need <strong>multiple sellers</strong> for high-volume output.</p>
+    </div>
+
+    <div class="machine-card" style="margin-bottom: 12px;">
+      <h4>⚡ Throughput Optimization</h4>
+      <p>Belt speed is fixed — each conveyor segment handles one item at a time. To increase throughput:</p>
+      <ul style="margin: 8px 0; padding-left: 20px; color: var(--text);">
+        <li><strong>Parallel lines:</strong> Use 3-Way or L/R Splitters to create 2-3 parallel processing lines that feed into the same seller. This 2-3× your output.</li>
+        <li><strong>Multiple sellers:</strong> A single seller can bottleneck your entire factory. Add 2nd/3rd sellers for different product types (main product, gems, bricks).</li>
+        <li><strong>Unloader belt upgrades:</strong> 2nd output belt ($100K) doubles feed rate. 3rd belt ($1M) triples it. This is often more impactful than adding machines.</li>
+        <li><strong>Minimize belt length:</strong> Every conveyor segment adds transit time. Keep machines close together and use elevators for vertical shortcuts.</li>
+        <li><strong>Overflow splitters at bottlenecks:</strong> Place an overflow splitter before any machine that processes slowly — the overflow path goes to a buffer or alternate machine.</li>
+      </ul>
+    </div>
+
+    <div class="machine-card">
+      <h4>🧱 Concrete Brick Pairing — Detailed Conveyor Pattern</h4>
+      <p>The Cement Mixer requires <em>two</em> simultaneous inputs: Dust + Stone. Here's the exact transport setup:</p>
+      <pre style="background:var(--card);padding:10px;border-radius:6px;font-size:0.8em;overflow-x:auto;color:var(--muted);line-height:1.5;">
+Surviving Stones → Left/Right Splitter
+                   ├─ LEFT: Stone → Crusher → Dust → Cement Mixer (dust input)
+                   └─ RIGHT: Stone → Conveyor → Cement Mixer (stone input)
+                                                  ↓
+                                            Cement ($30)
+                                                  ↓
+                                       Brick Mold → Concrete Brick ($100)
+                                                  ↓
+                                            Kiln → $120
+                                                  ↓
+                                          Polisher → $130
+                                                  ↓
+                                         (QA → $156) → Seller</pre>
+      <p class="sub"><strong>Critical:</strong> The conveyor path from the L/R splitter to the Cement Mixer must be equal length on both sides (or use an overflow splitter on the shorter path) to ensure dust and stone arrive at the same time. If stones arrive before dust, they'll clog the Cement Mixer input.<br><br>
+      <strong>Odd stone fallback:</strong> Add an <strong>Overflow Splitter</strong> before the Cement Mixer's stone input. If the mixer is full or waiting for dust, the overflow diverts the extra stone to a Crusher → Brick Mold → Kiln → Polisher path for fired bricks ($40 each).</p>
+    </div>
+  </div>
 </section>
 
 <!-- BYPRODUCTS -->
@@ -1796,7 +1884,7 @@
     <strong>🎯 Stone Priority Order (ALWAYS follow this):</strong><br>
     1. 💎 Run through ALL gem prospectors (5% chance each, ~22.6% total chance)<br>
     2. ⚗️ Surviving stones: pair up for <strong>concrete bricks</strong> ($130+ per pair, $156 QA'd)<br>
-    3. 🧱 Odd stone out: fire brick ($36) or glass sheet ($30, if needed for circuits)<br>
+    3. 🧱 Odd stone out: polished fired brick ($40) or glass sheet ($30, if needed for circuits)<br>
     4. 💎 Process any gems found: Polish → Gem Cutter → sell or use in recipes
   </div>
 
