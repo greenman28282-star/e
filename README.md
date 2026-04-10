@@ -1,4 +1,4 @@
-Here is the complete list of every production building shown in the video, formatted with their name, description, and price:
+Here is the complete list of every production building, formatted with their name, description, and price:
 
 * **Ore Cleaner** - Adds $10 value to ores that have not already been cleaned. - $1,000
 * **Polisher** - Adds $10 value to an item that has not already been polished. - $850
