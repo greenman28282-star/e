@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Interactive factory optimization guide for Ultimate Mining Tycoon (UMT) on Roblox. Live calculator for ore values, stage-by-stage progression, machine logic, prestige strategies, and product comparisons.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⛏️</text></svg>">
 <title>Factory Optimization Guide — Ultimate Mining Tycoon</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -448,6 +450,22 @@
 
   /* Selection color */
   ::selection { background: rgba(108,140,255,0.3); color: var(--text); }
+
+  /* Print styles */
+  @media print {
+    body { background: #fff; color: #000; }
+    .nav, .back-to-top, .stage-collapse-btn, .toggle-switch, .toggle-label { display: none !important; }
+    .container { max-width: 100%; padding: 0; }
+    section, .stage-card, .byprod-card, .tip-box, .machine-card { break-inside: avoid; border-color: #ccc !important; background: #fff !important; color: #000 !important; }
+    .stage-card, .byprod-card, .tip-box, .machine-card { box-shadow: none; }
+    .collapsible { max-height: none !important; opacity: 1 !important; }
+    h1, h2, h3, h4, .stage-title, .val, .per-ore { color: #000 !important; }
+    a { color: #333 !important; text-decoration: underline; }
+    .flow-item, .flow-arrow { border-color: #999 !important; color: #000 !important; background: #f5f5f5 !important; }
+    .comp-table th { background: #eee !important; color: #000 !important; }
+    .comp-table td { color: #000 !important; }
+    .site-footer { border-color: #ccc !important; }
+  }
 </style>
 </head>
 <body>
@@ -585,7 +603,7 @@
 <!-- STAGES -->
 <section id="stages">
   <h2><span class="icon">📈</span> Stage-by-Stage Optimal Setups</h2>
-  <p class="desc">Each stage includes prospectors in the stone byproduct flow. Expected gem value (EV) is calculated per stone based on available prospectors.</p>
+  <p class="desc">Each stage includes prospectors in the stone byproduct flow. Expected gem value (EV) is calculated per stone based on available prospectors. Investment costs are <strong>cumulative</strong> (total spent including all previous stages). <span class="building-tag new" style="display:inline;font-size:0.8em;">Green = new this stage</span></p>
 
   <!-- STAGE 1 -->
   <div class="stage-card">
@@ -876,6 +894,7 @@
       <span class="val">Total per ore: $<span class="v-s5-total">295</span></span>
       <span class="sub"> (Mech Parts: $<span class="v-s5-mech2">110</span> + Concrete Brick share: $<span class="v-s5-brick">146.61</span> + Gem EV: $<span class="v-s5-gem-ev2">38.84</span>)</span>
       <br><span class="per-ore">📈 Concrete bricks + prospectors = massive byproduct income!</span>
+      <br><span class="sub">⚠️ Concrete brick values shown here do NOT include QA (+20%) — QA Machine costs $2M, available later. With QA, bricks increase from $360 → $432.</span>
     </div>
     <div class="transport-tip">
       🚂 <strong>Transport (COMPLEX):</strong><br>
@@ -1051,7 +1070,7 @@
     </div>
 
     <div class="tip-box good">
-      <strong>⚡ Best immediate sell:</strong> Superconductors give $<span class="v-s8-sc-perore">749</span>/ore from the product (2 ores). Plus gem EV from the 2 stones used for ceramic prospected first: $<span class="v-s8-gem-2stones">276</span>. Total = $<span class="v-s8-total-perore">1,025</span>/ore!
+      <strong>⚡ Best immediate sell:</strong> Superconductors give $<span class="v-s8-sc-perore">749</span>/ore from the product (2 ores). Plus gem EV from 2 prospected stones: $<span class="v-s8-gem-2stones">276</span>. Total per ore: $<span class="v-s8-total-perore">1,025</span>. Note: the ceramic recipe requires 2 stones that survive prospecting (77.4% each), so some batches may need extra stones from other lines.
     </div>
 
     <div class="value-result">
@@ -1442,6 +1461,34 @@
     </div>
   </div>
 
+  <!-- EXPLOSIVES -->
+  <div class="machine-group">
+    <h3>💥 Explosives Chain — Worth It?</h3>
+    <div class="tip-box warn" style="margin-bottom: 12px;">
+      <strong>⚠️ Generally NOT worth pursuing.</strong> The Explosives chain has a low multiplier (×1.5) relative to its complexity, and competes with Casings for the same input. Your casings are far more valuable when fed into Power Cores, Tablets, or Engines.
+    </div>
+    <div class="machine-grid">
+      <div class="machine-card">
+        <h4>Blasting Powder Chamber <span class="machine-status status-situational">⚠️ Situational</span></h4>
+        <p>Metal Dust + Stone Dust → Blasting Powder ($52 set value). Also applies powder to ceramics and ceramic casings, improving their value. Costs $15,000.</p>
+        <div class="feeds"><strong>Needs:</strong> Crusher (on bar → metal dust) + Crusher (on stone → stone dust) | <strong>Feeds:</strong> Explosives Maker, Blasting Powder Refiner</div>
+      </div>
+      <div class="machine-card">
+        <h4>Explosives Maker <span class="machine-status status-situational">⚠️ Situational</span></h4>
+        <p>Blasting Powder + Casing → Explosives (×1.5 combined). The problem: a Casing fed into Power Core assembly yields ×3.5, not ×1.5. Explosives waste your casings.</p>
+        <div class="feeds"><strong>Needs:</strong> Blasting Powder + Metal or Ceramic Casing | <strong>Problem:</strong> ×1.5 multiplier vs ×3.5 from Power Core</div>
+      </div>
+      <div class="machine-card">
+        <h4>Blasting Powder Refiner <span class="machine-status status-situational">⚠️ Situational</span></h4>
+        <p>Blasting Powder + Metal Dust → adds $15 to the blasting powder. Costs $2.5M for a tiny flat bonus. The metal dust could be sifted for better returns.</p>
+        <div class="feeds"><strong>Needs:</strong> Blasting Powder + Metal Dust | <strong>Cost:</strong> $2.5M for +$15 value</div>
+      </div>
+    </div>
+    <div class="tip-box" style="margin-top: 12px;">
+      <strong>💡 When Explosives <em>might</em> work:</strong> If you have surplus ceramic casings (from clay) that aren't needed for Superconductors, combining them with blasting powder gives some value. But in practice, ceramic casings are better used in Superconductors (×3.0) which feed into Power Cores. The Explosives chain is a trap for most players.
+    </div>
+  </div>
+
   <!-- END-GAME ASSEMBLERS -->
   <div class="machine-group">
     <h3>🏆 End-Game Assemblers</h3>
@@ -1507,7 +1554,11 @@
 <!-- COMPARISON TABLE -->
 <section id="comparison">
   <h2><span class="icon">📊</span> Product Value Comparison</h2>
-  <p class="desc">All values include QA (+20%), prospector gem EV, and concrete brick byproducts. Based on ore value $<span class="v-ore3">30</span>.</p>
+  <p class="desc">All values include QA (+20%), prospector gem EV, and concrete brick byproducts. Based on ore value $<span class="v-ore3">30</span>. Products that consume gems (Laser, Amulet, Glider) show net gem EV after subtracting the consumed gem's value.</p>
+
+  <div class="tip-box" style="margin-bottom: 20px;">
+    <strong>⚡ Throughput vs $/ore tradeoff:</strong> This table ranks by <em>value per ore consumed</em>, which is ideal for maximizing income per ore. However, simpler products (like Tempered Mech Parts) process much faster — a 1-ore recipe runs at full belt speed, while an 11-ore Power Core factory has many bottlenecks. <strong>If your factory throughput is low, a simpler product at higher volume can out-earn a complex one.</strong> Consider your actual ores/minute when choosing what to build.
+  </div>
 
   <div style="overflow-x: auto;">
     <table class="comp-table" id="compTable">
@@ -1542,7 +1593,7 @@
       <p>Multiplies ore value by <strong class="val">×1.25</strong> (25% boost). Works on ores only, once per ore, before any other processing.</p>
       <p class="sub" style="margin-top: 8px;">📐 Size: 5×3 blocks | Apply BEFORE cleaning/polishing so the +25% compounds through all subsequent multipliers.</p>
       <div class="gem-ev-box" style="margin-top: 8px;">
-        With <strong>Lead ($30)</strong>: $30 × 1.25 = <span class="val">$37.50</span>. That extra $7.50 compounds to +$<span class="v-ps-lead-gain">18</span> per ore at the end of a full chain.
+        With your current ore ($<span class="v-ore5">30</span>): the ×1.25 boost compounds to +$<span class="v-ps-lead-gain">18</span> per ore at the end of a full tempered bar chain.
       </div>
     </div>
 
@@ -1625,9 +1676,22 @@
     </p>
   </div>
 
+  <div class="stage-card" style="border-color: var(--orange); margin-top: 20px;">
+    <div class="stage-title" style="margin-bottom: 12px;">⏰ When to Prestige</div>
+    <div class="tip-box good" style="margin-bottom: 12px;">
+      <strong>🎯 First prestige: as soon as you hit $20M.</strong> Don't delay — the Nano Sifter (1 medal) immediately adds recycling value to every dust in your factory. Each subsequent prestige gets faster because your prestige machines carry over.
+    </div>
+    <p style="color: var(--muted); font-size: 0.9em;">
+      <strong>Prestige threshold:</strong> $20,000,000 cash to unlock the prestige button.<br>
+      <strong>Medal calculation:</strong> You earn 1 Medal per prestige. The more money you have when you prestige, the more medals you can earn in later prestiges.<br>
+      <strong>Strategy:</strong> Your first few prestiges should be fast — rush to $20M with a simple Tempered Mech Parts factory, prestige, repeat. Each time your prestige machines make the next run faster. Aim for Nano Sifter (1M) → Ore Upgrader (3M) → Philosopher's Stone (3M) in your first 7 medals.<br>
+      <strong>When to stop prestiging:</strong> Once you have all the prestige machines you want, there's no further benefit to resetting. Focus on building your ultimate factory.
+    </p>
+  </div>
+
   <div class="stage-card" style="border-color: var(--gold); margin-top: 20px;">
     <div class="stage-title" style="margin-bottom: 12px;">⭐ Prestige + Full Chain: How Values Stack</div>
-    <p>With Philosopher's Stone + Ore Upgrader both active, processing Lead ($30):</p>
+    <p>With Philosopher's Stone + Ore Upgrader both active, processing <span class="v-ore">Lead</span> ($<span class="v-ore4">30</span>):</p>
     <div class="flow-diagram">
       <div style="margin-bottom: 4px; color: var(--muted); font-size: 0.8em; font-weight: 600;">OPTIMAL PRESTIGE ORDER:</div>
       <div class="flow-row">
@@ -1781,6 +1845,12 @@
       <p>Stone → Crush → Dust → Kiln → <strong class="val">Glass ($30)</strong></p>
       <p class="sub" style="margin-top: 6px;">Per stone: $30 | Critical for Circuits, Tablets, Lenses</p>
     </div>
+
+    <div class="byprod-card" style="border-color: var(--muted);">
+      <h4>🔄 Sifter Bonus (from dust byproduct)</h4>
+      <p>Any dust that passes through a Sifter has a <strong>10% chance</strong> (or <strong>16.6% with Nano Sifter ⭐</strong>) of producing a random ore. The dust is NOT destroyed on failure.</p>
+      <p class="sub" style="margin-top: 6px;">Free bonus! Route dust through Sifter before brick molding. Regular Sifter EV: ~$3/dust (10% × avg $30 ore). Nano Sifter EV: ~$10+/dust (16.6% × rarer ores). Not included in stage totals above but adds up over time.</p>
+    </div>
   </div>
 
   <div class="tip-box warn">
@@ -1818,27 +1888,10 @@
   </div>
 
   <div class="stage-card">
-    <div class="stage-title" style="margin-bottom: 12px;">Gem Prospecting Chain</div>
-    <div class="flow-diagram">
-      <div class="flow-row">
-        <span class="flow-item fi-byproduct">Stone</span>
-        <span class="flow-arrow">→</span>
-        <span class="flow-item fi-gem">Topaz (5%)</span>
-        <span class="flow-arrow">→</span>
-        <span class="flow-item fi-gem">Emerald (5%)</span>
-        <span class="flow-arrow">→</span>
-        <span class="flow-item fi-gem">Sapphire (5%)</span>
-        <span class="flow-arrow">→</span>
-        <span class="flow-item fi-gem">Ruby (5%)</span>
-        <span class="flow-arrow">→</span>
-        <span class="flow-item fi-gem">Diamond (5%)</span>
-        <span class="flow-arrow">→</span>
-        <span class="flow-item fi-byproduct">Surviving (77.4%)</span>
-      </div>
-    </div>
-    <p>Run every stone through all 5 prospectors before using it for anything else. Cumulative gem chance: 1 − 0.95⁵ ≈ 22.62%.</p>
+    <div class="stage-title" style="margin-bottom: 12px;">Gem Processing & Products</div>
+    <p style="margin-bottom: 8px;">All 5 prospectors should run on every stone (see <a href="#byproducts" style="color: var(--accent);">Byproduct Optimization</a> for the full prospecting chain and EV breakdown — $<span class="v-gem-ev-total">141</span>/stone with all 5).</p>
 
-    <div class="tip-box gem" style="margin-top: 16px;">
+    <div class="tip-box gem" style="margin-top: 12px;">
       <strong>💎 Gem Processing Priority:</strong><br>
       1. <strong>Polish</strong> (+$10) → <strong>Gem Cutter</strong> (+40% value) — always do this first<br>
       2. <strong>Prismatic Gem Crucible</strong> → Merge 2 cut gems (+25% combined value)<br>
@@ -1893,32 +1946,15 @@
 
 <!-- PRO TIPS -->
 <section id="tips">
-  <h2><span class="icon">💡</span> Pro Tips & Key Insights</h2>
-  <p class="desc">Critical optimization rules for maximum profit.</p>
+  <h2><span class="icon">💡</span> Pro Tips & Quick Reference</h2>
+  <p class="desc">Key optimization rules. See individual sections above for detailed explanations.</p>
 
   <div class="tip-box gem">
-    <strong>🔑 Rule #0: ALWAYS prospect stones before processing them.</strong><br>
-    With all 5 prospectors + Gem Cutter, each stone has an expected gem value of ~$<span class="v-tip-gem-ev">141</span>. This is FREE value — the stone is destroyed only if a gem is found (22.6% chance), and the gem is worth far more than what you'd make from the stone. Prospectors pay for themselves extremely fast.
-  </div>
-
-  <div class="tip-box good">
-    <strong>🔑 Rule #1: Always Clean + Polish ores BEFORE smelting.</strong><br>
-    The $20 value added by cleaning+polishing gets multiplied by ALL subsequent operations (×1.2 smelt, ×2 temper, etc.). Early flat bonuses compound into massive gains.
-  </div>
-
-  <div class="tip-box good">
-    <strong>🔑 Rule #2: Always QA your final products last.</strong><br>
-    The QA Machine adds 20% to any item's final value. Apply it to your most expensive finished products (Power Cores, Tablets, etc.) for maximum dollar gain.
-  </div>
-
-  <div class="tip-box good">
-    <strong>🔑 Rule #3: Never sell raw stones.</strong><br>
-    Stones from smelting are worth massive value when prospected + processed. Raw stone = $0. Prospected + concrete bricked = $180+/stone plus ~$141 gem EV.
-  </div>
-
-  <div class="tip-box warn">
-    <strong>⚠️ The Blast Furnace is a trap!</strong><br>
-    It costs $25,000 but makes bars 10% LESS valuable (×0.9 vs Ore Smelter's ×1.2). The Ore Smelter is strictly better for $1,500.
+    <strong>🔑 The Golden Rules:</strong><br>
+    <strong>#0</strong> — ALWAYS prospect stones before processing them ($<span class="v-tip-gem-ev">141</span> gem EV per stone with all 5 prospectors)<br>
+    <strong>#1</strong> — Always Clean + Polish ores BEFORE smelting (the +$20 compounds through all subsequent multipliers)<br>
+    <strong>#2</strong> — Always QA your final products last (20% on your most expensive item = max gain)<br>
+    <strong>#3</strong> — Never sell raw stones (prospected + concrete bricked = $180+/stone plus gem EV)
   </div>
 
   <div class="tip-box">
@@ -1933,17 +1969,7 @@
 
   <div class="tip-box">
     <strong>📊 The "Per Ore" Metric:</strong><br>
-    Always compare value <em>per ore consumed</em>, not total product value. Include prospector gem EV + concrete brick byproducts. Power Core: $<span class="v-eg-perore2">1,614</span>/ore. Tablet: $<span class="v-tab-perore2">1,090</span>/ore.
-  </div>
-
-  <div class="tip-box" style="border-color: var(--orange);">
-    <strong>⭐ Prestige machines compound with EVERYTHING:</strong><br>
-    Ore Upgrader + Philosopher's Stone applied before cleaning/polishing means the extra value gets multiplied by smelt (×1.2), temper (×2), and ALL combination machines. A $30 Lead becomes a $62.50 effective ore, compounding to +65% per Power Core!
-  </div>
-
-  <div class="tip-box" style="border-color: var(--orange);">
-    <strong>⭐ Nano Sifter > regular Sifter:</strong><br>
-    16.6% success rate vs 10%, AND it produces rarer ores (up to Iridium/Palladium). Replace your regular Sifter immediately after first prestige — it only costs 1 Medal.
+    Always compare value <em>per ore consumed</em>, not total product value. Include prospector gem EV + concrete brick byproducts. But also consider <strong>throughput</strong> — a simpler product at higher volume can out-earn a complex one. See the <a href="#comparison" style="color: var(--accent);">Comparison Table</a>.
   </div>
 </section>
 
@@ -2135,17 +2161,11 @@ function recalc() {
   // Philosopher's Stone: ×1.25
   if (hasPhil) effectiveV = effectiveV * 1.25;
 
-  // Show/hide prestige summary
+  // Show/hide prestige summary — full content updated at end of recalc()
   var summaryEl = document.getElementById('prestigeEffectSummary');
   if (summaryEl) {
-    if (hasPhil || hasUpgrader) {
+    if (hasPhil || hasUpgrader || hasNano || hasDup) {
       summaryEl.style.display = 'block';
-      var summaryText = '⭐ Prestige boost active: ';
-      if (hasUpgrader) summaryText += 'Ore Upgrader shifts ore to next tier. ';
-      if (hasPhil) summaryText += "Philosopher's Stone adds ×1.25. ";
-      summaryText += 'Effective ore value: $' + fmtDollar(effectiveV);
-      if (hasDup) summaryText += ' | Duplicator: 2× items at 50% value each.';
-      summaryEl.innerHTML = '<strong>' + summaryText + '</strong>';
     } else {
       summaryEl.style.display = 'none';
     }
@@ -2173,6 +2193,7 @@ function recalc() {
   setAll('.v-ore', fmtDollar(V));
   setAll('.v-ore2', fmtDollar(V));
   setAll('.v-ore3', fmtDollar(V));
+  setAll('.v-ore5', fmtDollar(V));
 
   // === STAGE 1 ===
   var s1Coil = bar + 20;
@@ -2279,17 +2300,24 @@ function recalc() {
   var coil = temperedBar + 20;
   var em = (coil + casing) * 1.5;
   var scPerOre = sc / 2;
-  // The 2 stones used for ceramic also get prospected first
+  // SC recipe: 2 ores → 2 stones prospected (each has 77.4% survival chance, so ~1.55 survive on avg)
+  // Ceramic needs 2 surviving stones — on average there's a shortfall, so brick bonus is near zero
+  // Any rare extra survivors go to concrete bricks
   var s8Gem2Stones = 2 * gem5.ev;
-  var s8TotalPerOre = scPerOre + gem5.ev; // gem EV per ore (1 stone per ore)
+  var s8Survivors = 2 * gem5.survivalRate;
+  var s8ForBricks = Math.max(0, s8Survivors - 2);
+  var s8BrickPairs = Math.floor(s8ForBricks / 2);
+  var s8Odd = s8ForBricks - s8BrickPairs * 2;
+  var s8BrickValue = s8BrickPairs * concreteBrickPairQA + (s8Odd > 0.5 ? firedBrickQA : 0);
+  var s8TotalPerOre = scPerOre + gem5.ev + s8BrickValue / 2;
   setAll('.v-s8-sc', fmtDollar(sc));
   setAll('.v-s8-sc2', fmtDollar(sc));
   setAll('.v-s8-em', fmtDollar(em));
   setAll('.v-s8-gem-ev', fmtD(gem5.ev));
   setAll('.v-s8-sc-perore', fmtDollar(scPerOre));
   setAll('.v-s8-gem-2stones', fmtDollar(s8Gem2Stones));
-  setAll('.v-s8-total-perore', fmtDollar(scPerOre + gem5.ev));
-  setAll('.v-s8-sc-perore2', fmtDollar(scPerOre + gem5.ev));
+  setAll('.v-s8-total-perore', fmtDollar(s8TotalPerOre));
+  setAll('.v-s8-sc-perore2', fmtDollar(s8TotalPerOre));
 
   // === END GAME: POWER CORE ===
   var casing1 = casing;
@@ -2370,6 +2398,65 @@ function recalc() {
   setAll('.v-eng-gem-total', fmtDollar(totalGemEV6));
   setAll('.v-eng-perore', fmtDollar(engPerOre));
 
+  // === LASER ===
+  var lens = glass + 50; // Glass ($30) → Lens (+$50) = $80
+  var optics = (lens + pipe) * 1.25;
+  // Laser uses: 1 ore (pipe via plate), 1 ore (coil), 2 surviving stones (glass for lens + glass for circuit), 1 gem consumed
+  // Total: 2 ores. Gem consumed = average cut gem from prospectors (opportunity cost)
+  var avgCutGem = s6AvgGem; // already calculated: weighted avg of polished+cut gems
+  var laser = (optics + avgCutGem + circuit) * 2.75;
+  var laserQA = laser * 1.2;
+  var laserOres = 2;
+  var totalGemEVLaser = laserOres * gem5.ev;
+  // One gem consumed by laser recipe, reducing sellable gem EV
+  // Approximate: reduce total gem EV by one average gem occurrence
+  var laserGemConsumed = avgCutGem; // opportunity cost of using gem in laser
+  var laserNetGemEV = Math.max(0, totalGemEVLaser - laserGemConsumed);
+  var laserSurvivors = laserOres * gem5.survivalRate;
+  var laserForBricks = Math.max(0, laserSurvivors - 2); // 2 survivors for glass
+  var laserBrickPairs = Math.floor(laserForBricks / 2);
+  var laserOdd = laserForBricks - laserBrickPairs * 2;
+  var laserBrickValue = laserBrickPairs * concreteBrickPairQA + (laserOdd > 0.5 ? firedBrickQA : 0);
+  var laserGrand = laserQA + laserBrickValue + laserNetGemEV;
+  var laserPerOre = laserGrand / laserOres;
+
+  // === AMULET ===
+  // Ring (metal dust + coil, ×1.75) + Frame (bar + bolts, ×1.25) + Prismatic Gem (2 cut gems merged, ×1.25)
+  // Ring: need 1 ore crushed to dust + 1 coil ore = 2 ores
+  // Frame: 1 bar ore + 1 bolt ore = 2 ores
+  // Prismatic Gem: 2 cut gems from prospectors
+  // Total: 4 ores
+  var metalDust = 25; // Crushing a tempered bar back to dust sets value to $25
+  var ring = (metalDust + coil) * 1.75;
+  var prismaticGem = (avgCutGem + avgCutGem) * 1.25;
+  var amulet = (ring + frame + prismaticGem) * 2.0;
+  var amuletQA = amulet * 1.2;
+  var amuletOres = 4;
+  var totalGemEVAmulet = amuletOres * gem5.ev;
+  var amuletGemConsumed = 2 * avgCutGem; // 2 gems used for prismatic
+  var amuletNetGemEV = Math.max(0, totalGemEVAmulet - amuletGemConsumed);
+  var amuletSurvivors = amuletOres * gem5.survivalRate;
+  var amuletBrickPairs = Math.floor(amuletSurvivors / 2);
+  var amuletOdd = amuletSurvivors - amuletBrickPairs * 2;
+  var amuletBrickValue = amuletBrickPairs * concreteBrickPairQA + (amuletOdd > 0.5 ? firedBrickQA : 0);
+  var amuletGrand = amuletQA + amuletBrickValue + amuletNetGemEV;
+  var amuletPerOre = amuletGrand / amuletOres;
+
+  // === GLIDER (Filigree + Amulet, ×1.5) ===
+  var filigree = plate * 1.2; // Plate → Filigree (+20% value)
+  var glider = (filigree + amulet) * 1.5;
+  var gliderQA = glider * 1.2;
+  var gliderOres = 5; // 4 for amulet + 1 for filigree plate
+  var totalGemEVGlider = gliderOres * gem5.ev;
+  var gliderGemConsumed = 2 * avgCutGem;
+  var gliderNetGemEV = Math.max(0, totalGemEVGlider - gliderGemConsumed);
+  var gliderSurvivors = gliderOres * gem5.survivalRate;
+  var gliderBrickPairs = Math.floor(gliderSurvivors / 2);
+  var gliderOdd = gliderSurvivors - gliderBrickPairs * 2;
+  var gliderBrickValue = gliderBrickPairs * concreteBrickPairQA + (gliderOdd > 0.5 ? firedBrickQA : 0);
+  var gliderGrand = gliderQA + gliderBrickValue + gliderNetGemEV;
+  var gliderPerOre = gliderGrand / gliderOres;
+
   // Gem EV display
   setAll('.v-gem-ev-total', fmtD(gem5.ev));
   setAll('.v-tip-gem-ev', fmtDollar(gem5.ev));
@@ -2378,10 +2465,13 @@ function recalc() {
   var compData = [
     { name: "Power Core + QA", ores: 11, product: pcQA, gems: totalGemEV11, bricks: brickValue, total: pcGrand },
     { name: "Tablet + Tuner + QA", ores: 5, product: tabletQA, gems: totalGemEV5, bricks: tabBrickValue, total: tabGrand },
-    { name: "Superconductor + QA", ores: 2, product: sc * 1.2, gems: 2 * gem5.ev, bricks: 0, total: sc * 1.2 + 2 * gem5.ev },
+    { name: "Superconductor + QA", ores: 2, product: sc * 1.2, gems: s8Gem2Stones, bricks: s8BrickValue, total: sc * 1.2 + s8Gem2Stones + s8BrickValue },
     { name: "Engine + QA", ores: 6, product: engineQA, gems: totalGemEV6, bricks: engBrickValue, total: engGrand },
     { name: "Electromagnet + QA", ores: 5, product: em * 1.2, gems: 5 * gem5.ev, bricks: 1 * concreteBrickPairQA, total: em * 1.2 + 5 * gem5.ev + concreteBrickPairQA },
     { name: "Tempered Mech Parts + QA", ores: 1, product: mech * 1.2, gems: gem5.ev, bricks: gem5.survivalRate * concreteBrickPairValue / 2, total: mech * 1.2 + gem5.ev + gem5.survivalRate * concreteBrickPairValue / 2 },
+    { name: "Laser + QA", ores: laserOres, product: laserQA, gems: laserNetGemEV, bricks: laserBrickValue, total: laserGrand },
+    { name: "Amulet + QA", ores: amuletOres, product: amuletQA, gems: amuletNetGemEV, bricks: amuletBrickValue, total: amuletGrand },
+    { name: "Glider + QA", ores: gliderOres, product: gliderQA, gems: gliderNetGemEV, bricks: gliderBrickValue, total: gliderGrand },
   ];
 
   compData.sort(function(a, b) { return (b.total / b.ores) - (a.total / a.ores); });
@@ -2437,12 +2527,38 @@ function recalc() {
     setAll('.v-prestige-pct', '0');
   }
 
-  // Philosopher's Stone lead gain example
-  var psLeadBar = (30 * 1.25 + 20) * 1.2;
-  var psLeadTempered = psLeadBar * 2;
-  var noLeadBar = (30 + 20) * 1.2;
-  var noLeadTempered = noLeadBar * 2;
-  setAll('.v-ps-lead-gain', fmtDollar(psLeadTempered - noLeadTempered));
+  // Philosopher's Stone gain example — uses CURRENT ore, not hardcoded Lead
+  var psOreBar = (V * 1.25 + 20) * 1.2;
+  var psOreTempered = psOreBar * 2;
+  var noOreBar = (V + 20) * 1.2;
+  var noOreTempered = noOreBar * 2;
+  setAll('.v-ps-lead-gain', fmtDollar(psOreTempered - noOreTempered));
+  setAll('.v-ore4', fmtDollar(V));
+
+  // Ore Upgrader: show target tier name in prestige summary
+  var ORE_NAMES = ['Tin','Iron','Lead','Cobalt','Aluminium','Silver','Uranium','Vanadium','Tungsten','Gold','Titanium','Molybdenum','Plutonium','Palladium','Mithril'];
+  var upgraderFrom = '';
+  var upgraderTo = '';
+  for (var u = 0; u < ORE_TIERS.length - 1; u++) {
+    if (V <= ORE_TIERS[u]) { upgraderFrom = ORE_NAMES[u] || '$' + ORE_TIERS[u]; upgraderTo = ORE_NAMES[u + 1] || '$' + ORE_TIERS[u + 1]; break; }
+  }
+  if (V >= ORE_TIERS[ORE_TIERS.length - 1]) { upgraderFrom = 'Mithril'; upgraderTo = 'MAX'; }
+  setAll('.v-upgrader-from', upgraderFrom);
+  setAll('.v-upgrader-to', upgraderTo);
+
+  // Update prestige summary with upgrader target tier
+  if (summaryEl) {
+    if (hasPhil || hasUpgrader || hasNano || hasDup) {
+      summaryEl.style.display = 'block';
+      var summaryText = '⭐ Prestige boost active: ';
+      if (hasUpgrader) summaryText += 'Ore Upgrader: ' + upgraderFrom + ' → ' + upgraderTo + '. ';
+      if (hasPhil) summaryText += "Phil. Stone ×1.25. ";
+      if (hasNano) summaryText += 'Nano Sifter active. ';
+      summaryText += 'Effective ore value: $' + fmtDollar(effectiveV);
+      if (hasDup) summaryText += ' | Duplicator: 2× items at 50% value each.';
+      summaryEl.innerHTML = '<strong>' + summaryText + '</strong>';
+    }
+  }
 }
 
 // Initial calc
