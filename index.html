@@ -667,7 +667,7 @@
       <span class="sub"> (Coil: $<span class="v-s1-coil2">80</span> + 95% Dust: $<span class="v-s1-dust">23.75</span> + Gem EV: $<span class="v-s1-gem-ev2">4.25</span>)</span>
     </div>
     <div class="transport-tip">
-      🚂 <strong>Transport:</strong> Simple linear layout. Conveyor from Unloader → Cleaner → Polisher → Smelter. The Smelter splits output automatically — bars go one direction (→ Coiler → Seller), stones go the other (→ Topaz Prospector). Use a <strong>Filter</strong> after the Prospector to separate gems (→ Polisher → Seller) from surviving stones (→ Crusher → Polisher → Seller). Note: ores are polished before smelting, but dust needs a <em>second</em> Polisher since items can only be polished once.
+      🚂 <strong>Transport:</strong> Simple linear layout. Conveyor from Unloader → Cleaner → Polisher → Smelter. The Smelter splits output automatically — bars go one direction (→ Coiler → Seller), stones go the other (→ Topaz Prospector). Use a <strong>Filter</strong> after the Prospector to separate gems (→ Polisher → Seller) from surviving stones (→ Crusher → Polisher → Seller). Note: stones didn't go through the ore Polisher, so a dedicated Polisher on the stone line adds +$10 to dust.
     </div>
   </div>
 
@@ -1020,7 +1020,7 @@
     </div>
     <div class="transport-tip">
       🚂 <strong>Transport (VERY COMPLEX):</strong><br>
-      • <strong>Bar routing:</strong> Use a <strong>3-Way Splitter</strong> after Tempering Forge to split tempered bars into 3 paths: Bolt line, Plate line, and a pass-through for Frame Maker<br>
+      • <strong>Bar routing:</strong> 4 ores smelt into 4 tempered bars. Use <strong>splitters</strong> to route bars: some to Bolt Machine, some to Plate Stamper, and some pass through for Frame Maker input<br>
       • Frame Maker takes Bar + Bolt; Casing Machine takes Frame + Bolt + Plate — use Overflow Splitters to buffer components<br>
       • All 4 smelters output stones automatically → feed into prospector chain → <strong>Filter</strong> (gems → Polisher → Gem Cutter → Seller)<br>
       • Surviving stones → concrete brick pairing (L/R Splitter → Crusher/Cement → Brick Mold → Kiln → Polisher → Seller)<br>
@@ -1273,7 +1273,7 @@
       </div>
       <div class="machine-card" style="border-color: var(--red);">
         <h4>Blast Furnace <span class="machine-status status-trap">❌ Trap</span></h4>
-        <p>Ore → Bar (×0.9 value) + Stone. Costs $25,000 but makes bars <strong>10% LESS valuable</strong> than the $1,500 Ore Smelter. There is NO scenario where this is better.</p>
+        <p>Ore → Bar (×0.9 value) + Stone. Costs $25,000 but makes bars <strong>10% LESS valuable</strong> than the $380 Ore Smelter. There is NO scenario where this is better.</p>
         <div class="obsolete-note">⛔ NEVER BUY. Ore Smelter is strictly superior in every way.</div>
       </div>
     </div>
@@ -1354,7 +1354,7 @@
       </div>
       <div class="machine-card">
         <h4>Kiln <span class="machine-status status-core">✅ Core</span></h4>
-        <p>Bricks → Fired Bricks (×1.2) AND Dust → Glass ($30). Still needed after Cement Mixer because concrete bricks also pass through the Kiln for the final boost.</p>
+        <p>Bricks → Fired Bricks (×1.2 on base value, before polish) AND Dust → Glass ($30). Still needed after Cement Mixer because concrete bricks also pass through the Kiln for the final boost. Polish bricks <em>after</em> kilning for best results.</p>
         <div class="feeds"><strong>Feeds into:</strong> Glass → Circuits/Tablets, Fired/Concrete Bricks → Seller | <strong>Obsolete?</strong> Never.</div>
         <div class="obsolete-note" style="color: var(--green);">✅ Cement Mixer does NOT replace the Kiln — concrete bricks still need to be kilned.</div>
       </div>
@@ -1869,7 +1869,7 @@ Surviving Stones → Left/Right Splitter
                                           Polisher → $130
                                                   ↓
                                          (QA → $156) → Seller</pre>
-      <p class="sub"><strong>Critical:</strong> The conveyor path from the L/R splitter to the Cement Mixer must be equal length on both sides (or use an overflow splitter on the shorter path) to ensure dust and stone arrive at the same time. If stones arrive before dust, they'll clog the Cement Mixer input.<br><br>
+      <p class="sub"><strong>Tip:</strong> Try to keep conveyor path lengths similar on both sides of the L/R splitter so dust and stone arrive at the Cement Mixer around the same time. If one path is much longer, use an <strong>Overflow Splitter</strong> on the shorter path to buffer items. The game may queue inputs, but balanced paths reduce wait times.<br><br>
       <strong>Odd stone fallback:</strong> Add an <strong>Overflow Splitter</strong> before the Cement Mixer's stone input. If the mixer is full or waiting for dust, the overflow diverts the extra stone to a Crusher → Brick Mold → Kiln → Polisher path for fired bricks ($40 each).</p>
     </div>
   </div>
@@ -1961,9 +1961,9 @@ Surviving Stones → Left/Right Splitter
         </thead>
         <tbody>
           <tr><td style="color:var(--gold);">Topaz</td><td>$75</td><td>$85</td><td>$119</td><td>Prospector ($2K) / Mining 0-549m</td></tr>
-          <tr><td style="color:var(--green);">Emerald</td><td>$200</td><td>$210</td><td>$294</td><td>Prospector ($6K) / Mining 150-849m</td></tr>
+          <tr><td style="color:var(--green);">Emerald</td><td>$200</td><td>$210</td><td>$294</td><td>Prospector ($5K) / Mining 150-849m</td></tr>
           <tr><td style="color:var(--accent);">Sapphire</td><td>$250</td><td>$260</td><td>$364</td><td>Prospector ($8K) / Mining 150-849m</td></tr>
-          <tr><td style="color:var(--red);">Ruby</td><td>$300</td><td>$310</td><td>$434</td><td>Prospector ($10K) / Mining 150-849m</td></tr>
+          <tr><td style="color:var(--red);">Ruby</td><td>$300</td><td>$310</td><td>$434</td><td>Prospector ($15K) / Mining 150-849m</td></tr>
           <tr><td style="color:var(--cyan);">Diamond</td><td>$1,500</td><td>$1,510</td><td>$2,114</td><td>Prospector ($30K) / Mining 400-1800m</td></tr>
           <tr style="border-top: 2px solid var(--border);"><td colspan="5" style="color:var(--muted); font-style:italic;">Higher gems (mining only):</td></tr>
           <tr><td style="color:var(--pink);">Poudretteite</td><td>$1,700</td><td>$1,710</td><td>$2,394</td><td>Mining 550-1199m</td></tr>
@@ -2272,10 +2272,10 @@ function recalc() {
   var gem4 = gemEVPerStone(4, true, false);  // Stage 4: 4 prospectors
   var gem5 = gemEVPerStone(5, true, true);   // Stage 6+: 5 prospectors + cut
 
-  // Concrete brick value per surviving stone pair (wiki-verified values):
+  // Concrete brick value produced from one surviving stone pair (2 stones → 1 concrete brick):
   // Concrete Brick ($100 base) → Kiln (×1.2 on base = $120) → Polish (+$10 = $130) → QA (×1.2 = $156)
-  var concreteBrickPairValue = 130;   // Kilned + Polished (pre-QA)
-  var concreteBrickPairQA = 156;      // Kilned + Polished + QA
+  var concreteBrickPairValue = 130;   // Value of 1 concrete brick (from 2 stones), Kilned + Polished
+  var concreteBrickPairQA = 156;      // Value of 1 concrete brick (from 2 stones), Kilned + Polished + QA
   // Fired brick: Brick ($25 base) → Kiln (×1.2 = $30) → Polish (+$10 = $40) → QA (×1.2 = $48)
   var firedBrickValue = 40;           // Kilned + Polished (pre-QA)
   var firedBrickQA = 48;              // Kilned + Polished + QA
