@@ -1070,7 +1070,7 @@
     </div>
 
     <div class="tip-box good">
-      <strong>⚡ Best immediate sell:</strong> Superconductors give $<span class="v-s8-sc-perore">749</span>/ore from the product (2 ores). Plus gem EV from 2 prospected stones: $<span class="v-s8-gem-2stones">276</span>. Total per ore: $<span class="v-s8-total-perore">1,025</span> (extra surviving stones beyond the 2 needed for ceramic go to concrete bricks).
+      <strong>⚡ Best immediate sell:</strong> Superconductors give $<span class="v-s8-sc-perore">749</span>/ore from the product (2 ores). Plus gem EV from 2 prospected stones: $<span class="v-s8-gem-2stones">276</span>. Total per ore: $<span class="v-s8-total-perore">1,025</span>. Note: the ceramic recipe requires 2 stones that survive prospecting (77.4% each), so some batches may need extra stones from other lines.
     </div>
 
     <div class="value-result">
@@ -2300,8 +2300,9 @@ function recalc() {
   var coil = temperedBar + 20;
   var em = (coil + casing) * 1.5;
   var scPerOre = sc / 2;
-  // SC recipe: 2 ores → 2 stones prospected → ~1.55 survive → 2 needed for ceramic
-  // Extra survivors beyond 2 go to concrete bricks
+  // SC recipe: 2 ores → 2 stones prospected (each has 77.4% survival chance, so ~1.55 survive on avg)
+  // Ceramic needs 2 surviving stones — on average there's a shortfall, so brick bonus is near zero
+  // Any rare extra survivors go to concrete bricks
   var s8Gem2Stones = 2 * gem5.ev;
   var s8Survivors = 2 * gem5.survivalRate;
   var s8ForBricks = Math.max(0, s8Survivors - 2);
