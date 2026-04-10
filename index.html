@@ -242,7 +242,7 @@
 
 <div class="hero">
   <h1>⚙️ Factory Optimization Guide</h1>
-  <p>Optimal production setups for every stage of the game, with prospector gem income calculated into every stage.</p>
+  <p>Optimal production setups for every stage of the game, with prospector gem income and prestige machines calculated into every stage.</p>
   <div class="src">Data sourced from the <a href="https://umt.miraheze.org/wiki/Ultimate_Mining_Tycoon_Wiki" target="_blank">UMT Wiki</a></div>
 </div>
 
@@ -250,6 +250,8 @@
   <a href="#calculator">🧮 Calculator</a>
   <a href="#stages">📈 Stage Guide</a>
   <a href="#endgame">🏆 End-Game</a>
+  <a href="#prestige">⭐ Prestige</a>
+  <a href="#transport">🚂 Transport</a>
   <a href="#byproducts">♻️ Byproducts</a>
   <a href="#comparison">📊 Comparison</a>
   <a href="#gems">💎 Gems</a>
@@ -311,6 +313,40 @@
       <div><span style="color:var(--muted);">Painite:</span> <span style="color:var(--gold);">$12,000</span></div>
     </div>
     <div class="calc-note" style="margin-top: 12px;">Prospectors only produce the 5 common gems (Topaz → Diamond). Higher gems must be mined directly.</div>
+  </div>
+
+  <div class="calc-box" style="border-color: var(--orange);">
+    <h3 style="color: var(--orange); margin-bottom: 12px;">⭐ Prestige Machines (toggles affect all calculations)</h3>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px;">
+      <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+        <input type="checkbox" id="hasPhilosopher" onchange="recalc()" style="width:18px;height:18px;accent-color:var(--orange);">
+        <span><strong>Philosopher's Stone</strong> <span style="color:var(--muted);">(3 Medals)</span><br><span style="color:var(--muted);font-size:0.85em;">×1.25 ore value before processing</span></span>
+      </label>
+      <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+        <input type="checkbox" id="hasOreUpgrader" onchange="recalc()" style="width:18px;height:18px;accent-color:var(--orange);">
+        <span><strong>Ore Upgrader</strong> <span style="color:var(--muted);">(3 Medals)</span><br><span style="color:var(--muted);font-size:0.85em;">Upgrades ore to next tier (max Mithril)</span></span>
+      </label>
+      <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+        <input type="checkbox" id="hasNanoSifter" onchange="recalc()" style="width:18px;height:18px;accent-color:var(--orange);">
+        <span><strong>Nano Sifter</strong> <span style="color:var(--muted);">(1 Medal)</span><br><span style="color:var(--muted);font-size:0.85em;">16.6% sift rate (vs regular 10%)</span></span>
+      </label>
+      <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+        <input type="checkbox" id="hasDuplicator" onchange="recalc()" style="width:18px;height:18px;accent-color:var(--orange);">
+        <span><strong>Duplicator</strong> <span style="color:var(--muted);">(8 Medals)</span><br><span style="color:var(--muted);font-size:0.85em;">Duplicates items at half value</span></span>
+      </label>
+      <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+        <input type="checkbox" id="hasGemToBar" onchange="recalc()" style="width:18px;height:18px;accent-color:var(--orange);">
+        <span><strong>Gem→Bar Transmuter</strong> <span style="color:var(--muted);">(4 Medals)</span><br><span style="color:var(--muted);font-size:0.85em;">Convert gems to bars for metalwork chains</span></span>
+      </label>
+      <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+        <input type="checkbox" id="hasBarToGem" onchange="recalc()" style="width:18px;height:18px;accent-color:var(--orange);">
+        <span><strong>Bar→Gem Transmuter</strong> <span style="color:var(--muted);">(4 Medals)</span><br><span style="color:var(--muted);font-size:0.85em;">Convert bars to gems for jewelcrafting</span></span>
+      </label>
+    </div>
+    <div class="calc-note" style="margin-top: 12px;">⭐ Prestige machines are permanent — kept after each prestige reset. Toggle them to see how they affect your factory output.</div>
+    <div id="prestigeEffectSummary" class="tip-box good" style="margin-top: 12px; display: none;">
+      <strong>⭐ Prestige boost active:</strong> Philosopher's Stone adds ×1.25 to ore value before cleaning/polishing. Effective ore value: $<span class="v-effective-ore">30</span>
+    </div>
   </div>
 </section>
 
@@ -921,6 +957,200 @@
   </div>
 </section>
 
+<!-- PRESTIGE -->
+<section id="prestige">
+  <h2><span class="icon">⭐</span> Prestige Machines</h2>
+  <p class="desc">Prestige machines are unlocked with Medals earned by reaching $20M+ before resetting. They are <strong>kept permanently</strong> across all future prestiges. Data from the <a href="https://umt.miraheze.org/wiki/Prestige" target="_blank" style="color: var(--accent);">UMT Wiki</a>.</p>
+
+  <div class="tip-box warn" style="margin-bottom: 24px;">
+    <strong>⚠️ Prestige resets:</strong> Money, factory machines, vehicles, and most equipment. You <strong>keep</strong> cosmetics, Robux purchases, and all Medal-bought prestige machines. First prestige requires $20,000,000.
+  </div>
+
+  <div class="byprod-grid">
+    <div class="byprod-card" style="border-color: var(--orange);">
+      <h4 style="color: var(--orange);">⭐ Philosopher's Stone — 3 Medals</h4>
+      <p>Multiplies ore value by <strong class="val">×1.25</strong> (25% boost). Works on ores only, once per ore, before any other processing.</p>
+      <p class="sub" style="margin-top: 8px;">📐 Size: 5×3 blocks | Apply BEFORE cleaning/polishing so the +25% compounds through all subsequent multipliers.</p>
+      <div class="gem-ev-box" style="margin-top: 8px;">
+        With <strong>Lead ($30)</strong>: $30 × 1.25 = <span class="val">$37.50</span>. That extra $7.50 compounds to +$<span class="v-ps-lead-gain">18</span> per ore at the end of a full chain.
+      </div>
+    </div>
+
+    <div class="byprod-card" style="border-color: var(--orange);">
+      <h4 style="color: var(--orange);">⭐ Ore Upgrader — 3 Medals</h4>
+      <p>Upgrades ore to the <strong>next tier</strong> (max Mithril). Once per ore. Cannot be used on duplicated ores.</p>
+      <p class="sub" style="margin-top: 8px;">📐 Size: 3×3 blocks | Massive boost on cheap ores! Tin→Iron = 2×, Iron→Lead = 1.5×, Lead→Cobalt = 1.67×</p>
+      <div style="overflow-x: auto; margin-top: 8px;">
+        <table class="comp-table" style="font-size: 0.85em;">
+          <thead><tr><th>From</th><th>To</th><th>Value Change</th><th>Multiplier</th></tr></thead>
+          <tbody>
+            <tr><td>Tin ($10)</td><td>Iron ($20)</td><td>+$10</td><td style="color:var(--gold);">×2.00</td></tr>
+            <tr><td>Iron ($20)</td><td>Lead ($30)</td><td>+$10</td><td style="color:var(--gold);">×1.50</td></tr>
+            <tr><td>Lead ($30)</td><td>Cobalt ($50)</td><td>+$20</td><td style="color:var(--gold);">×1.67</td></tr>
+            <tr><td>Cobalt ($50)</td><td>Aluminium ($65)</td><td>+$15</td><td style="color:var(--gold);">×1.30</td></tr>
+            <tr><td>Aluminium ($65)</td><td>Silver ($150)</td><td>+$85</td><td style="color:var(--gold);">×2.31</td></tr>
+            <tr><td>Silver ($150)</td><td>Uranium ($180)</td><td>+$30</td><td style="color:var(--gold);">×1.20</td></tr>
+            <tr><td>Uranium ($180)</td><td>Vanadium ($240)</td><td>+$60</td><td style="color:var(--gold);">×1.33</td></tr>
+            <tr><td>Vanadium ($240)</td><td>Tungsten ($300)</td><td>+$60</td><td style="color:var(--gold);">×1.25</td></tr>
+            <tr><td>Tungsten ($300)</td><td>Gold ($350)</td><td>+$50</td><td style="color:var(--gold);">×1.17</td></tr>
+            <tr><td>Gold ($350)</td><td>Titanium ($400)</td><td>+$50</td><td style="color:var(--gold);">×1.14</td></tr>
+            <tr><td>Titanium ($400)</td><td>Molybdenum ($600)</td><td>+$200</td><td style="color:var(--gold);">×1.50</td></tr>
+            <tr><td>Molybdenum ($600)</td><td>Plutonium ($1K)</td><td>+$400</td><td style="color:var(--gold);">×1.67</td></tr>
+            <tr><td>Plutonium ($1K)</td><td>Palladium ($1.2K)</td><td>+$200</td><td style="color:var(--gold);">×1.20</td></tr>
+            <tr><td>Palladium ($1.2K)</td><td>Mithril ($2K)</td><td>+$800</td><td style="color:var(--gold);">×1.67</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="byprod-card" style="border-color: var(--orange);">
+      <h4 style="color: var(--orange);">⭐ Nano Sifter — 1 Medal</h4>
+      <p>Upgraded Sifter: <strong class="val">16.6% chance</strong> to produce an ore from dust (vs regular Sifter's 10%). Produces rarer ores including Iridium and Palladium.</p>
+      <p class="sub" style="margin-top: 8px;">📐 Size: 3×3 blocks | Cheapest prestige machine. Get this first for free recycling value from dust.</p>
+    </div>
+
+    <div class="byprod-card" style="border-color: var(--orange);">
+      <h4 style="color: var(--orange);">⭐ Duplicator — 8 Medals</h4>
+      <p>Duplicates any item, but each copy is worth <strong class="val">half value</strong>. Items can only be duplicated once. Derived items from duplicated inputs can't be duplicated again.</p>
+      <p class="sub" style="margin-top: 8px;">📐 Most expensive prestige machine. Best used to duplicate high-value ores/bars early in the chain. Since v0.5.4, duplicated dust returns to $1 value (not $0.5).</p>
+      <div class="tip-box" style="margin-top: 8px;">
+        <strong>💡 Optimal Duplicator placement:</strong> Duplicate the ore BEFORE processing. You get 2 ores at half value each, but both go through the full processing chain. Net result: ~100% more output at ~50% value = ~100% more total dollars vs not duplicating.
+      </div>
+    </div>
+
+    <div class="byprod-card" style="border-color: var(--orange);">
+      <h4 style="color: var(--orange);">⭐ Gem→Bar Transmuter — 4 Medals</h4>
+      <p>Converts gems into metal bars of <strong>equivalent value</strong>. The bar can then be processed through metalwork chains (temper, plate, casing, etc.).</p>
+      <p class="sub" style="margin-top: 8px;">Useful when gem chains are maxed but metalwork multipliers are higher. A Diamond ($1,500) becomes a $1,500 bar that can be tempered to $3,000!</p>
+    </div>
+
+    <div class="byprod-card" style="border-color: var(--orange);">
+      <h4 style="color: var(--orange);">⭐ Bar→Gem Transmuter — 4 Medals</h4>
+      <p>Converts metal bars into gems of <strong>equivalent value</strong>. The gem can then go through jewelcrafting chains (cutting, rings, amulets, lasers).</p>
+      <p class="sub" style="margin-top: 8px;">Useful when you have surplus bars but need gems for Lasers or Amulets. A tempered Gold bar ($840) becomes an $840 gem for cutting!</p>
+    </div>
+  </div>
+
+  <div class="stage-card" style="border-color: var(--orange); margin-top: 20px;">
+    <div class="stage-title" style="margin-bottom: 12px;">⭐ Recommended Prestige Medal Priority</div>
+    <div class="flow-diagram">
+      <div class="flow-row">
+        <span class="flow-item fi-sell" style="border-color:var(--orange);color:var(--orange);">1st: Nano Sifter (1M)</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-sell" style="border-color:var(--orange);color:var(--orange);">2nd: Ore Upgrader (3M)</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-sell" style="border-color:var(--orange);color:var(--orange);">3rd: Phil. Stone (3M)</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-sell" style="border-color:var(--orange);color:var(--orange);">4th: Transmuters (4M ea)</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-sell" style="border-color:var(--orange);color:var(--orange);">Last: Duplicator (8M)</span>
+      </div>
+    </div>
+    <p style="margin-top: 12px; color: var(--muted); font-size: 0.9em;">
+      <strong>Nano Sifter first</strong> — cheapest (1 medal), immediate recycling value from dust. 
+      <strong>Ore Upgrader next</strong> — massive ROI on lower-tier ores. 
+      <strong>Philosopher's Stone</strong> — guaranteed ×1.25 on every ore, compounds through all chains. 
+      <strong>Transmuters</strong> — unlock cross-chain flexibility late-game. 
+      <strong>Duplicator last</strong> — costs 8 medals but the half-value penalty limits early usefulness.
+    </p>
+  </div>
+
+  <div class="stage-card" style="border-color: var(--gold); margin-top: 20px;">
+    <div class="stage-title" style="margin-bottom: 12px;">⭐ Prestige + Full Chain: How Values Stack</div>
+    <p>With Philosopher's Stone + Ore Upgrader both active, processing Lead ($30):</p>
+    <div class="flow-diagram">
+      <div style="margin-bottom: 4px; color: var(--muted); font-size: 0.8em; font-weight: 600;">OPTIMAL PRESTIGE ORDER:</div>
+      <div class="flow-row">
+        <span class="flow-item fi-ore">Lead ($30)</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-machine" style="border-color:var(--orange);color:var(--orange);">⭐ Ore Upgrader → Cobalt ($50)</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-machine" style="border-color:var(--orange);color:var(--orange);">⭐ Phil. Stone (×1.25) → $62.50</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-machine">Clean+Polish (+$20) → $82.50</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-machine">Smelt (×1.2) → $99</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-machine">Temper (×2) → $198</span>
+      </div>
+      <div style="margin-top: 8px; color: var(--muted); font-size: 0.85em;">
+        Without prestige: Lead ($30) → Clean+Polish ($50) → Smelt ($60) → Temper ($120). <strong>Prestige = $198 vs $120 = +65% boost!</strong>
+      </div>
+    </div>
+
+    <div class="value-result" style="margin-top: 16px;">
+      <span class="val">Power Core per ore with prestige: $<span class="v-prestige-pc-perore">—</span></span>
+      <span class="sub"> vs without: $<span class="v-eg-perore3">—</span></span>
+      <br><span class="per-ore">📈 Prestige boost: +<span class="v-prestige-pct">—</span>% per ore!</span>
+    </div>
+  </div>
+</section>
+
+<!-- TRANSPORT -->
+<section id="transport">
+  <h2><span class="icon">🚂</span> Transport & Infrastructure</h2>
+  <p class="desc">Factory layout, transport buildings, and throughput optimization. Data from the <a href="https://umt.miraheze.org/wiki/Conveyors" target="_blank" style="color: var(--accent);">UMT Wiki</a>.</p>
+
+  <div class="byprod-grid">
+    <div class="byprod-card">
+      <h4>📦 Unloader (Free → $8M)</h4>
+      <p>Deposits ores/gems from inventory to factory. Upgradeable capacity:</p>
+      <table class="comp-table" style="font-size: 0.85em; margin-top: 8px;">
+        <thead><tr><th>Level</th><th>Capacity</th><th>Price</th></tr></thead>
+        <tbody>
+          <tr><td>Lv 1</td><td>12 items</td><td>Free</td></tr>
+          <tr><td>Lv 2</td><td>36 items</td><td>$1,000</td></tr>
+          <tr><td>Lv 3</td><td>108 items</td><td>$20,000</td></tr>
+          <tr><td>Lv 4</td><td>162 items</td><td>$400,000</td></tr>
+          <tr><td>Lv 5</td><td>216 items</td><td>$8,000,000</td></tr>
+        </tbody>
+      </table>
+      <p class="sub" style="margin-top: 6px;">Extra output belts: 2nd $100K, 3rd $1M, 4th $5M. More belts = faster factory feed rate.</p>
+    </div>
+
+    <div class="byprod-card">
+      <h4>🔀 Splitters ($50 each)</h4>
+      <p><strong>Left/Right Splitter:</strong> Splits items evenly to one side + straight ahead.<br>
+      <strong>Three-Way Splitter:</strong> Evenly splits left, right, and straight.<br>
+      <strong>Overflow Splitter:</strong> Items go straight unless blocked, then divert to side.</p>
+      <p class="sub" style="margin-top: 6px;">Essential for complex multi-product factories. Use overflow splitters to prevent jams.</p>
+    </div>
+
+    <div class="byprod-card">
+      <h4>🔍 Filters</h4>
+      <p>Route specific item types onto certain conveyor paths. Critical for separating ores, gems, stones, and processed products in multi-line factories.</p>
+      <p class="sub" style="margin-top: 6px;">Use filters after smelters to separate bars from stones → different processing chains.</p>
+    </div>
+
+    <div class="byprod-card">
+      <h4>🛗 Elevators</h4>
+      <p>Move items vertically between factory levels. Your plot is 30×30 with <strong>100 blocks height</strong> and 4,000 complexity.</p>
+      <p class="sub" style="margin-top: 6px;">Build vertically to save floor space. Stack processing chains on multiple levels.</p>
+    </div>
+
+    <div class="byprod-card">
+      <h4>🚧 Gate Belt</h4>
+      <p>Conditional pass-through that controls item flow. Acts as a switch to allow or block items based on conditions.</p>
+      <p class="sub" style="margin-top: 6px;">Useful for managing overflow, recycling jams, or gating output to the Seller.</p>
+    </div>
+
+    <div class="byprod-card">
+      <h4>➡️ Conveyors ($10 each)</h4>
+      <p>Basic horizontal transport between machines. Rotatable in Build Mode. The backbone of every factory layout.</p>
+      <p class="sub" style="margin-top: 6px;">Belt speed can be a bottleneck. Use parallel lines for high-throughput setups.</p>
+    </div>
+  </div>
+
+  <div class="tip-box" style="margin-top: 16px;">
+    <strong>🏗️ Factory Layout Tips:</strong><br>
+    • <strong>Filter after every smelter</strong> — separate bars from stones immediately<br>
+    • <strong>Prospect stones before any other processing</strong> — use a separate line for the 5 prospectors<br>
+    • <strong>Overflow splitters prevent jams</strong> — always have a "drain" path so items don't clog<br>
+    • <strong>Build vertically</strong> — 100 block height means you can stack 3-4 full processing floors<br>
+    • <strong>Upgrade unloader output belts</strong> — the #1 throughput bottleneck is usually the unloader
+  </div>
+</section>
+
 <!-- BYPRODUCTS -->
 <section id="byproducts">
   <h2><span class="icon">♻️</span> Byproduct Optimization</h2>
@@ -1134,12 +1364,22 @@
     <strong>📊 The "Per Ore" Metric:</strong><br>
     Always compare value <em>per ore consumed</em>, not total product value. Include prospector gem EV + concrete brick byproducts. Power Core: $<span class="v-eg-perore2">1,614</span>/ore. Tablet: $<span class="v-tab-perore2">1,090</span>/ore.
   </div>
+
+  <div class="tip-box" style="border-color: var(--orange);">
+    <strong>⭐ Prestige machines compound with EVERYTHING:</strong><br>
+    Ore Upgrader + Philosopher's Stone applied before cleaning/polishing means the extra value gets multiplied by smelt (×1.2), temper (×2), and ALL combination machines. A $30 Lead becomes a $62.50 effective ore, compounding to +65% per Power Core!
+  </div>
+
+  <div class="tip-box" style="border-color: var(--orange);">
+    <strong>⭐ Nano Sifter > regular Sifter:</strong><br>
+    16.6% success rate vs 10%, AND it produces rarer ores (up to Iridium/Palladium). Replace your regular Sifter immediately after first prestige — it only costs 1 Medal.
+  </div>
 </section>
 
 <!-- BUILDING REFERENCE -->
 <section id="buildings">
   <h2><span class="icon">🏭</span> Full Building Reference</h2>
-  <p class="desc">All 45 buildings sorted by price.</p>
+  <p class="desc">All production buildings + prestige machines + transport, sorted by price.</p>
   <div style="overflow-x: auto;">
     <table class="comp-table" id="buildingTable">
       <thead>
@@ -1225,6 +1465,16 @@ const buildings = [
   { name: "Blasting Powder Refiner", price: 2500000, cat: "Explosives", effect: "Blasting Powder + Metal Dust → +$15 value" },
   { name: "Laser Maker", price: 3500000, cat: "End-Game", effect: "Optics + Gem + Circuit → Laser (×2.75)" },
   { name: "Power Core Assembler", price: 4500000, cat: "End-Game", effect: "Casing + Superconductor + Electromagnet → Power Core (×3.5)" },
+  // --- Prestige Machines (Medal cost, not $) ---
+  { name: "Nano Sifter", price: 0, cat: "Prestige", effect: "⭐ 1 Medal — 16.6% sift rate, produces rarer ores (up to Iridium/Palladium)" },
+  { name: "Philosopher's Stone", price: 0, cat: "Prestige", effect: "⭐ 3 Medals — ×1.25 ore value (once per ore, before other processing)" },
+  { name: "Ore Upgrader", price: 0, cat: "Prestige", effect: "⭐ 3 Medals — Upgrades ore to next tier (max Mithril). Once per ore." },
+  { name: "Gem→Bar Transmuter", price: 0, cat: "Prestige", effect: "⭐ 4 Medals — Converts gems into bars of equal value" },
+  { name: "Bar→Gem Transmuter", price: 0, cat: "Prestige", effect: "⭐ 4 Medals — Converts bars into gems of equal value" },
+  { name: "Duplicator", price: 0, cat: "Prestige", effect: "⭐ 8 Medals — Duplicates items at half value. Once per item." },
+  // --- Transport ---
+  { name: "Conveyor", price: 10, cat: "Transport", effect: "Moves items horizontally between machines" },
+  { name: "Splitter", price: 50, cat: "Transport", effect: "Splits item flow: Left/Right, Three-Way, or Overflow variants" },
 ];
 
 function fmt(n) {
@@ -1248,12 +1498,14 @@ function fmtDollar(n) {
     "Upgrade": "var(--green)", "Smelting": "var(--orange)", "Processing": "var(--muted)",
     "Bar Processing": "var(--cyan)", "Gems": "var(--purple)", "Stone Processing": "var(--pink)",
     "Plate Processing": "var(--cyan)", "Combination": "var(--accent)", "Explosives": "var(--red)",
-    "Glass Processing": "var(--cyan)", "End-Game": "var(--gold)",
+    "Glass Processing": "var(--cyan)", "End-Game": "var(--gold)", "Prestige": "var(--orange)",
+    "Transport": "var(--green)",
   };
   buildings.forEach(function(b) {
     const tr = document.createElement('tr');
     const c = catColors[b.cat] || 'var(--text)';
-    tr.innerHTML = '<td style="font-weight:600;">' + b.name + '</td><td style="color:var(--gold);">$' + fmt(b.price) + '</td><td style="color:' + c + ';">' + b.cat + '</td><td style="color:var(--muted);font-size:0.9em;">' + b.effect + '</td>';
+    var priceStr = b.cat === 'Prestige' ? '⭐ Medals' : '$' + fmt(b.price);
+    tr.innerHTML = '<td style="font-weight:600;">' + b.name + '</td><td style="color:var(--gold);">' + priceStr + '</td><td style="color:' + c + ';">' + b.cat + '</td><td style="color:var(--muted);font-size:0.9em;">' + b.effect + '</td>';
     tbody.appendChild(tr);
   });
 })();
@@ -1273,8 +1525,43 @@ function setAll(selector, value) {
 function recalc() {
   var V = parseFloat(document.getElementById('oreVal').value) || 0;
 
-  // Bar value after clean+polish+smelt
-  var bar = (V + 20) * 1.2;
+  // Prestige toggles
+  var hasPhil = document.getElementById('hasPhilosopher') && document.getElementById('hasPhilosopher').checked;
+  var hasUpgrader = document.getElementById('hasOreUpgrader') && document.getElementById('hasOreUpgrader').checked;
+  var hasNano = document.getElementById('hasNanoSifter') && document.getElementById('hasNanoSifter').checked;
+  var hasDup = document.getElementById('hasDuplicator') && document.getElementById('hasDuplicator').checked;
+
+  // Ore Upgrader: upgrade to next tier
+  var ORE_TIERS = [10, 20, 30, 50, 65, 150, 180, 240, 300, 350, 400, 600, 1000, 1200, 2000];
+  var effectiveV = V;
+  if (hasUpgrader) {
+    for (var t = 0; t < ORE_TIERS.length - 1; t++) {
+      if (V <= ORE_TIERS[t]) { effectiveV = ORE_TIERS[t + 1]; break; }
+    }
+    if (V > ORE_TIERS[ORE_TIERS.length - 2]) effectiveV = V; // Already at/above Mithril
+  }
+  // Philosopher's Stone: ×1.25
+  if (hasPhil) effectiveV = effectiveV * 1.25;
+
+  // Show/hide prestige summary
+  var summaryEl = document.getElementById('prestigeEffectSummary');
+  if (summaryEl) {
+    if (hasPhil || hasUpgrader) {
+      summaryEl.style.display = 'block';
+      var summaryText = '⭐ Prestige boost active: ';
+      if (hasUpgrader) summaryText += 'Ore Upgrader shifts ore to next tier. ';
+      if (hasPhil) summaryText += "Philosopher's Stone adds ×1.25. ";
+      summaryText += 'Effective ore value: $' + fmtDollar(effectiveV);
+      if (hasDup) summaryText += ' | Duplicator: 2× items at 50% value each.';
+      summaryEl.innerHTML = '<strong>' + summaryText + '</strong>';
+    } else {
+      summaryEl.style.display = 'none';
+    }
+  }
+  setAll('.v-effective-ore', fmtDollar(effectiveV));
+
+  // Bar value after clean+polish+smelt (using effective ore value)
+  var bar = (effectiveV + 20) * 1.2;
   var temperedBar = bar * 2;
 
   // Gem EVs for different stages
@@ -1524,6 +1811,46 @@ function recalc() {
       '<td class="' + cls + '">$' + fmtDollar(perOre) + '/ore</td>';
     tbody.appendChild(tr);
   });
+
+  // === PRESTIGE SECTION DYNAMIC VALUES ===
+  // Calculate what Power Core per ore would be WITHOUT prestige for comparison
+  var barNoPrestige = (V + 20) * 1.2;
+  var temperedNoPrestige = barNoPrestige * 2;
+  var boltNP = temperedNoPrestige + 15;
+  var plateNP = temperedNoPrestige + 20;
+  var frameNP = (temperedNoPrestige + boltNP) * 1.25;
+  var casingNP = (frameNP + boltNP + plateNP) * 1.30;
+  var alloyNP = (temperedNoPrestige + temperedNoPrestige) * 1.2;
+  var coilNP = temperedNoPrestige + 20;
+  var scNP = (alloyNP + 150) * 3.0;
+  var emNP = (coilNP + casingNP) * 1.5;
+  var pcNP = (casingNP + scNP + emNP) * 3.5;
+  var pcQANP = pcNP * 1.2;
+  var totalGemEV11NP = 11 * gem5.ev;
+  var expectedSurvNP = 11 * gem5.survivalRate;
+  var survBricksNP = Math.max(0, expectedSurvNP - 2);
+  var brickPairsNP = Math.floor(survBricksNP / 2);
+  var oddNP = survBricksNP - brickPairsNP * 2;
+  var brickValNP = brickPairsNP * concreteBrickPairQA + (oddNP > 0.5 ? firedBrickQA : 0);
+  var pcGrandNP = pcQANP + brickValNP + totalGemEV11NP;
+  var pcPerOreNP = pcGrandNP / 11;
+
+  setAll('.v-eg-perore3', fmtDollar(pcPerOreNP));
+  setAll('.v-prestige-pc-perore', fmtDollar(pcPerOre));
+
+  if (pcPerOreNP > 0) {
+    var prestigePct = ((pcPerOre - pcPerOreNP) / pcPerOreNP) * 100;
+    setAll('.v-prestige-pct', fmtD(Math.max(0, prestigePct)));
+  } else {
+    setAll('.v-prestige-pct', '0');
+  }
+
+  // Philosopher's Stone lead gain example
+  var psLeadBar = (30 * 1.25 + 20) * 1.2;
+  var psLeadTempered = psLeadBar * 2;
+  var noLeadBar = (30 + 20) * 1.2;
+  var noLeadTempered = noLeadBar * 2;
+  setAll('.v-ps-lead-gain', fmtDollar(psLeadTempered - noLeadTempered));
 }
 
 // Initial calc
