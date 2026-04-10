@@ -402,6 +402,51 @@
     outline-offset: 2px;
   }
 
+  /* Machine status indicators */
+  .machine-status {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 3px 10px; border-radius: 6px; font-size: 0.75em; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .status-core { background: rgba(74,222,128,0.12); color: var(--green); border: 1px solid rgba(74,222,128,0.3); }
+  .status-useful { background: rgba(108,140,255,0.12); color: var(--accent); border: 1px solid rgba(108,140,255,0.3); }
+  .status-situational { background: rgba(251,146,60,0.12); color: var(--orange); border: 1px solid rgba(251,146,60,0.3); }
+  .status-trap { background: rgba(248,113,113,0.12); color: var(--red); border: 1px solid rgba(248,113,113,0.3); }
+  .status-obsolete { background: rgba(139,143,163,0.12); color: var(--muted); border: 1px solid rgba(139,143,163,0.3); text-decoration: line-through; }
+  .status-prestige { background: rgba(251,146,60,0.12); color: var(--orange); border: 1px solid rgba(251,146,60,0.3); }
+
+  .machine-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    transition: border-color var(--transition);
+  }
+  .machine-card:hover { border-color: rgba(108,140,255,0.3); }
+  .machine-card h4 { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 6px; }
+  .machine-card .feeds { color: var(--muted); font-size: 0.82em; margin-top: 6px; }
+  .machine-card .feeds strong { color: var(--cyan); }
+  .machine-card .obsolete-note { color: var(--orange); font-size: 0.85em; margin-top: 6px; font-weight: 600; }
+
+  .machine-group { margin-bottom: 28px; }
+  .machine-group > h3 { color: var(--cyan); margin-bottom: 12px; font-size: 1.15em; display: flex; align-items: center; gap: 8px; }
+  .machine-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 12px;
+  }
+
+  .transport-tip {
+    background: rgba(34,211,238,0.06);
+    border: 1px solid rgba(34,211,238,0.2);
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-top: 12px;
+    font-size: 0.88em;
+    color: var(--cyan);
+  }
+  .transport-tip strong { color: var(--cyan); }
+
   /* Selection color */
   ::selection { background: rgba(108,140,255,0.3); color: var(--text); }
 </style>
@@ -418,12 +463,14 @@
   <a href="#calculator">🧮 Calculator</a>
   <a href="#stages">📈 Stage Guide</a>
   <a href="#endgame">🏆 End-Game</a>
+  <a href="#machines">🔧 Machine Logic</a>
   <a href="#prestige">⭐ Prestige</a>
   <a href="#transport">🚂 Transport</a>
   <a href="#byproducts">♻️ Byproducts</a>
   <a href="#comparison">📊 Comparison</a>
   <a href="#gems">💎 Gems</a>
   <a href="#tips">💡 Pro Tips</a>
+  <a href="#buildings">🏭 Buildings</a>
 </nav>
 
 <div class="container">
@@ -602,6 +649,9 @@
       <span class="val">Total per ore: $<span class="v-s1-total">93</span></span>
       <span class="sub"> (Coil: $<span class="v-s1-coil2">80</span> + 95% Dust: $<span class="v-s1-dust">23.75</span> + Gem EV: $<span class="v-s1-gem-ev2">4.25</span>)</span>
     </div>
+    <div class="transport-tip">
+      🚂 <strong>Transport:</strong> Simple linear layout. Conveyor from Unloader → Cleaner → Polisher → Smelter. Use a <strong>Filter</strong> after Smelter to separate bars (→ Coiler) from stones (→ Prospector → Crusher). One splitter is enough.
+    </div>
   </div>
 
   <!-- STAGE 2 -->
@@ -660,6 +710,9 @@
       <span class="val">Total per ore: $<span class="v-s2-total">135</span></span>
       <span class="sub"> (Pipe: $<span class="v-s2-pipe2">100</span> + 90.25% Brick: $<span class="v-s2-brick">27.08</span> + Gem EV: $<span class="v-s2-gem-ev2">14.25</span>)</span>
     </div>
+    <div class="transport-tip">
+      🚂 <strong>Transport:</strong> After the Filter (bars vs stones), the bar line goes: Plate Stamper → Pipe Maker → Seller. Stone line: Topaz Prosp → Emerald Prosp → Crusher → Brick Mold → Seller. Use a <strong>second Filter</strong> after Prospectors to catch gems (→ Polisher → Seller).
+    </div>
   </div>
 
   <!-- STAGE 3 -->
@@ -709,6 +762,9 @@
       <span class="val">Total per ore: $<span class="v-s3-total">157</span></span>
       <span class="sub"> (Pipe: $<span class="v-s3-pipe2">100</span> + 85.7% Fired Brick: $<span class="v-s3-brick">30.87</span> + Gem EV: $<span class="v-s3-gem-ev2">25.98</span>)</span>
     </div>
+    <div class="transport-tip">
+      🚂 <strong>Transport:</strong> Extend the prospector chain: …→ Sapphire Prosp → Crusher → Brick Mold → <strong>Kiln</strong> → Seller. Same layout as Stage 2, just longer stone processing line.
+    </div>
   </div>
 
   <!-- STAGE 4 -->
@@ -755,6 +811,9 @@
     <div class="value-result">
       <span class="val">Total per ore: $<span class="v-s4-total">178</span></span>
       <span class="sub"> (Mech Parts: $<span class="v-s4-mech2">110</span> + 81.45% Fired Brick: $<span class="v-s4-brick">29.32</span> + Gem EV: $<span class="v-s4-gem-ev2">38.84</span>)</span>
+    </div>
+    <div class="transport-tip">
+      🚂 <strong>Transport:</strong> Bar line switches from Pipe to: Plate → Mech Parts → Seller. The Pipe Maker is now unused for the main line — keep it for later (Engines need pipes). <strong>Overflow Splitter</strong> recommended if switching between products.
     </div>
   </div>
 
@@ -815,6 +874,9 @@
       <span class="sub"> (Mech Parts: $<span class="v-s5-mech2">110</span> + Concrete Brick share: $<span class="v-s5-brick">146.61</span> + Gem EV: $<span class="v-s5-gem-ev2">38.84</span>)</span>
       <br><span class="per-ore">📈 Concrete bricks + prospectors = massive byproduct income!</span>
     </div>
+    <div class="transport-tip">
+      🚂 <strong>Transport (COMPLEX):</strong> Stone line now needs <strong>pairing logic</strong>. After prospectors, surviving stones must be split: one goes to Crusher (→ Dust → Cement Mixer), the other goes straight to Cement Mixer. Use a <strong>Left/Right Splitter</strong> to alternate stones. The cement then goes to Brick Mold → Kiln → Seller. Consider building vertically with <strong>Elevators</strong> to save floor space.
+    </div>
   </div>
 
   <!-- STAGE 6 -->
@@ -872,6 +934,9 @@
       <span class="sub"> (Tempered Mech Parts: $<span class="v-s6-mech2">170</span> + Concrete share: $<span class="v-s6-brick">139.33</span> + Gem EV: $<span class="v-s6-gem-ev2">137.87</span>)</span>
       <br><span class="per-ore">📈 Gem income now rivals the concrete brick income!</span>
     </div>
+    <div class="transport-tip">
+      🚂 <strong>Transport:</strong> Insert <strong>Tempering Forge</strong> right after Smelter (before Plate). Add 5th prospector (Diamond) to the stone chain. Gem output now needs: Filter → Polisher → Gem Cutter → Seller. <strong>Upgrade Unloader to Lv 3+</strong> — throughput becomes critical with this many machines.
+    </div>
   </div>
 
   <!-- STAGE 7 -->
@@ -922,6 +987,9 @@
       <span class="val">Casing value: $<span class="v-s7-casing2">607</span></span>
       <span class="sub"> from 4 ores | Per ore (with prospected byproducts): $<span class="v-s7-perore">289</span></span>
     </div>
+    <div class="transport-tip">
+      🚂 <strong>Transport (VERY COMPLEX):</strong> 4 ore lines must merge. Use <strong>Splitters</strong> to route: Ore #1 → Bar line, Ore #2+#3 → Bolt line, Ore #4 → Plate line. Then Frame Maker takes Bar+Bolt, Casing Machine takes Frame+Bolt+Plate. Use <strong>Overflow Splitters</strong> on every junction to prevent jams. <strong>Elevators</strong> highly recommended — stack the casing assembly on a separate floor.
+    </div>
   </div>
 
   <!-- STAGE 8 -->
@@ -971,6 +1039,9 @@
     <div class="value-result">
       <span class="val">Superconductor: $<span class="v-s8-sc2">1,498</span></span>
       <span class="sub"> from 2 ores | Per ore (with gem EV): $<span class="v-s8-sc-perore2">1,025</span></span>
+    </div>
+    <div class="transport-tip">
+      🚂 <strong>Transport:</strong> Alloy Furnace takes 2 tempered bars (use Splitter to feed 2 bars in). For ceramic: 2 surviving stones → Crusher → Clay Mixer → Ceramic Furnace. Then SC Constructor takes Alloy+Ceramic. <strong>Gate Belts</strong> useful here to synchronize inputs so items arrive at the right time.
     </div>
   </div>
 
@@ -1118,6 +1189,295 @@
     </div>
   </div>
 
+</section>
+
+<!-- MACHINE LOGIC & OBSOLESCENCE -->
+<section id="machines">
+  <h2><span class="icon">🔧</span> Machine Logic & Obsolescence Guide</h2>
+  <p class="desc">Confused about whether a new machine replaces an old one? This section clarifies every machine interaction. <span class="machine-status status-core">✅ Core</span> = always needed. <span class="machine-status status-useful">🔗 Useful</span> = needed for recipes. <span class="machine-status status-situational">⚠️ Situational</span> = use case dependent. <span class="machine-status status-trap">❌ Trap</span> = never buy.</p>
+
+  <div class="tip-box warn" style="margin-bottom: 24px;">
+    <strong>⚠️ Key Principle:</strong> Very few machines become obsolete! Most machines serve <em>different recipe chains</em> rather than replacing each other. The biggest mistake players make is thinking a new machine replaces an older one, when actually both are needed for different end-game products.
+  </div>
+
+  <!-- ORE PROCESSING -->
+  <div class="machine-group">
+    <h3>⛏️ Ore Processing (Pre-Smelting)</h3>
+    <div class="machine-grid">
+      <div class="machine-card">
+        <h4>Ore Cleaner <span class="machine-status status-core">✅ Core</span></h4>
+        <p>Adds $10 to uncleaned ores. Always apply before smelting — the $10 compounds through ALL subsequent multipliers (smelt ×1.2, temper ×2, etc.).</p>
+        <div class="feeds"><strong>Feeds:</strong> Polisher → Smelter | <strong>Obsolete?</strong> Never. Always needed.</div>
+      </div>
+      <div class="machine-card">
+        <h4>Polisher <span class="machine-status status-core">✅ Core</span></h4>
+        <p>Adds $10 to any unpolished item. Used on ores (before smelting) AND gems (before cutting). Two completely different uses!</p>
+        <div class="feeds"><strong>Feeds:</strong> Ores → Smelter, Gems → Gem Cutter | <strong>Obsolete?</strong> Never. Dual purpose.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SMELTING -->
+  <div class="machine-group">
+    <h3>🔥 Smelting</h3>
+    <div class="machine-grid">
+      <div class="machine-card" style="border-color: var(--green);">
+        <h4>Ore Smelter <span class="machine-status status-core">✅ Core</span></h4>
+        <p>Ore → Bar (×1.2 value) + Stone byproduct. The stone is where gems and concrete bricks come from — hugely valuable.</p>
+        <div class="feeds"><strong>Feeds:</strong> Bar → Tempering/Coiler/Plate/Bolts, Stone → Prospectors | <strong>Obsolete?</strong> Never.</div>
+      </div>
+      <div class="machine-card" style="border-color: var(--red);">
+        <h4>Blast Furnace <span class="machine-status status-trap">❌ Trap</span></h4>
+        <p>Ore → Bar (×0.9 value) + Stone. Costs $25,000 but makes bars <strong>10% LESS valuable</strong> than the $1,500 Ore Smelter. There is NO scenario where this is better.</p>
+        <div class="obsolete-note">⛔ NEVER BUY. Ore Smelter is strictly superior in every way.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BAR PROCESSING -->
+  <div class="machine-group">
+    <h3>🔩 Bar Processing — Do I Need Both Coiler AND Plate Stamper?</h3>
+    <div class="tip-box" style="margin-bottom: 12px;">
+      <strong>💡 YES — both are needed!</strong> Coiler and Plate Stamper both add $20 to bars, which often confuses players. But they serve <em>completely different recipe chains</em>. Neither makes the other obsolete.
+    </div>
+    <div class="machine-grid">
+      <div class="machine-card">
+        <h4>Coiler <span class="machine-status status-useful">🔗 Useful</span></h4>
+        <p>Bar → Coil (+$20). Best early-game product. Later, Coils feed into <strong>Circuits</strong> (×2.0), <strong>Rings</strong> (×1.75), and <strong>Electromagnets</strong> (×1.5).</p>
+        <div class="feeds"><strong>Feeds into:</strong> Circuits, Rings, Electromagnets | <strong>Obsolete?</strong> No! Needed for Tablets (via Circuit) and Power Cores (via Electromagnet).</div>
+      </div>
+      <div class="machine-card">
+        <h4>Plate Stamper <span class="machine-status status-useful">🔗 Useful</span></h4>
+        <p>Bar → Plate (+$20). Unlocks the entire metalwork chain: Pipes, Mech Parts, Filigree, and Casings (via Frames).</p>
+        <div class="feeds"><strong>Feeds into:</strong> Pipes, Mech Parts, Filigree, Frames → Casings | <strong>Obsolete?</strong> No! Foundation of the entire main-line progression.</div>
+      </div>
+      <div class="machine-card">
+        <h4>Bolt Machine <span class="machine-status status-useful">🔗 Useful</span></h4>
+        <p>Bar → Bolts (+$15). Only $3K. Needed for Frames, which are needed for Casings, which are needed for EVERYTHING end-game.</p>
+        <div class="feeds"><strong>Feeds into:</strong> Frame Maker → Casing Machine | <strong>Obsolete?</strong> No! Critical for all casing-based products.</div>
+      </div>
+      <div class="machine-card">
+        <h4>Tempering Forge <span class="machine-status status-core">✅ Core</span></h4>
+        <p>Doubles untempered bar value (×2). This is NOT a replacement for smelting — it goes AFTER the smelter. Apply to bars before making Plates/Coils/Bolts.</p>
+        <div class="feeds"><strong>Fed by:</strong> Ore Smelter (bar output) | <strong>Obsolete?</strong> Never. Massive multiplier.</div>
+        <div class="obsolete-note" style="color: var(--green);">✅ Does NOT replace Ore Smelter — you still smelt first, THEN temper.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PLATE PRODUCTS -->
+  <div class="machine-group">
+    <h3>🔧 Plate Products — Does Mech Parts Make Pipes Obsolete?</h3>
+    <div class="tip-box" style="margin-bottom: 12px;">
+      <strong>💡 NO!</strong> Mech Parts add more per plate ($30 vs $20), so they're better for direct selling. But Pipes are needed for <strong>Engines</strong> and <strong>Optics</strong>. Keep both.
+    </div>
+    <div class="machine-grid">
+      <div class="machine-card">
+        <h4>Pipe Maker <span class="machine-status status-useful">🔗 Useful</span></h4>
+        <p>Plate → Pipe (+$20). Lower value-add than Mech Parts, but Pipes are a required input for <strong>Engines</strong> (×1.2) and <strong>Optics</strong> (×1.25, for Lasers).</p>
+        <div class="feeds"><strong>Feeds into:</strong> Engines, Optics → Lasers | <strong>Obsolete?</strong> No! Required for Engine and Laser recipes.</div>
+      </div>
+      <div class="machine-card">
+        <h4>Mech Parts Maker <span class="machine-status status-useful">🔗 Useful</span></h4>
+        <p>Plate → Mech Parts (+$30). Best $/plate for direct selling. Also a required input for <strong>Engines</strong> (×1.2).</p>
+        <div class="feeds"><strong>Feeds into:</strong> Engines | <strong>Obsolete?</strong> No! Needed for Engine recipe alongside Pipes.</div>
+      </div>
+      <div class="machine-card">
+        <h4>Filigree Cutter <span class="machine-status status-situational">⚠️ Situational</span></h4>
+        <p>Plate → Filigree (+20% value). Only useful if you're making <strong>Gliders</strong> (Filigree + Amulet = ×1.5). Otherwise, Mech Parts give more per plate.</p>
+        <div class="feeds"><strong>Feeds into:</strong> Gliders | <strong>Obsolete?</strong> N/A — niche use for Glider recipes only.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STONE PROCESSING -->
+  <div class="machine-group">
+    <h3>🧱 Stone Processing — Do Concrete Bricks Replace Fired Bricks?</h3>
+    <div class="tip-box" style="margin-bottom: 12px;">
+      <strong>💡 MOSTLY YES</strong> — Concrete bricks ($360/pair) are 5× more valuable than two fired bricks ($72/pair). Once you have the Cement Mixer, you should always prefer concrete bricks. But you still need fired bricks for <strong>odd surviving stones</strong> that can't be paired, and the Kiln is still needed for concrete brick processing.
+    </div>
+    <div class="machine-grid">
+      <div class="machine-card">
+        <h4>Crusher <span class="machine-status status-core">✅ Core</span></h4>
+        <p>Anything → Dust ($25 set value). Required for bricks, cement, clay, glass, rings, and blasting powder. Literally everything in stone processing starts here.</p>
+        <div class="feeds"><strong>Feeds into:</strong> Everything in stone processing | <strong>Obsolete?</strong> Never.</div>
+      </div>
+      <div class="machine-card">
+        <h4>Brick Mold <span class="machine-status status-core">✅ Core</span></h4>
+        <p>Dust → Brick ($30) OR Cement → Concrete Brick ($300). Same machine, two inputs. You need it for BOTH regular and concrete bricks.</p>
+        <div class="feeds"><strong>Fed by:</strong> Crusher (dust) or Cement Mixer (cement) | <strong>Obsolete?</strong> Never. Does double duty.</div>
+      </div>
+      <div class="machine-card">
+        <h4>Kiln <span class="machine-status status-core">✅ Core</span></h4>
+        <p>Bricks → Fired Bricks (×1.2) AND Dust → Glass ($30). Still needed after Cement Mixer because concrete bricks also pass through the Kiln for the final boost.</p>
+        <div class="feeds"><strong>Feeds into:</strong> Glass → Circuits/Tablets, Fired/Concrete Bricks → Seller | <strong>Obsolete?</strong> Never.</div>
+        <div class="obsolete-note" style="color: var(--green);">✅ Cement Mixer does NOT replace the Kiln — concrete bricks still need to be kilned.</div>
+      </div>
+      <div class="machine-card" style="border-color: var(--green);">
+        <h4>Cement Mixer <span class="machine-status status-core">✅ Core</span></h4>
+        <p>Dust + Stone → Cement ($50). The cement goes to Brick Mold to make concrete bricks ($300). <strong>Biggest single upgrade in the game.</strong></p>
+        <div class="feeds"><strong>Fed by:</strong> Crusher + raw stone | <strong>Feeds:</strong> Brick Mold → Kiln → Seller</div>
+        <div class="obsolete-note" style="color: var(--green);">✅ Makes fired-only bricks MOSTLY obsolete (5× value per stone pair), but doesn't replace Crusher, Brick Mold, or Kiln.</div>
+      </div>
+      <div class="machine-card">
+        <h4>Clay Mixer <span class="machine-status status-situational">⚠️ Situational</span></h4>
+        <p>2 Dust → Clay Block ($50). Only useful as input for Ceramic Furnace → Superconductors. Don't confuse with Cement Mixer!</p>
+        <div class="feeds"><strong>Feeds into:</strong> Ceramic Furnace → Superconductors | <strong>Obsolete?</strong> N/A — specific to SC recipe.</div>
+      </div>
+      <div class="machine-card">
+        <h4>Ceramic Furnace <span class="machine-status status-situational">⚠️ Situational</span></h4>
+        <p>Clay Block → Ceramic Casing ($150). Only useful as a component for Superconductors.</p>
+        <div class="feeds"><strong>Feeds into:</strong> Superconductor Constructor | <strong>Obsolete?</strong> N/A — specific to SC recipe.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SIFTING -->
+  <div class="machine-group">
+    <h3>🔄 Sifting & Recycling</h3>
+    <div class="machine-grid">
+      <div class="machine-card">
+        <h4>Sifter <span class="machine-status status-situational">⚠️ Situational</span></h4>
+        <p>10% chance: Dust → random low-tier ore (Tin, Iron, Cobalt, etc.). Dust is NOT destroyed on failure. Free bonus ore, but low success rate.</p>
+        <div class="feeds"><strong>Fed by:</strong> Crusher (dust) | <strong>Feeds:</strong> Sifted ore → back to main line</div>
+        <div class="obsolete-note">⚠️ Becomes <strong>fully obsolete</strong> when you get the Nano Sifter (prestige). Replace immediately.</div>
+      </div>
+      <div class="machine-card" style="border-color: var(--orange);">
+        <h4>Nano Sifter <span class="machine-status status-prestige">⭐ Prestige</span></h4>
+        <p>16.6% sift rate (vs 10%) AND produces rarer ores (up to Iridium/Palladium). <strong>Strictly superior replacement</strong> for the regular Sifter.</p>
+        <div class="feeds"><strong>Replaces:</strong> Sifter | <strong>Cost:</strong> 1 Medal (cheapest prestige machine)</div>
+        <div class="obsolete-note" style="color: var(--green);">✅ Makes regular Sifter completely obsolete. Get this FIRST after prestige.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GEM MACHINES -->
+  <div class="machine-group">
+    <h3>💎 Gem Machines — Do They Replace Each Other?</h3>
+    <div class="tip-box" style="margin-bottom: 12px;">
+      <strong>💡 NO — Prospectors STACK!</strong> Each prospector checks the stone independently (5% each). Running a stone through all 5 prospectors gives a 22.6% cumulative chance of getting a gem. They don't compete — they cooperate. Buy them all.
+    </div>
+    <div class="machine-grid">
+      <div class="machine-card">
+        <h4>Topaz→Diamond Prospectors <span class="machine-status status-core">✅ Core</span></h4>
+        <p>Each has a 5% independent chance to convert a stone into its gem. They STACK — a stone passes through all of them sequentially. 22.6% cumulative chance with all 5.</p>
+        <div class="feeds"><strong>Fed by:</strong> Smelter (stone byproduct) | <strong>Feeds:</strong> Gems → Polisher → Gem Cutter</div>
+        <div class="obsolete-note" style="color: var(--green);">✅ None replaces any other. Buy all 5 as soon as you can afford them.</div>
+      </div>
+      <div class="machine-card">
+        <h4>Gem Cutter <span class="machine-status status-core">✅ Core</span></h4>
+        <p>Polished Gem → Cut Gem (×1.4). A <strong>multiplier on ALL prospector output</strong>. Must Polish first, then Cut. Apply to every single gem before selling or using in recipes.</p>
+        <div class="feeds"><strong>Fed by:</strong> Polisher (gems only) | <strong>Feeds:</strong> Seller, or Prismatic Gem Crucible</div>
+      </div>
+      <div class="machine-card">
+        <h4>Prismatic Gem Crucible <span class="machine-status status-situational">⚠️ Situational</span></h4>
+        <p>2 Cut Gems → Prismatic Gem (×1.25 combined value). Only worth it if you're making Amulets or Lasers. For direct selling, it's only +25% on TWO gems.</p>
+        <div class="feeds"><strong>Feeds into:</strong> Amulets, Lasers | <strong>Worth it?</strong> Only for end-game gem recipes.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMBINATION MACHINES -->
+  <div class="machine-group">
+    <h3>🔗 Combination Machines (Multi-Input)</h3>
+    <div class="tip-box" style="margin-bottom: 12px;">
+      <strong>💡 These machines COMBINE items — they don't replace anything.</strong> Each requires specific inputs from earlier machines. Think of them as "assembly" steps, not upgrades.
+    </div>
+    <div class="machine-grid">
+      <div class="machine-card">
+        <h4>Frame Maker <span class="machine-status status-useful">🔗 Useful</span></h4>
+        <p>Bar + Bolts → Frame (×1.25 combined). Required for Casings, Amulets.</p>
+        <div class="feeds"><strong>Needs:</strong> Smelter + Bolt Machine | <strong>Feeds:</strong> Casing Machine, Amulet Maker</div>
+      </div>
+      <div class="machine-card">
+        <h4>Casing Machine <span class="machine-status status-core">✅ Core</span></h4>
+        <p>Frame + Bolts + Plate → Casing (×1.30). Used in Power Cores, Tablets, Engines, Electromagnets, Explosives. <strong>Most-used combination machine.</strong></p>
+        <div class="feeds"><strong>Needs:</strong> 4 ores worth of tempered bars | <strong>Feeds:</strong> Everything end-game</div>
+      </div>
+      <div class="machine-card">
+        <h4>Circuit Maker <span class="machine-status status-useful">🔗 Useful</span></h4>
+        <p>Glass + Coil → Circuit (×2.0 combined). Great multiplier. Required for Tablets and Lasers.</p>
+        <div class="feeds"><strong>Needs:</strong> Kiln (glass) + Coiler | <strong>Feeds:</strong> Tablet Factory, Laser Maker</div>
+      </div>
+      <div class="machine-card">
+        <h4>Alloy Furnace <span class="machine-status status-useful">🔗 Useful</span></h4>
+        <p>2 Bars → Alloy Bar (×1.2 combined). Only used for Superconductors. Does NOT replace single bars — you still need those for Plates/Coils/Bolts.</p>
+        <div class="feeds"><strong>Needs:</strong> 2 tempered bars | <strong>Feeds:</strong> Superconductor Constructor</div>
+        <div class="obsolete-note" style="color: var(--green);">✅ Does NOT replace Ore Smelter or Tempering Forge. It combines their outputs.</div>
+      </div>
+      <div class="machine-card">
+        <h4>Magnetic Machine <span class="machine-status status-useful">🔗 Useful</span></h4>
+        <p>Coil + Metal Casing → Electromagnet (×1.5 combined). Required for Power Cores.</p>
+        <div class="feeds"><strong>Needs:</strong> Coiler + Casing Machine | <strong>Feeds:</strong> Power Core Assembler</div>
+      </div>
+      <div class="machine-card">
+        <h4>Ring Maker <span class="machine-status status-situational">⚠️ Situational</span></h4>
+        <p>Metal Dust + Coil → Ring (×1.75). Only for Amulet recipes. Requires metal dust (from crushing a bar).</p>
+        <div class="feeds"><strong>Needs:</strong> Crusher (on bar) + Coiler | <strong>Feeds:</strong> Amulet Maker</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- END-GAME ASSEMBLERS -->
+  <div class="machine-group">
+    <h3>🏆 End-Game Assemblers</h3>
+    <div class="machine-grid">
+      <div class="machine-card" style="border-color: var(--gold);">
+        <h4>Power Core Assembler <span class="machine-status status-core">✅ Core</span></h4>
+        <p>Casing + Superconductor + Electromagnet → Power Core (×3.5). <strong>Best $/ore in the game.</strong> Requires the most complex factory setup.</p>
+        <div class="feeds"><strong>Needs:</strong> 11 ores worth of inputs | <strong>Best product in the game</strong></div>
+      </div>
+      <div class="machine-card">
+        <h4>Tablet Factory <span class="machine-status status-useful">🔗 Useful</span></h4>
+        <p>Casing + Glass + Circuit → Tablet (×3.0). 2nd best $/ore. Add Electronic Tuner (+$50) before QA for max value.</p>
+        <div class="feeds"><strong>Needs:</strong> Casing + Glass (Kiln) + Circuit (Coil+Glass) | 5 ores total</div>
+      </div>
+      <div class="machine-card">
+        <h4>Engine Factory <span class="machine-status status-useful">🔗 Useful</span></h4>
+        <p>Mech Parts + Pipe + Casing → Engine (×1.2). Decent $/ore but lower multiplier than Tablet/PC.</p>
+        <div class="feeds"><strong>Needs:</strong> Mech Parts + Pipe + Casing | 6 ores total</div>
+      </div>
+      <div class="machine-card">
+        <h4>Superconductor Constructor <span class="machine-status status-useful">🔗 Useful</span></h4>
+        <p>Alloy Bar + Ceramic Casing → Superconductor (×3.0). Great multiplier, but mainly used as Power Core input.</p>
+        <div class="feeds"><strong>Needs:</strong> Alloy Furnace + Ceramic Furnace | 2 ores + 2 stones</div>
+      </div>
+      <div class="machine-card">
+        <h4>Laser Maker <span class="machine-status status-situational">⚠️ Situational</span></h4>
+        <p>Optics + Gem + Circuit → Laser (×2.75). Highest gem multiplier, but requires many components. Only worth it with high-value gems.</p>
+        <div class="feeds"><strong>Needs:</strong> Optics (Lens+Pipe) + Cut Gem + Circuit | Complex setup</div>
+      </div>
+      <div class="machine-card">
+        <h4>Quality Assurance Machine <span class="machine-status status-core">✅ Core</span></h4>
+        <p>Adds 20% to untested items. <strong>Always apply last</strong> — to your most expensive finished product. Items can only be QA'd once.</p>
+        <div class="feeds"><strong>Feeds:</strong> Seller | <strong>Obsolete?</strong> Never. Final multiplier on everything.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUICK REFERENCE -->
+  <div class="stage-card" style="border-color: var(--accent); margin-top: 20px;">
+    <div class="stage-title" style="margin-bottom: 12px;">🔑 Quick Obsolescence Cheat Sheet</div>
+    <div style="overflow-x: auto;">
+      <table class="comp-table" style="font-size: 0.88em;">
+        <thead>
+          <tr><th>Machine</th><th>Replaced by?</th><th>Status</th><th>Why</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Ore Smelter</td><td>—</td><td style="color:var(--green);">✅ Always needed</td><td>Nothing else makes bars. Tempering goes AFTER smelting.</td></tr>
+          <tr><td>Blast Furnace</td><td>Ore Smelter</td><td style="color:var(--red);">❌ Never buy</td><td>×0.9 vs ×1.2. Strictly worse for 17× the price.</td></tr>
+          <tr><td>Coiler</td><td>—</td><td style="color:var(--green);">✅ Always needed</td><td>Circuits, Rings, Electromagnets all need Coils.</td></tr>
+          <tr><td>Plate Stamper</td><td>—</td><td style="color:var(--green);">✅ Always needed</td><td>Pipes, Mech Parts, Filigree, Casings all need Plates.</td></tr>
+          <tr><td>Pipe Maker</td><td>—</td><td style="color:var(--accent);">🔗 Needed for recipes</td><td>Mech Parts add more, but Pipes needed for Engines + Optics.</td></tr>
+          <tr><td>Kiln</td><td>—</td><td style="color:var(--green);">✅ Always needed</td><td>Cement Mixer doesn't replace Kiln — concrete bricks still need kilning.</td></tr>
+          <tr><td>Sifter</td><td>Nano Sifter ⭐</td><td style="color:var(--muted);">🔄 Replaced</td><td>Nano Sifter is strictly better (16.6% vs 10%, rarer ores).</td></tr>
+          <tr><td>Crusher</td><td>—</td><td style="color:var(--green);">✅ Always needed</td><td>Every stone processing path starts with crushing.</td></tr>
+          <tr><td>Fired Bricks</td><td>Concrete Bricks</td><td style="color:var(--orange);">⚠️ Mostly replaced</td><td>Concrete = 5× value/pair. Fired only for odd stones.</td></tr>
+          <tr><td>Prospectors</td><td>—</td><td style="color:var(--green);">✅ All 5 needed</td><td>They STACK, not replace. 22.6% combined gem chance.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </section>
 
 <!-- COMPARISON TABLE -->
