@@ -1051,7 +1051,7 @@
     </div>
 
     <div class="tip-box good">
-      <strong>⚡ Best immediate sell:</strong> Superconductors give $<span class="v-s8-sc-perore">749</span>/ore from the product (2 ores). Plus gem EV from the 2 stones used for ceramic prospected first: $<span class="v-s8-gem-2stones">276</span>. Total = $<span class="v-s8-total-perore">1,025</span>/ore!
+      <strong>⚡ Best immediate sell:</strong> Superconductors give $<span class="v-s8-sc-perore">749</span>/ore from the product (2 ores). Plus gem EV from 2 prospected stones: $<span class="v-s8-gem-2stones">276</span>. Total per ore: $<span class="v-s8-total-perore">1,025</span> (extra surviving stones beyond the 2 needed for ceramic go to concrete bricks).
     </div>
 
     <div class="value-result">
@@ -2279,17 +2279,23 @@ function recalc() {
   var coil = temperedBar + 20;
   var em = (coil + casing) * 1.5;
   var scPerOre = sc / 2;
-  // The 2 stones used for ceramic also get prospected first
+  // SC recipe: 2 ores → 2 stones prospected → ~1.55 survive → 2 needed for ceramic
+  // Extra survivors beyond 2 go to concrete bricks
   var s8Gem2Stones = 2 * gem5.ev;
-  var s8TotalPerOre = scPerOre + gem5.ev; // gem EV per ore (1 stone per ore)
+  var s8Survivors = 2 * gem5.survivalRate;
+  var s8ForBricks = Math.max(0, s8Survivors - 2);
+  var s8BrickPairs = Math.floor(s8ForBricks / 2);
+  var s8Odd = s8ForBricks - s8BrickPairs * 2;
+  var s8BrickValue = s8BrickPairs * concreteBrickPairQA + (s8Odd > 0.5 ? firedBrickQA : 0);
+  var s8TotalPerOre = scPerOre + gem5.ev + s8BrickValue / 2;
   setAll('.v-s8-sc', fmtDollar(sc));
   setAll('.v-s8-sc2', fmtDollar(sc));
   setAll('.v-s8-em', fmtDollar(em));
   setAll('.v-s8-gem-ev', fmtD(gem5.ev));
   setAll('.v-s8-sc-perore', fmtDollar(scPerOre));
   setAll('.v-s8-gem-2stones', fmtDollar(s8Gem2Stones));
-  setAll('.v-s8-total-perore', fmtDollar(scPerOre + gem5.ev));
-  setAll('.v-s8-sc-perore2', fmtDollar(scPerOre + gem5.ev));
+  setAll('.v-s8-total-perore', fmtDollar(s8TotalPerOre));
+  setAll('.v-s8-sc-perore2', fmtDollar(s8TotalPerOre));
 
   // === END GAME: POWER CORE ===
   var casing1 = casing;
