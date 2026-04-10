@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Interactive factory optimization guide for Ultimate Mining Tycoon (UMT) on Roblox. Live calculator for ore values, stage-by-stage progression, machine logic, prestige strategies, and product comparisons.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⛏️</text></svg>">
 <title>Factory Optimization Guide — Ultimate Mining Tycoon</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -448,6 +450,22 @@
 
   /* Selection color */
   ::selection { background: rgba(108,140,255,0.3); color: var(--text); }
+
+  /* Print styles */
+  @media print {
+    body { background: #fff; color: #000; }
+    .nav, .back-to-top, .stage-collapse-btn, .toggle-switch, .toggle-label { display: none !important; }
+    .container { max-width: 100%; padding: 0; }
+    section, .stage-card, .byprod-card, .tip-box, .machine-card { break-inside: avoid; border-color: #ccc !important; background: #fff !important; color: #000 !important; }
+    .stage-card, .byprod-card, .tip-box, .machine-card { box-shadow: none; }
+    .collapsible { max-height: none !important; opacity: 1 !important; }
+    h1, h2, h3, h4, .stage-title, .val, .per-ore { color: #000 !important; }
+    a { color: #333 !important; text-decoration: underline; }
+    .flow-item, .flow-arrow { border-color: #999 !important; color: #000 !important; background: #f5f5f5 !important; }
+    .comp-table th { background: #eee !important; color: #000 !important; }
+    .comp-table td { color: #000 !important; }
+    .site-footer { border-color: #ccc !important; }
+  }
 </style>
 </head>
 <body>
@@ -585,7 +603,7 @@
 <!-- STAGES -->
 <section id="stages">
   <h2><span class="icon">📈</span> Stage-by-Stage Optimal Setups</h2>
-  <p class="desc">Each stage includes prospectors in the stone byproduct flow. Expected gem value (EV) is calculated per stone based on available prospectors.</p>
+  <p class="desc">Each stage includes prospectors in the stone byproduct flow. Expected gem value (EV) is calculated per stone based on available prospectors. Investment costs are <strong>cumulative</strong> (total spent including all previous stages). <span class="building-tag new" style="display:inline;font-size:0.8em;">Green = new this stage</span></p>
 
   <!-- STAGE 1 -->
   <div class="stage-card">
@@ -1870,27 +1888,10 @@
   </div>
 
   <div class="stage-card">
-    <div class="stage-title" style="margin-bottom: 12px;">Gem Prospecting Chain</div>
-    <div class="flow-diagram">
-      <div class="flow-row">
-        <span class="flow-item fi-byproduct">Stone</span>
-        <span class="flow-arrow">→</span>
-        <span class="flow-item fi-gem">Topaz (5%)</span>
-        <span class="flow-arrow">→</span>
-        <span class="flow-item fi-gem">Emerald (5%)</span>
-        <span class="flow-arrow">→</span>
-        <span class="flow-item fi-gem">Sapphire (5%)</span>
-        <span class="flow-arrow">→</span>
-        <span class="flow-item fi-gem">Ruby (5%)</span>
-        <span class="flow-arrow">→</span>
-        <span class="flow-item fi-gem">Diamond (5%)</span>
-        <span class="flow-arrow">→</span>
-        <span class="flow-item fi-byproduct">Surviving (77.4%)</span>
-      </div>
-    </div>
-    <p>Run every stone through all 5 prospectors before using it for anything else. Cumulative gem chance: 1 − 0.95⁵ ≈ 22.62%.</p>
+    <div class="stage-title" style="margin-bottom: 12px;">Gem Processing & Products</div>
+    <p style="margin-bottom: 8px;">All 5 prospectors should run on every stone (see <a href="#byproducts" style="color: var(--accent);">Byproduct Optimization</a> for the full prospecting chain and EV breakdown — $<span class="v-gem-ev-total">141</span>/stone with all 5).</p>
 
-    <div class="tip-box gem" style="margin-top: 16px;">
+    <div class="tip-box gem" style="margin-top: 12px;">
       <strong>💎 Gem Processing Priority:</strong><br>
       1. <strong>Polish</strong> (+$10) → <strong>Gem Cutter</strong> (+40% value) — always do this first<br>
       2. <strong>Prismatic Gem Crucible</strong> → Merge 2 cut gems (+25% combined value)<br>
@@ -1945,32 +1946,15 @@
 
 <!-- PRO TIPS -->
 <section id="tips">
-  <h2><span class="icon">💡</span> Pro Tips & Key Insights</h2>
-  <p class="desc">Critical optimization rules for maximum profit.</p>
+  <h2><span class="icon">💡</span> Pro Tips & Quick Reference</h2>
+  <p class="desc">Key optimization rules. See individual sections above for detailed explanations.</p>
 
   <div class="tip-box gem">
-    <strong>🔑 Rule #0: ALWAYS prospect stones before processing them.</strong><br>
-    With all 5 prospectors + Gem Cutter, each stone has an expected gem value of ~$<span class="v-tip-gem-ev">141</span>. This is FREE value — the stone is destroyed only if a gem is found (22.6% chance), and the gem is worth far more than what you'd make from the stone. Prospectors pay for themselves extremely fast.
-  </div>
-
-  <div class="tip-box good">
-    <strong>🔑 Rule #1: Always Clean + Polish ores BEFORE smelting.</strong><br>
-    The $20 value added by cleaning+polishing gets multiplied by ALL subsequent operations (×1.2 smelt, ×2 temper, etc.). Early flat bonuses compound into massive gains.
-  </div>
-
-  <div class="tip-box good">
-    <strong>🔑 Rule #2: Always QA your final products last.</strong><br>
-    The QA Machine adds 20% to any item's final value. Apply it to your most expensive finished products (Power Cores, Tablets, etc.) for maximum dollar gain.
-  </div>
-
-  <div class="tip-box good">
-    <strong>🔑 Rule #3: Never sell raw stones.</strong><br>
-    Stones from smelting are worth massive value when prospected + processed. Raw stone = $0. Prospected + concrete bricked = $180+/stone plus ~$141 gem EV.
-  </div>
-
-  <div class="tip-box warn">
-    <strong>⚠️ The Blast Furnace is a trap!</strong><br>
-    It costs $25,000 but makes bars 10% LESS valuable (×0.9 vs Ore Smelter's ×1.2). The Ore Smelter is strictly better for $1,500.
+    <strong>🔑 The Golden Rules:</strong><br>
+    <strong>#0</strong> — ALWAYS prospect stones before processing them ($<span class="v-tip-gem-ev">141</span> gem EV per stone with all 5 prospectors)<br>
+    <strong>#1</strong> — Always Clean + Polish ores BEFORE smelting (the +$20 compounds through all subsequent multipliers)<br>
+    <strong>#2</strong> — Always QA your final products last (20% on your most expensive item = max gain)<br>
+    <strong>#3</strong> — Never sell raw stones (prospected + concrete bricked = $180+/stone plus gem EV)
   </div>
 
   <div class="tip-box">
@@ -1985,17 +1969,7 @@
 
   <div class="tip-box">
     <strong>📊 The "Per Ore" Metric:</strong><br>
-    Always compare value <em>per ore consumed</em>, not total product value. Include prospector gem EV + concrete brick byproducts. Power Core: $<span class="v-eg-perore2">1,614</span>/ore. Tablet: $<span class="v-tab-perore2">1,090</span>/ore.
-  </div>
-
-  <div class="tip-box" style="border-color: var(--orange);">
-    <strong>⭐ Prestige machines compound with EVERYTHING:</strong><br>
-    Ore Upgrader + Philosopher's Stone applied before cleaning/polishing means the extra value gets multiplied by smelt (×1.2), temper (×2), and ALL combination machines. A $30 Lead becomes a $62.50 effective ore, compounding to +65% per Power Core!
-  </div>
-
-  <div class="tip-box" style="border-color: var(--orange);">
-    <strong>⭐ Nano Sifter > regular Sifter:</strong><br>
-    16.6% success rate vs 10%, AND it produces rarer ores (up to Iridium/Palladium). Replace your regular Sifter immediately after first prestige — it only costs 1 Medal.
+    Always compare value <em>per ore consumed</em>, not total product value. Include prospector gem EV + concrete brick byproducts. But also consider <strong>throughput</strong> — a simpler product at higher volume can out-earn a complex one. See the <a href="#comparison" style="color: var(--accent);">Comparison Table</a>.
   </div>
 </section>
 
