@@ -137,7 +137,6 @@
     transition: border-color var(--transition), box-shadow var(--transition);
     box-shadow: var(--shadow);
     position: relative;
-    overflow: hidden;
   }
   .stage-card:hover { border-color: rgba(108,140,255,0.4); box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
   .stage-header {
@@ -2507,8 +2506,8 @@ recalc();
       if (afterHeader) collDiv.appendChild(child);
     });
     card.appendChild(collDiv);
-    // Set max-height for animation
-    collDiv.style.maxHeight = collDiv.scrollHeight + 'px';
+    // Start expanded with no height constraint so content is never clipped
+    collDiv.style.maxHeight = 'none';
     // Add collapse button
     var btn = document.createElement('button');
     btn.className = 'stage-collapse-btn';
@@ -2516,9 +2515,20 @@ recalc();
     btn.setAttribute('aria-label', 'Toggle stage details');
     btn.addEventListener('click', function(e) {
       e.stopPropagation();
-      var isCollapsed = card.classList.toggle('collapsed');
-      if (!isCollapsed) {
+      if (card.classList.contains('collapsed')) {
+        // Expanding: set target height for animation, then remove constraint after transition
         collDiv.style.maxHeight = collDiv.scrollHeight + 'px';
+        card.classList.remove('collapsed');
+        var onEnd = function() {
+          collDiv.style.maxHeight = 'none';
+          collDiv.removeEventListener('transitionend', onEnd);
+        };
+        collDiv.addEventListener('transitionend', onEnd);
+      } else {
+        // Collapsing: set explicit height first so transition has a start value
+        collDiv.style.maxHeight = collDiv.scrollHeight + 'px';
+        void collDiv.offsetHeight; // force reflow
+        card.classList.add('collapsed');
       }
     });
     card.appendChild(btn);
