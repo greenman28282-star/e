@@ -667,7 +667,7 @@
       <span class="sub"> (Coil: $<span class="v-s1-coil2">80</span> + 95% Dust: $<span class="v-s1-dust">23.75</span> + Gem EV: $<span class="v-s1-gem-ev2">4.25</span>)</span>
     </div>
     <div class="transport-tip">
-      🚂 <strong>Transport:</strong> Simple linear layout. Conveyor from Unloader → Cleaner → Polisher → Smelter. The Smelter splits output automatically — bars go one direction (→ Coiler → Seller), stones go the other (→ Topaz Prospector). Use a <strong>Filter</strong> after the Prospector to separate gems (→ Polisher → Seller) from surviving stones (→ Crusher → Seller).
+      🚂 <strong>Transport:</strong> Simple linear layout. Conveyor from Unloader → Cleaner → Polisher → Smelter. The Smelter splits output automatically — bars go one direction (→ Coiler → Seller), stones go the other (→ Topaz Prospector). Use a <strong>Filter</strong> after the Prospector to separate gems (→ Polisher → Seller) from surviving stones (→ Crusher → Polisher → Seller). Note: ores are polished before smelting, but dust needs a <em>second</em> Polisher since items can only be polished once.
     </div>
   </div>
 
@@ -728,7 +728,8 @@
       <span class="sub"> (Pipe: $<span class="v-s2-pipe2">100</span> + 90.25% Brick: $<span class="v-s2-brick">27.08</span> + Gem EV: $<span class="v-s2-gem-ev2">14.25</span>)</span>
     </div>
     <div class="transport-tip">
-      🚂 <strong>Transport:</strong> Smelter splits bars and stones automatically. Bar line: Plate Stamper → Pipe Maker → Seller. Stone line: Topaz Prosp → Emerald Prosp → <strong>Filter</strong> to separate gems (→ Polisher → Seller) from surviving stones (→ Crusher → Brick Mold → Seller).
+      🚂 <strong>Transport:</strong> Smelter splits bars and stones automatically. Bar line: Plate Stamper → Pipe Maker → Seller. Stone line: Topaz Prosp → Emerald Prosp → <strong>Filter</strong> to separate gems (→ Polisher → Seller) from surviving stones (→ Crusher → Brick Mold → Polisher → Seller). Polish bricks before selling for +$10 each.<br>
+      <span class="sub">💡 <strong>Optional:</strong> Add a Sifter ($4,000) between Crusher and Brick Mold — 10% free ore bonus from dust without consuming it. Route: Crusher → Sifter → Brick Mold.</span>
     </div>
   </div>
 
@@ -832,7 +833,7 @@
     <div class="transport-tip">
       🚂 <strong>Transport:</strong><br>
       • Bar line switches from Pipe to: Plate → Mech Parts → Seller<br>
-      • Stone line adds Ruby Prosp → <strong>Filter</strong> (gems → Polisher → Seller), surviving stones → Crusher → Brick Mold → Kiln → Seller<br>
+      • Stone line adds Ruby Prosp → <strong>Filter</strong> (gems → Polisher → Seller), surviving stones → Crusher → Brick Mold → Kiln → Polisher → Seller<br>
       • Pipe Maker is now unused for the main line — keep it for later (Engines need pipes)<br>
       • <strong>Overflow Splitter</strong> recommended if switching between products
     </div>
@@ -900,7 +901,7 @@
       🚂 <strong>Transport (COMPLEX):</strong><br>
       • After all 4 prospectors → <strong>Filter</strong>: gems go to Polisher → Seller, surviving stones continue<br>
       • <strong>Pairing logic</strong>: Use a <strong>Left/Right Splitter</strong> to alternate surviving stones — one to Crusher (→ Dust → Cement Mixer), the other straight to Cement Mixer<br>
-      • Cement → Brick Mold → Kiln → Seller<br>
+      • Cement → Brick Mold → Kiln → Polisher → Seller<br>
       • Consider building vertically with <strong>Elevators</strong> to save floor space
     </div>
   </div>
@@ -964,7 +965,7 @@
       🚂 <strong>Transport:</strong><br>
       • Insert <strong>Tempering Forge</strong> on the bar line right after Smelter (before Plate)<br>
       • Add 5th prospector (Diamond) to the stone chain<br>
-      • <strong>Filter</strong> after all 5 prospectors: gems → Polisher → Gem Cutter → Seller; surviving stones → pairing logic for concrete bricks<br>
+      • <strong>Filter</strong> after all 5 prospectors: gems → Polisher → Gem Cutter → Seller; surviving stones → pairing logic for concrete bricks (Brick Mold → Kiln → Polisher → Seller)<br>
       • <strong>Upgrade Unloader to Lv 3+</strong> — throughput becomes critical with this many machines
     </div>
   </div>
@@ -1825,7 +1826,7 @@
     <div class="byprod-card" style="border-color: var(--gold);">
       <h4>🏆 Best: Concrete Bricks (need 2 surviving stones)</h4>
       <p>Stone + Dust → <strong>Cement ($30)</strong> → Brick Mold → <strong>Concrete Brick ($100)</strong> → Kiln → <strong>$120</strong> → Polish → <strong>$130</strong> → QA → <strong class="val">$156</strong></p>
-      <p class="sub" style="margin-top: 6px;">Per stone: $216 | Requires: Crusher, Cement Mixer, Brick Mold, Kiln, QA Machine</p>
+      <p class="sub" style="margin-top: 6px;">Per stone: $78 (from pair) | Requires: Crusher, Cement Mixer, Brick Mold, Kiln, Polisher, QA Machine</p>
     </div>
 
     <div class="byprod-card">
@@ -1836,8 +1837,8 @@
 
     <div class="byprod-card">
       <h4>🥉 Decent: Fired Bricks (need 1 surviving stone)</h4>
-      <p>Stone → Crush → Dust → Brick ($30) → Kiln → <strong class="val">$36</strong> → QA → <strong class="val">$43</strong></p>
-      <p class="sub" style="margin-top: 6px;">Per stone: $43 | Simple, no multi-stone requirement</p>
+      <p>Stone → Crush → Dust → Brick ($25) → Kiln → <strong>$30</strong> → Polish → <strong>$40</strong> → QA → <strong class="val">$48</strong></p>
+      <p class="sub" style="margin-top: 6px;">Per stone: $48 | Simple, no multi-stone requirement. Always polish before selling!</p>
     </div>
 
     <div class="byprod-card">
