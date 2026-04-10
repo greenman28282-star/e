@@ -2551,7 +2551,7 @@ recalc();
       } else {
         // Collapsing: set explicit height first so transition has a start value
         collDiv.style.maxHeight = collDiv.scrollHeight + 'px';
-        void collDiv.offsetHeight; // force reflow
+        void collDiv.offsetHeight; // force reflow so browser registers the explicit height before CSS transitions to 0
         card.classList.add('collapsed');
       }
     });
