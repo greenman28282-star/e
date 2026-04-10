@@ -1,0 +1,1255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Factory Optimization Guide</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --surface2: #242836;
+    --border: #2e3345;
+    --text: #e2e4eb;
+    --muted: #8b8fa3;
+    --accent: #6c8cff;
+    --gold: #f5c542;
+    --green: #4ade80;
+    --red: #f87171;
+    --orange: #fb923c;
+    --cyan: #22d3ee;
+    --purple: #c084fc;
+    --pink: #f472b6;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    padding: 0 0 80px;
+  }
+  .hero {
+    background: linear-gradient(135deg, #1a1d27 0%, #242836 50%, #1a1d27 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 60px 20px 50px;
+    text-align: center;
+  }
+  .hero h1 {
+    font-size: 2.5em;
+    background: linear-gradient(135deg, var(--gold), var(--orange));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 10px;
+  }
+  .hero p { color: var(--muted); font-size: 1.1em; max-width: 600px; margin: 0 auto; }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(15, 17, 23, 0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 20px;
+    display: flex; gap: 8px; flex-wrap: wrap; justify-content: center;
+  }
+  .nav a {
+    color: var(--muted); text-decoration: none; font-size: 0.85em;
+    padding: 6px 14px; border-radius: 6px; transition: all 0.2s;
+    border: 1px solid transparent;
+  }
+  .nav a:hover { color: var(--text); background: var(--surface2); border-color: var(--border); }
+
+  section { margin-top: 50px; }
+  section h2 {
+    font-size: 1.8em; margin-bottom: 8px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  section h2 .icon { font-size: 1.2em; }
+  section > .desc { color: var(--muted); margin-bottom: 24px; }
+
+  /* Calculator */
+  .calc-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 30px;
+  }
+  .calc-box label { font-weight: 600; margin-right: 10px; }
+  .calc-box input[type=number] {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--gold);
+    font-size: 1.2em;
+    padding: 8px 14px;
+    border-radius: 8px;
+    width: 120px;
+    text-align: center;
+  }
+  .calc-box input:focus { outline: none; border-color: var(--accent); }
+  .calc-note { color: var(--muted); font-size: 0.85em; margin-top: 8px; }
+
+  /* Stage cards */
+  .stage-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px;
+    margin-bottom: 24px;
+    transition: border-color 0.3s;
+  }
+  .stage-card:hover { border-color: var(--accent); }
+  .stage-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px; margin-bottom: 16px; }
+  .stage-title { font-size: 1.35em; font-weight: 700; }
+  .stage-cost {
+    background: var(--surface2);
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 0.9em;
+    color: var(--gold);
+    white-space: nowrap;
+  }
+  .stage-buildings {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    margin-bottom: 16px;
+  }
+  .building-tag {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    padding: 3px 10px;
+    border-radius: 6px;
+    font-size: 0.8em;
+    color: var(--cyan);
+  }
+  .building-tag.new {
+    border-color: var(--green);
+    color: var(--green);
+  }
+  .flow-diagram {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    margin: 16px 0;
+    overflow-x: auto;
+  }
+  .flow-row {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    flex-wrap: nowrap;
+    margin: 8px 0;
+    min-width: fit-content;
+  }
+  .flow-item {
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 0.85em;
+    font-weight: 600;
+    white-space: nowrap;
+    border: 1px solid;
+  }
+  .flow-arrow {
+    color: var(--muted);
+    font-size: 1.2em;
+    margin: 0 4px;
+    flex-shrink: 0;
+  }
+  .fi-ore { background: #3b2a1a; border-color: #7a5c3a; color: #e0b070; }
+  .fi-machine { background: #1a2a3b; border-color: #3a5c7a; color: #70b0e0; }
+  .fi-product { background: #1a3b2a; border-color: #3a7a5c; color: #70e0b0; }
+  .fi-sell { background: #3b3a1a; border-color: #7a7a3a; color: #e0e070; }
+  .fi-byproduct { background: #2a1a3b; border-color: #5c3a7a; color: #b070e0; }
+
+  .value-result {
+    background: linear-gradient(135deg, #1a2a1a, #1a3b2a);
+    border: 1px solid #3a7a5c;
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-top: 12px;
+    font-size: 1.05em;
+  }
+  .value-result .val { color: var(--gold); font-weight: 700; font-size: 1.15em; }
+  .value-result .per-ore { color: var(--green); font-size: 0.95em; }
+
+  /* Comparison table */
+  .comp-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 0.9em;
+  }
+  .comp-table th, .comp-table td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+  .comp-table th {
+    background: var(--surface2);
+    color: var(--muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.8em;
+    letter-spacing: 0.5px;
+  }
+  .comp-table tr:hover td { background: rgba(108, 140, 255, 0.05); }
+  .comp-table .rank-1 { color: var(--gold); font-weight: 700; }
+  .comp-table .rank-2 { color: #c0c0c0; font-weight: 600; }
+  .comp-table .rank-3 { color: #cd7f32; font-weight: 600; }
+
+  /* Tips */
+  .tip-box {
+    background: var(--surface);
+    border-left: 4px solid var(--accent);
+    border-radius: 0 10px 10px 0;
+    padding: 16px 20px;
+    margin: 16px 0;
+    font-size: 0.95em;
+  }
+  .tip-box.warn { border-left-color: var(--orange); }
+  .tip-box.good { border-left-color: var(--green); }
+  .tip-box strong { color: var(--gold); }
+
+  /* Byproduct section */
+  .byprod-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 16px;
+    margin: 16px 0;
+  }
+  .byprod-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+  }
+  .byprod-card h4 { color: var(--cyan); margin-bottom: 8px; }
+  .byprod-card .val { color: var(--gold); font-weight: 700; }
+
+  .sub { color: var(--muted); font-size: 0.85em; }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .hero h1 { font-size: 1.8em; }
+    .stage-card { padding: 18px; }
+    .flow-diagram { padding: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>⚙️ Factory Optimization Guide</h1>
+  <p>Optimal production setups for every stage of the game, calculated to maximize profit per ore.</p>
+</div>
+
+<nav class="nav">
+  <a href="#calculator">🧮 Calculator</a>
+  <a href="#stages">📈 Stage Guide</a>
+  <a href="#endgame">🏆 End-Game</a>
+  <a href="#byproducts">♻️ Byproducts</a>
+  <a href="#comparison">📊 Comparison</a>
+  <a href="#gems">💎 Gems</a>
+  <a href="#tips">💡 Pro Tips</a>
+</nav>
+
+<div class="container">
+
+<!-- CALCULATOR -->
+<section id="calculator">
+  <h2><span class="icon">🧮</span> Ore Value Calculator</h2>
+  <p class="desc">Enter your ore's base value to see exact dollar amounts throughout the guide. All formulas update live.</p>
+  <div class="calc-box">
+    <label for="oreVal">Base Ore Value ($):</label>
+    <input type="number" id="oreVal" value="10" min="0" step="1" oninput="recalc()">
+    <div class="calc-note">💡 If you don't know your ore value, $10 is a good starting estimate for common ores.</div>
+  </div>
+</section>
+
+<!-- STAGES -->
+<section id="stages">
+  <h2><span class="icon">📈</span> Stage-by-Stage Optimal Setups</h2>
+  <p class="desc">Progress through these stages as your budget grows. Each stage builds on the previous one.</p>
+
+  <!-- STAGE 1 -->
+  <div class="stage-card">
+    <div class="stage-header">
+      <div class="stage-title">Stage 1: Foundation</div>
+      <div class="stage-cost">Investment: $7,100</div>
+    </div>
+    <div class="stage-buildings">
+      <span class="building-tag new">Polisher $850</span>
+      <span class="building-tag new">Ore Cleaner $1,000</span>
+      <span class="building-tag new">Ore Smelter $1,500</span>
+      <span class="building-tag new">Crusher $1,750</span>
+      <span class="building-tag new">Coiler $1,750</span>
+    </div>
+    <p>Start by maximizing bar value with cleaning + polishing before smelting. Coils give the best single-step value-add for bars at this price. Crush stones into dust for later use.</p>
+
+    <div class="flow-diagram">
+      <div style="margin-bottom: 4px; color: var(--muted); font-size: 0.8em; font-weight: 600;">MAIN LINE:</div>
+      <div class="flow-row">
+        <span class="flow-item fi-ore">Ore ($<span class="v-ore">10</span>)</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-machine">Clean (+$10)</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-machine">Polish (+$10)</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-machine">Smelt (×1.2)</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-machine">Coil (+$20)</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-sell">💰 Sell Coil ($<span class="v-s1-coil">44</span>)</span>
+      </div>
+      <div style="margin-top: 10px; margin-bottom: 4px; color: var(--muted); font-size: 0.8em; font-weight: 600;">BYPRODUCT LINE:</div>
+      <div class="flow-row">
+        <span class="flow-item fi-byproduct">Stone (from smelt)</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-machine">Crush → Dust ($25)</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-sell">💰 Sell Dust ($25)</span>
+      </div>
+    </div>
+
+    <div class="value-result">
+      <span class="val">Total per ore: $<span class="v-s1-total">69</span></span>
+      <span class="sub"> (Coil: $<span class="v-s1-coil2">44</span> + Dust: $25)</span>
+    </div>
+  </div>
+
+  <!-- STAGE 2 -->
+  <div class="stage-card">
+    <div class="stage-header">
+      <div class="stage-title">Stage 2: Bricks & Pipes</div>
+      <div class="stage-cost">Investment: $17,600</div>
+    </div>
+    <div class="stage-buildings">
+      <span class="building-tag">Polisher</span>
+      <span class="building-tag">Ore Cleaner</span>
+      <span class="building-tag">Ore Smelter</span>
+      <span class="building-tag">Crusher</span>
+      <span class="building-tag new">Brick Mold $2,000</span>
+      <span class="building-tag new">Plate Stamper $3,500</span>
+      <span class="building-tag new">Pipe Maker $4,000</span>
+    </div>
+    <p>Switch from Coils to Plates→Pipes for more value. Turn dust into bricks. Keep the Coiler for later — coils will be critical in end-game circuits and rings.</p>
+
+    <div class="flow-diagram">
+      <div style="margin-bottom: 4px; color: var(--muted); font-size: 0.8em; font-weight: 600;">MAIN LINE:</div>
+      <div class="flow-row">
+        <span class="flow-item fi-ore">Ore</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-machine">Clean</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-machine">Polish</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-machine">Smelt (×1.2)</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-machine">Plate (+$20)</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-machine">Pipe (+$20)</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-sell">💰 Sell Pipe ($<span class="v-s2-pipe">64</span>)</span>
+      </div>
+      <div style="margin-top: 10px; margin-bottom: 4px; color: var(--muted); font-size: 0.8em; font-weight: 600;">BYPRODUCT LINE:</div>
+      <div class="flow-row">
+        <span class="flow-item fi-byproduct">Stone</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-machine">Crush → Dust</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-machine">Brick Mold ($30)</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-sell">💰 Sell Brick ($30)</span>
+      </div>
+    </div>
+
+    <div class="value-result">
+      <span class="val">Total per ore: $<span class="v-s2-total">94</span></span>
+      <span class="sub"> (Pipe: $<span class="v-s2-pipe2">64</span> + Brick: $30)</span>
+    </div>
+  </div>
+
+  <!-- STAGE 3 -->
+  <div class="stage-card">
+    <div class="stage-header">
+      <div class="stage-title">Stage 3: Kiln Upgrade</div>
+      <div class="stage-cost">Investment: $22,350</div>
+    </div>
+    <div class="stage-buildings">
+      <span class="building-tag">Polisher</span>
+      <span class="building-tag">Ore Cleaner</span>
+      <span class="building-tag">Ore Smelter</span>
+      <span class="building-tag">Crusher</span>
+      <span class="building-tag">Brick Mold</span>
+      <span class="building-tag">Plate Stamper</span>
+      <span class="building-tag">Pipe Maker</span>
+      <span class="building-tag new">Kiln $4,750</span>
+    </div>
+    <p>The Kiln fires bricks for +20% value. A simple but effective boost to your byproduct line.</p>
+
+    <div class="flow-diagram">
+      <div style="margin-bottom: 4px; color: var(--muted); font-size: 0.8em; font-weight: 600;">MAIN LINE: (same as Stage 2)</div>
+      <div class="flow-row">
+        <span class="flow-item fi-ore">Ore</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-machine">Clean → Polish → Smelt → Plate → Pipe</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-sell">💰 Sell Pipe ($<span class="v-s3-pipe">64</span>)</span>
+      </div>
+      <div style="margin-top: 10px; margin-bottom: 4px; color: var(--muted); font-size: 0.8em; font-weight: 600;">BYPRODUCT LINE:</div>
+      <div class="flow-row">
+        <span class="flow-item fi-byproduct">Stone</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-machine">Crush → Dust</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-machine">Brick ($30)</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-machine">Kiln (+20%)</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-sell">💰 Sell Fired Brick ($36)</span>
+      </div>
+    </div>
+
+    <div class="value-result">
+      <span class="val">Total per ore: $<span class="v-s3-total">100</span></span>
+      <span class="sub"> (Pipe: $<span class="v-s3-pipe2">64</span> + Fired Brick: $36)</span>
+    </div>
+  </div>
+
+  <!-- STAGE 4 -->
+  <div class="stage-card">
+    <div class="stage-header">
+      <div class="stage-title">Stage 4: Mechanical Parts</div>
+      <div class="stage-cost">Investment: $28,350</div>
+    </div>
+    <div class="stage-buildings">
+      <span class="building-tag">All previous</span>
+      <span class="building-tag new">Mech Parts Maker $6,000</span>
+    </div>
+    <p>Mechanical Parts add $30 to plates vs Pipes' $20. Switch your main line to Mech Parts for an immediate $10/ore boost. Keep the Pipe Maker — you'll need pipes for end-game engines and optics.</p>
+
+    <div class="flow-diagram">
+      <div style="margin-bottom: 4px; color: var(--muted); font-size: 0.8em; font-weight: 600;">MAIN LINE:</div>
+      <div class="flow-row">
+        <span class="flow-item fi-ore">Ore</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-machine">Clean → Polish → Smelt</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-machine">Plate (+$20)</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-machine">Mech Parts (+$30)</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-sell">💰 Sell ($<span class="v-s4-mech">74</span>)</span>
+      </div>
+      <div style="margin-top: 10px; margin-bottom: 4px; color: var(--muted); font-size: 0.8em; font-weight: 600;">BYPRODUCT LINE: (same as Stage 3)</div>
+      <div class="flow-row">
+        <span class="flow-item fi-byproduct">Stone</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-machine">Crush → Brick → Kiln</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-sell">💰 Fired Brick ($36)</span>
+      </div>
+    </div>
+
+    <div class="value-result">
+      <span class="val">Total per ore: $<span class="v-s4-total">110</span></span>
+      <span class="sub"> (Mech Parts: $<span class="v-s4-mech2">74</span> + Fired Brick: $36)</span>
+    </div>
+  </div>
+
+  <!-- STAGE 5 -->
+  <div class="stage-card" style="border-color: var(--green);">
+    <div class="stage-header">
+      <div class="stage-title">⭐ Stage 5: Concrete Revolution</div>
+      <div class="stage-cost">Investment: $38,350</div>
+    </div>
+    <div class="stage-buildings">
+      <span class="building-tag">All previous</span>
+      <span class="building-tag new">Cement Mixer $10,000</span>
+    </div>
+    <p><strong>This is the biggest single upgrade in the game.</strong> The Cement Mixer lets you combine dust + stone into cement ($50), which the Brick Mold turns into concrete bricks ($300), which the Kiln boosts to $360. That's <strong>$360 from two free stones</strong> — a 10× improvement over fired bricks!</p>
+
+    <div class="tip-box good">
+      <strong>🚀 Game-changer!</strong> The concrete brick path turns worthless stone byproducts into $360 each (per pair). This will be your primary money maker for several stages.
+    </div>
+
+    <div class="flow-diagram">
+      <div style="margin-bottom: 4px; color: var(--muted); font-size: 0.8em; font-weight: 600;">MAIN LINE (per ore):</div>
+      <div class="flow-row">
+        <span class="flow-item fi-ore">Ore</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-machine">Clean → Polish → Smelt</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-machine">Plate → Mech Parts</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-sell">💰 Sell ($<span class="v-s5-mech">74</span>)</span>
+      </div>
+      <div style="margin-top: 10px; margin-bottom: 4px; color: var(--muted); font-size: 0.8em; font-weight: 600;">BYPRODUCT LINE (per 2 stones from 2 ores):</div>
+      <div class="flow-row">
+        <span class="flow-item fi-byproduct">Stone #1 (keep)</span>
+        <span class="flow-arrow">+</span>
+        <span class="flow-item fi-byproduct">Stone #2 → Crush → Dust ($25)</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-machine">Cement Mixer ($50)</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-machine">Brick Mold ($300)</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-machine">Kiln (+20%)</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-sell">💰 Sell ($360)</span>
+      </div>
+    </div>
+
+    <div class="value-result">
+      <span class="val">Total per ore: $<span class="v-s5-total">254</span></span>
+      <span class="sub"> (Mech Parts: $<span class="v-s5-mech2">74</span> + Concrete Brick share: $180/ore)</span>
+      <br><span class="per-ore">📈 That's a +131% improvement over Stage 4!</span>
+    </div>
+  </div>
+
+  <!-- STAGE 6 -->
+  <div class="stage-card">
+    <div class="stage-header">
+      <div class="stage-title">Stage 6: Tempering</div>
+      <div class="stage-cost">Investment: $88,350</div>
+    </div>
+    <div class="stage-buildings">
+      <span class="building-tag">All previous</span>
+      <span class="building-tag new">Tempering Forge $50,000</span>
+    </div>
+    <p>The Tempering Forge <strong>doubles</strong> bar value before any further processing. This is a massive multiplier that affects everything downstream. Clean→Polish→Smelt→<strong>Temper</strong>→process.</p>
+
+    <div class="flow-diagram">
+      <div style="margin-bottom: 4px; color: var(--muted); font-size: 0.8em; font-weight: 600;">MAIN LINE:</div>
+      <div class="flow-row">
+        <span class="flow-item fi-ore">Ore</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-machine">Clean → Polish → Smelt</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-machine" style="border-color: var(--gold); color: var(--gold);">⚡ Temper (×2)</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-machine">Plate (+$20) → Mech Parts (+$30)</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-sell">💰 Sell ($<span class="v-s6-mech">98</span>)</span>
+      </div>
+      <div style="margin-top: 10px; margin-bottom: 4px; color: var(--muted); font-size: 0.8em; font-weight: 600;">BYPRODUCT: Same concrete brick path ($360 per 2 stones)</div>
+    </div>
+
+    <div class="value-result">
+      <span class="val">Total per ore: $<span class="v-s6-total">278</span></span>
+      <span class="sub"> (Tempered Mech Parts: $<span class="v-s6-mech2">98</span> + Concrete Brick share: $180)</span>
+    </div>
+  </div>
+
+  <!-- STAGE 7 -->
+  <div class="stage-card">
+    <div class="stage-header">
+      <div class="stage-title">Stage 7: Casings & Frames</div>
+      <div class="stage-cost">Investment: $151,350</div>
+    </div>
+    <div class="stage-buildings">
+      <span class="building-tag">All previous</span>
+      <span class="building-tag new">Bolt Machine $3,000</span>
+      <span class="building-tag new">Frame Maker $10,000</span>
+      <span class="building-tag new">Casing Machine $50,000</span>
+    </div>
+    <p>Now you can build metal casings — the foundation of end-game products. A casing requires 4 ores worth of bars (1 bar + 1 bolt → frame, plus 1 bolt + 1 plate). The casing itself is very valuable, but the real power comes when you use it in end-game recipes.</p>
+
+    <div class="flow-diagram">
+      <div style="margin-bottom: 4px; color: var(--muted); font-size: 0.8em; font-weight: 600;">CASING RECIPE (4 ores → 1 casing):</div>
+      <div class="flow-row">
+        <span class="flow-item fi-ore">Ore #1 → Tempered Bar</span>
+        <span class="flow-arrow">┐</span>
+      </div>
+      <div class="flow-row">
+        <span class="flow-item fi-ore">Ore #2 → Tempered Bolts</span>
+        <span class="flow-arrow">┤</span>
+        <span class="flow-item fi-machine">Frame Maker (×1.25)</span>
+        <span class="flow-arrow">┐</span>
+      </div>
+      <div class="flow-row">
+        <span class="flow-item fi-ore">Ore #3 → Tempered Bolts</span>
+        <span class="flow-arrow">───────────────────────┤</span>
+        <span class="flow-item fi-machine">Casing Machine (×1.30)</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-sell">💰 Casing ($<span class="v-s7-casing">351</span>)</span>
+      </div>
+      <div class="flow-row">
+        <span class="flow-item fi-ore">Ore #4 → Tempered Plate</span>
+        <span class="flow-arrow">───────────────────────┘</span>
+      </div>
+    </div>
+
+    <div class="tip-box">
+      <strong>💡 Strategy choice:</strong> At ore value $<span class="v-ore2">10</span>, selling tempered mech parts + concrete bricks = $<span class="v-s6-total2">278</span>/ore. Selling casings + concrete bricks = $<span class="v-s7-perore">268</span>/ore. <strong>Mech parts are still slightly better for immediate selling!</strong> Build casings only when saving components for end-game products.
+    </div>
+
+    <div class="value-result">
+      <span class="val">Casing value: $<span class="v-s7-casing2">351</span></span>
+      <span class="sub"> from 4 ores | Per ore (with concrete bricks): $<span class="v-s7-perore2">268</span></span>
+    </div>
+  </div>
+
+  <!-- STAGE 8 -->
+  <div class="stage-card">
+    <div class="stage-header">
+      <div class="stage-title">Stage 8: Alloy & Superconductors</div>
+      <div class="stage-cost">Investment: $321,350</div>
+    </div>
+    <div class="stage-buildings">
+      <span class="building-tag">All previous</span>
+      <span class="building-tag new">Clay Mixer $20,000</span>
+      <span class="building-tag new">Ceramic Furnace $30,000</span>
+      <span class="building-tag new">Alloy Furnace $100K</span>
+      <span class="building-tag new">Magnetic Machine $100K</span>
+    </div>
+    <p>Now you can make alloy bars (merge 2 tempered bars, +20%) and ceramic casings from stones (2 dust → clay → ceramic $150). Combine alloys + ceramics into superconductors (×3 value!).</p>
+
+    <div class="flow-diagram">
+      <div style="margin-bottom: 4px; color: var(--muted); font-size: 0.8em; font-weight: 600;">SUPERCONDUCTOR (2 ores + 2 stones):</div>
+      <div class="flow-row">
+        <span class="flow-item fi-ore">2 Ores → 2 Tempered Bars</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-machine">Alloy Furnace (×1.2)</span>
+        <span class="flow-arrow">┐</span>
+      </div>
+      <div class="flow-row">
+        <span class="flow-item fi-byproduct">2 Stones → Crush → 2 Dust</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-machine">Clay ($50) → Ceramic ($150)</span>
+        <span class="flow-arrow">┤</span>
+        <span class="flow-item fi-machine">Superconductor (×3.0)</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-sell">💰 ($<span class="v-s8-sc">968</span>)</span>
+      </div>
+      <div style="margin-top: 14px; margin-bottom: 4px; color: var(--muted); font-size: 0.8em; font-weight: 600;">ELECTROMAGNET (5 ores):</div>
+      <div class="flow-row">
+        <span class="flow-item fi-ore">1 Ore → Tempered Coil</span>
+        <span class="flow-arrow">+</span>
+        <span class="flow-item fi-ore">4 Ores → Casing</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-machine">Magnetic Machine (×1.5)</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-sell">💰 ($<span class="v-s8-em">875</span>)</span>
+      </div>
+    </div>
+
+    <div class="tip-box good">
+      <strong>⚡ Best immediate sell at this stage:</strong> Superconductors give $<span class="v-s8-sc-perore">484</span>/ore (using stone byproducts for ceramics). This far surpasses selling mech parts ($<span class="v-s6-mech3">278</span>/ore).
+    </div>
+
+    <div class="value-result">
+      <span class="val">Superconductor: $<span class="v-s8-sc2">968</span></span>
+      <span class="sub"> from 2 ores + 2 stones | Per ore: $<span class="v-s8-sc-perore2">484</span></span>
+    </div>
+  </div>
+
+</section>
+
+<!-- END GAME -->
+<section id="endgame">
+  <h2><span class="icon">🏆</span> End-Game: Ultimate Products</h2>
+  <p class="desc">These are the highest-value products in the game. The Power Core is king, but requires a massive 11-ore investment per unit.</p>
+
+  <!-- POWER CORE -->
+  <div class="stage-card" style="border-color: var(--gold);">
+    <div class="stage-header">
+      <div class="stage-title" style="color: var(--gold);">👑 Power Core (THE BEST)</div>
+      <div class="stage-cost">Total Factory: ~$8.7M+</div>
+    </div>
+    <p style="margin-bottom: 16px;">The Power Core is the single most valuable non-gem product in the game. It combines a casing, a superconductor, and an electromagnet with a massive 250% value increase (×3.5).</p>
+
+    <div class="flow-diagram">
+      <div style="margin-bottom: 4px; color: var(--muted); font-size: 0.8em; font-weight: 600;">POWER CORE RECIPE (11 ores):</div>
+      <div class="flow-row">
+        <span class="flow-item fi-ore">4 Ores</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-product">Metal Casing ($<span class="v-eg-casing">351</span>)</span>
+        <span class="flow-arrow">─────────────────┐</span>
+      </div>
+      <div class="flow-row">
+        <span class="flow-item fi-ore">2 Ores + 2 Stones</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-product">Superconductor ($<span class="v-eg-sc">968</span>)</span>
+        <span class="flow-arrow">───────────┤</span>
+        <span class="flow-item fi-machine" style="border-color: var(--gold); color: var(--gold);">⚡ Power Core (×3.5)</span>
+      </div>
+      <div class="flow-row">
+        <span class="flow-item fi-ore">1+4 Ores → Coil+Casing</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-product">Electromagnet ($<span class="v-eg-em">875</span>)</span>
+        <span class="flow-arrow">──┘</span>
+      </div>
+      <div style="margin-top: 14px;">
+        <div class="flow-row">
+          <span class="flow-item fi-sell" style="font-size: 1em;">💰 Power Core: $<span class="v-eg-pc">7,678</span></span>
+          <span class="flow-arrow">→</span>
+          <span class="flow-item fi-machine">QA (+20%)</span>
+          <span class="flow-arrow">→</span>
+          <span class="flow-item fi-sell" style="font-size: 1.1em; border-color: var(--gold); color: var(--gold);">💰💰💰 $<span class="v-eg-pc-qa">9,213</span></span>
+        </div>
+      </div>
+      <div style="margin-top: 14px; margin-bottom: 4px; color: var(--muted); font-size: 0.8em; font-weight: 600;">BYPRODUCTS (9 leftover stones from 11 ores):</div>
+      <div class="flow-row">
+        <span class="flow-item fi-byproduct">8 Stones → 4 Concrete Bricks → Kiln → QA</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-sell">💰 $<span class="v-eg-bricks">1,728</span></span>
+      </div>
+      <div class="flow-row">
+        <span class="flow-item fi-byproduct">1 Stone → Crush → Brick → Kiln → QA</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-sell">💰 $43</span>
+      </div>
+    </div>
+
+    <div class="value-result" style="background: linear-gradient(135deg, #2a2a1a, #3b3a1a); border-color: var(--gold);">
+      <span class="val" style="font-size: 1.3em;">Grand Total from 11 ores: $<span class="v-eg-grand">10,984</span></span><br>
+      <span class="per-ore" style="font-size: 1.1em;">📈 Per ore: $<span class="v-eg-perore">999</span></span>
+    </div>
+  </div>
+
+  <!-- TABLET -->
+  <div class="stage-card">
+    <div class="stage-header">
+      <div class="stage-title">🖥️ Electronic Tablet</div>
+      <div class="stage-cost">~$5.5M factory</div>
+    </div>
+    <p>A strong option before you can afford the full Power Core setup. Uses electronic bonuses (Tuner +$50).</p>
+
+    <div class="flow-diagram">
+      <div style="margin-bottom: 4px; color: var(--muted); font-size: 0.8em; font-weight: 600;">TABLET RECIPE (5 ores):</div>
+      <div class="flow-row">
+        <span class="flow-item fi-ore">4 Ores → Casing ($<span class="v-tab-casing">351</span>)</span>
+        <span class="flow-arrow">┐</span>
+      </div>
+      <div class="flow-row">
+        <span class="flow-item fi-byproduct">1 Stone → Glass ($30)</span>
+        <span class="flow-arrow">┤</span>
+        <span class="flow-item fi-machine">Tablet (×3.0)</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-machine">Tuner (+$50)</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-machine">QA (+20%)</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-sell">💰 $<span class="v-tab-final">2,814</span></span>
+      </div>
+      <div class="flow-row">
+        <span class="flow-item fi-ore">1 Ore → Coil ($<span class="v-tab-coil">68</span>)</span>
+        <span class="flow-arrow">+ Glass → Circuit (×2.0) ┘</span>
+      </div>
+    </div>
+
+    <div class="value-result">
+      <span class="val">Tablet (QA'd + Tuned): $<span class="v-tab-final2">2,814</span></span>
+      <span class="sub"> from 5 ores | Per ore (with byproducts): $<span class="v-tab-perore">658</span></span>
+    </div>
+  </div>
+
+  <!-- ENGINE -->
+  <div class="stage-card">
+    <div class="stage-header">
+      <div class="stage-title">🔧 Engine</div>
+      <div class="stage-cost">~$1.2M factory</div>
+    </div>
+
+    <div class="flow-diagram">
+      <div style="margin-bottom: 4px; color: var(--muted); font-size: 0.8em; font-weight: 600;">ENGINE RECIPE (6 ores):</div>
+      <div class="flow-row">
+        <span class="flow-item fi-ore">1 Ore → Mech Parts ($<span class="v-eng-mp">98</span>)</span>
+        <span class="flow-arrow">┐</span>
+      </div>
+      <div class="flow-row">
+        <span class="flow-item fi-ore">1 Ore → Pipe ($<span class="v-eng-pipe">88</span>)</span>
+        <span class="flow-arrow">┤</span>
+        <span class="flow-item fi-machine">Engine (×1.2)</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-machine">QA (+20%)</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-sell">💰 $<span class="v-eng-final">773</span></span>
+      </div>
+      <div class="flow-row">
+        <span class="flow-item fi-ore">4 Ores → Casing ($<span class="v-eng-casing">351</span>)</span>
+        <span class="flow-arrow">┘</span>
+      </div>
+    </div>
+
+    <div class="value-result">
+      <span class="val">Engine (QA'd): $<span class="v-eng-final2">773</span></span>
+      <span class="sub"> from 6 ores | Per ore (with byproducts): $<span class="v-eng-perore">345</span></span>
+    </div>
+  </div>
+
+</section>
+
+<!-- COMPARISON TABLE -->
+<section id="comparison">
+  <h2><span class="icon">📊</span> Product Value Comparison</h2>
+  <p class="desc">All values include QA (+20%) where applicable. Per-ore values include concrete brick byproducts. Based on ore value $<span class="v-ore3">10</span>.</p>
+
+  <div style="overflow-x: auto;">
+    <table class="comp-table" id="compTable">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Ores Used</th>
+          <th>Product Value</th>
+          <th>With QA</th>
+          <th>Total with Byproducts</th>
+          <th>Value per Ore</th>
+          <th>Min. Factory Cost</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Filled by JS -->
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- BYPRODUCTS -->
+<section id="byproducts">
+  <h2><span class="icon">♻️</span> Byproduct Optimization</h2>
+  <p class="desc">Never waste a stone! Every smelted ore produces a stone. Here's how to maximize their value.</p>
+
+  <div class="byprod-grid">
+    <div class="byprod-card" style="border-color: var(--gold);">
+      <h4>🏆 Best: Concrete Bricks (need 2 stones)</h4>
+      <p>Stone + Dust → <strong>Cement ($50)</strong> → Brick Mold → <strong>Concrete Brick ($300)</strong> → Kiln → <strong>$360</strong> → QA → <strong class="val">$432</strong></p>
+      <p class="sub" style="margin-top: 6px;">Per stone: $216 | Requires: Crusher, Cement Mixer, Brick Mold, Kiln, QA Machine</p>
+    </div>
+
+    <div class="byprod-card">
+      <h4>🥈 Good: Ceramic Casing (need 2 stones)</h4>
+      <p>2 Stones → Crush → 2 Dust → <strong>Clay ($50)</strong> → Ceramic Furnace → <strong class="val">$150</strong></p>
+      <p class="sub" style="margin-top: 6px;">Per stone: $75 | Only useful as component for Superconductors</p>
+    </div>
+
+    <div class="byprod-card">
+      <h4>🥉 Decent: Fired Bricks (need 1 stone)</h4>
+      <p>Stone → Crush → Dust → Brick ($30) → Kiln → <strong class="val">$36</strong> → QA → <strong class="val">$43</strong></p>
+      <p class="sub" style="margin-top: 6px;">Per stone: $43 | Simple, no multi-stone requirement</p>
+    </div>
+
+    <div class="byprod-card">
+      <h4>🔮 Glass Sheets (need 1 stone)</h4>
+      <p>Stone → Crush → Dust → Kiln → <strong class="val">Glass ($30)</strong></p>
+      <p class="sub" style="margin-top: 6px;">Per stone: $30 | Low value alone, but critical for Circuits, Tablets, Lenses</p>
+    </div>
+
+    <div class="byprod-card">
+      <h4>⚗️ Cement only (need 2 stones)</h4>
+      <p>Stone + Dust → <strong class="val">Cement ($50)</strong></p>
+      <p class="sub" style="margin-top: 6px;">Per stone: $25 | Only sell raw if you don't have Brick Mold</p>
+    </div>
+
+    <div class="byprod-card">
+      <h4>🧱 Raw Brick (need 1 stone)</h4>
+      <p>Stone → Crush → Dust → Brick Mold → <strong class="val">$30</strong></p>
+      <p class="sub" style="margin-top: 6px;">Per stone: $30 | Use if no Kiln yet</p>
+    </div>
+  </div>
+
+  <div class="tip-box good">
+    <strong>🎯 Stone Priority Order:</strong>
+    1. Run through ALL gem prospectors first (free 5% chance each).
+    2. Surviving stones: pair up for concrete bricks ($360+).
+    3. Odd stone out: fire brick ($36) or glass (if needed for circuits).
+    4. Always sift dust before using it (free 10% gem chance).
+  </div>
+</section>
+
+<!-- GEMS -->
+<section id="gems">
+  <h2><span class="icon">💎</span> Gem Strategy</h2>
+  <p class="desc">Gems come from prospecting stones (5% each) and sifting dust (10% for common gems). Since gem base values aren't specified in the README, here's the optimal processing strategy regardless of value.</p>
+
+  <div class="stage-card">
+    <div class="stage-title" style="margin-bottom: 12px;">Gem Prospecting Chain</div>
+    <div class="flow-diagram">
+      <div class="flow-row">
+        <span class="flow-item fi-byproduct">Stone</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-machine">Topaz (5%)</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-machine">Emerald (5%)</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-machine">Sapphire (5%)</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-machine">Ruby (5%)</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-machine">Diamond (5%)</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-byproduct">Surviving Stone (77.4%)</span>
+      </div>
+    </div>
+    <p>Run every stone through all 5 prospectors before using it for anything else. The stone passes through each with a 95% survival rate. Overall: ~22.6% chance of becoming some gem.</p>
+
+    <div class="tip-box" style="margin-top: 16px;">
+      <strong>💎 Gem Processing Priority:</strong><br>
+      1. <strong>Gem Cutter</strong> → Cut gems (+40% value)<br>
+      2. <strong>Prismatic Gem Crucible</strong> → Merge 2 cut gems (+25% combined value)<br>
+      3. Use prismatic gems in: <strong>Amulets</strong> (ring + frame + prismatic gem, ×2.0) or <strong>Lasers</strong> (optics + gem + circuit, ×2.75)<br>
+      4. <strong>Filigree + Glider</strong> → Combine filigree with jewellery (×1.5) for extra value on amulets
+    </div>
+
+    <div class="tip-box good" style="margin-top: 12px;">
+      <strong>🔮 Sifter Bonus:</strong> Always run dust through the Sifter before using it for bricks/glass/clay. The dust isn't destroyed, and you get a 10% chance of a free common gem ore. It's literally free value.
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-title" style="margin-bottom: 12px;">Optimal Gem Products (by multiplier)</div>
+    <div style="overflow-x: auto;">
+      <table class="comp-table">
+        <thead>
+          <tr><th>Product</th><th>Recipe</th><th>Value Multiplier</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="color: var(--purple);">Laser</td>
+            <td>Optics + Gem + Circuit</td>
+            <td style="color: var(--gold);">×2.75</td>
+            <td>Highest gem multiplier if you have optics + circuits</td>
+          </tr>
+          <tr>
+            <td style="color: var(--purple);">Amulet</td>
+            <td>Ring + Frame + Prismatic Gem</td>
+            <td style="color: var(--gold);">×2.0</td>
+            <td>Great for prismatic gems, can be Glidered</td>
+          </tr>
+          <tr>
+            <td style="color: var(--purple);">Glider + Amulet</td>
+            <td>Filigree + Amulet</td>
+            <td style="color: var(--gold);">×1.5</td>
+            <td>Extra multiplier on top of Amulet</td>
+          </tr>
+          <tr>
+            <td style="color: var(--purple);">Prismatic Gem</td>
+            <td>Gem + Gem</td>
+            <td style="color: var(--gold);">×1.25 (combined)</td>
+            <td>Always merge gems before using in recipes</td>
+          </tr>
+          <tr>
+            <td style="color: var(--purple);">Gem Cutter</td>
+            <td>Raw Gem</td>
+            <td style="color: var(--gold);">×1.4</td>
+            <td>Always cut gems first before anything else</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- PRO TIPS -->
+<section id="tips">
+  <h2><span class="icon">💡</span> Pro Tips & Key Insights</h2>
+  <p class="desc">Critical optimization rules for maximum profit.</p>
+
+  <div class="tip-box good">
+    <strong>🔑 Rule #1: Always Clean + Polish ores BEFORE smelting.</strong><br>
+    The $20 value added by cleaning+polishing gets multiplied by ALL subsequent operations (×1.2 smelt, ×2 temper, etc.). Polishing a $10 ore adds $20, which becomes $48 after smelt+temper. Polishing a finished Power Core adds only $10. <em>Early flat bonuses compound into massive gains.</em>
+  </div>
+
+  <div class="tip-box good">
+    <strong>🔑 Rule #2: Always QA your final products last.</strong><br>
+    The QA Machine adds 20% to any item's final value. Apply it to your most expensive finished products (Power Cores, Tablets, etc.) for maximum dollar gain.
+  </div>
+
+  <div class="tip-box good">
+    <strong>🔑 Rule #3: Never sell raw stones.</strong><br>
+    Stones from smelting are the foundation of your byproduct economy. At minimum, crush them into dust ($25). Better: concrete bricks ($360). Best: run through prospectors first for free gem chances, then concrete bricks.
+  </div>
+
+  <div class="tip-box warn">
+    <strong>⚠️ The Blast Furnace is a trap!</strong><br>
+    It costs $25,000 but makes bars 10% LESS valuable than the ore (×0.9 vs Ore Smelter's ×1.2). The only reason it exists is if you want more stone byproducts from already-smelted ores that need re-processing, but in practice the Ore Smelter is strictly better.
+  </div>
+
+  <div class="tip-box">
+    <strong>💰 Concrete Bricks are the mid-game MVP.</strong><br>
+    From Stage 5 onwards, your stone byproducts generate more value as concrete bricks ($360 each from 2 free stones) than most early-game main products. This single upgrade (Cement Mixer, $10K) more than doubles your per-ore income.
+  </div>
+
+  <div class="tip-box">
+    <strong>🔗 Why Plates → Pipes → More?</strong><br>
+    The Plate Stamper seems worse than the Coiler at first (same +$20, costs more). But plates unlock TWO further processing steps: Pipes (+$20 more), Mech Parts (+$30 more), and Filigree (+20% value). Coils only feed into Circuits and Rings. <strong>Invest in the plate path — it has more branches.</strong>
+  </div>
+
+  <div class="tip-box">
+    <strong>🔬 Alloy Stacking (Advanced):</strong><br>
+    If the game allows alloying alloy bars together, you can recursively merge for compounding 20% bonuses: 2 bars → alloy (×1.2) → 2 alloys → super-alloy (×1.2 again). After N layers with 2<sup>N</sup> bars: total bonus = 1.2<sup>N</sup>. With 8 bars (3 layers): 72.8% more value vs separate bars!
+  </div>
+
+  <div class="tip-box">
+    <strong>📊 The "Per Ore" Metric:</strong><br>
+    When comparing products, always look at value <em>per ore consumed</em>, not total product value. A $9,000 Power Core using 11 ores ($818/ore) could be worse than a $2,800 Tablet using 5 ores ($560/ore) if you have limited ores. But with byproducts included, Power Core wins: $<span class="v-eg-perore2">999</span>/ore vs $<span class="v-tab-perore2">658</span>/ore.
+  </div>
+</section>
+
+<!-- BUILDING REFERENCE -->
+<section id="buildings">
+  <h2><span class="icon">🏭</span> Full Building Reference</h2>
+  <p class="desc">All 47 buildings sorted by price.</p>
+
+  <div style="overflow-x: auto;">
+    <table class="comp-table" id="buildingTable">
+      <thead>
+        <tr><th>Building</th><th>Price</th><th>Category</th><th>Effect</th></tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</section>
+
+</div>
+
+<script>
+const buildings = [
+  { name: "Polisher", price: 850, cat: "Upgrade", effect: "Adds $10 value to any unpolished item" },
+  { name: "Ore Cleaner", price: 1000, cat: "Upgrade", effect: "Adds $10 value to uncleaned ores" },
+  { name: "Ore Smelter", price: 1500, cat: "Smelting", effect: "Ore → Bar (×1.2 value) + Stone" },
+  { name: "Crusher", price: 1750, cat: "Processing", effect: "Anything → Dust ($25 set value)" },
+  { name: "Coiler", price: 1750, cat: "Bar Processing", effect: "Bar → Coil (+$20)" },
+  { name: "Topaz Prospector", price: 2000, cat: "Gems", effect: "5% chance: Stone → Topaz" },
+  { name: "Brick Mold", price: 2000, cat: "Stone Processing", effect: "Dust → Brick ($30) or Cement → Concrete Brick ($300)" },
+  { name: "Bolt Machine", price: 3000, cat: "Bar Processing", effect: "Bar → Bolts (+$15)" },
+  { name: "Plate Stamper", price: 3500, cat: "Bar Processing", effect: "Bar → Plate (+$20)" },
+  { name: "Sifter", price: 4000, cat: "Stone Processing", effect: "10% chance: Dust → Common Gem Ore (dust kept)" },
+  { name: "Pipe Maker", price: 4000, cat: "Plate Processing", effect: "Plate → Pipe (+$20)" },
+  { name: "Kiln", price: 4750, cat: "Stone Processing", effect: "Dust → Glass ($30) or Bricks ×1.2" },
+  { name: "Emerald Prospector", price: 6000, cat: "Gems", effect: "5% chance: Stone → Emerald" },
+  { name: "Mech Parts Maker", price: 6000, cat: "Plate Processing", effect: "Plate → Mech Parts (+$30)" },
+  { name: "Sapphire Prospector", price: 8000, cat: "Gems", effect: "5% chance: Stone → Sapphire" },
+  { name: "Electronic Tuner", price: 8000, cat: "Upgrade", effect: "Adds $50 to untuned electronics" },
+  { name: "Cement Mixer", price: 10000, cat: "Stone Processing", effect: "Dust + Stone → Cement ($50)" },
+  { name: "Frame Maker", price: 10000, cat: "Combination", effect: "Bar + Bolts → Frame (×1.25)" },
+  { name: "Ruby Prospector", price: 10000, cat: "Gems", effect: "5% chance: Stone → Ruby" },
+  { name: "Ring Maker", price: 10000, cat: "Combination", effect: "Metal Dust + Coil → Ring (×1.75)" },
+  { name: "Blasting Powder Chamber", price: 15000, cat: "Explosives", effect: "Metal Dust + Stone Dust → Blasting Powder ($52)" },
+  { name: "Explosives Maker", price: 15000, cat: "Explosives", effect: "Blasting Powder + Casing → Explosives (×1.5)" },
+  { name: "Circuit Maker", price: 20000, cat: "Combination", effect: "Glass + Coil → Circuit (×2.0)" },
+  { name: "Clay Mixer", price: 20000, cat: "Stone Processing", effect: "2 Dust → Clay Block ($50)" },
+  { name: "Gem Cutter", price: 20000, cat: "Gems", effect: "Raw Gem → Cut Gem (+40%)" },
+  { name: "Blast Furnace", price: 25000, cat: "Smelting", effect: "Ore → Bar (×0.9 value) + Stone ⚠️ WORSE" },
+  { name: "Ceramic Furnace", price: 30000, cat: "Stone Processing", effect: "Clay Block → Ceramic Casing ($150)" },
+  { name: "Diamond Prospector", price: 30000, cat: "Gems", effect: "5% chance: Stone → Diamond" },
+  { name: "Tempering Forge", price: 50000, cat: "Upgrade", effect: "Doubles untempered bar value (×2)" },
+  { name: "Casing Machine", price: 50000, cat: "Combination", effect: "Frame + Bolts + Plate → Casing (×1.30)" },
+  { name: "Filigree Cutter", price: 50000, cat: "Plate Processing", effect: "Plate → Filigree (+20% value)" },
+  { name: "Lens Cutter", price: 75000, cat: "Glass Processing", effect: "Glass → Lens (+$50)" },
+  { name: "Prismatic Gem Crucible", price: 100000, cat: "Gems", effect: "2 Gems → Prismatic Gem (×1.25 combined)" },
+  { name: "Alloy Furnace", price: 100000, cat: "Combination", effect: "2 Bars → Alloy Bar (×1.2 combined)" },
+  { name: "Magnetic Machine", price: 100000, cat: "Combination", effect: "Coil + Metal Casing → Electromagnet (×1.5)" },
+  { name: "Optics Machine", price: 300000, cat: "Combination", effect: "Lens + Pipe → Optics (×1.25)" },
+  { name: "Glider", price: 500000, cat: "Combination", effect: "Filigree + Jewellery → Glider (×1.5)" },
+  { name: "Engine Factory", price: 1000000, cat: "End-Game", effect: "Mech Parts + Pipe + Casing → Engine (×1.2)" },
+  { name: "Superconductor Constructor", price: 1000000, cat: "End-Game", effect: "Alloy Bar + Ceramic Casing → Superconductor (×3.0)" },
+  { name: "Quality Assurance Machine", price: 2000000, cat: "Upgrade", effect: "Adds 20% to untested items" },
+  { name: "Amulet Maker", price: 2000000, cat: "End-Game", effect: "Ring + Frame + Prismatic Gem → Amulet (×2.0)" },
+  { name: "Tablet Factory", price: 2500000, cat: "End-Game", effect: "Casing + Glass + Circuit → Tablet (×3.0)" },
+  { name: "Blasting Powder Refiner", price: 2500000, cat: "Explosives", effect: "Blasting Powder + Metal Dust → Refined Powder (+$15)" },
+  { name: "Laser Maker", price: 3500000, cat: "End-Game", effect: "Optics + Gem + Circuit → Laser (×2.75)" },
+  { name: "Power Core Assembler", price: 4500000, cat: "End-Game", effect: "Casing + Superconductor + Electromagnet → Power Core (×3.5)" },
+];
+
+function fmt(n) {
+  return n >= 1000000 ? (n / 1000000).toFixed(2) + 'M' :
+         n >= 1000 ? (n / 1000).toFixed(n % 1000 === 0 ? 0 : 1) + 'K' :
+         n.toString();
+}
+
+function fmtD(n) {
+  return Math.round(n).toLocaleString();
+}
+
+// Build building table
+(function() {
+  const tbody = document.querySelector('#buildingTable tbody');
+  const catColors = {
+    "Upgrade": "var(--green)", "Smelting": "var(--orange)", "Processing": "var(--muted)",
+    "Bar Processing": "var(--cyan)", "Gems": "var(--purple)", "Stone Processing": "var(--pink)",
+    "Plate Processing": "var(--cyan)", "Combination": "var(--accent)", "Explosives": "var(--red)",
+    "Glass Processing": "var(--cyan)", "End-Game": "var(--gold)",
+  };
+  buildings.forEach(b => {
+    const tr = document.createElement('tr');
+    const c = catColors[b.cat] || 'var(--text)';
+    tr.innerHTML = `<td style="font-weight:600;">${b.name}</td><td style="color:var(--gold);">$${fmt(b.price)}</td><td style="color:${c};">${b.cat}</td><td style="color:var(--muted);font-size:0.9em;">${b.effect}</td>`;
+    tbody.appendChild(tr);
+  });
+})();
+
+function recalc() {
+  const V = parseFloat(document.getElementById('oreVal').value) || 0;
+
+  // Helper: bar value after clean+polish+smelt
+  const bar = (V + 20) * 1.2;
+  const temperedBar = bar * 2;
+
+  // Stage 1
+  const s1Coil = bar + 20;
+  setAll('.v-ore', fmtD(V));
+  setAll('.v-ore2', fmtD(V));
+  setAll('.v-ore3', fmtD(V));
+  setAll('.v-s1-coil', fmtD(s1Coil));
+  setAll('.v-s1-coil2', fmtD(s1Coil));
+  setAll('.v-s1-total', fmtD(s1Coil + 25));
+
+  // Stage 2
+  const s2Pipe = bar + 40;
+  setAll('.v-s2-pipe', fmtD(s2Pipe));
+  setAll('.v-s2-pipe2', fmtD(s2Pipe));
+  setAll('.v-s2-total', fmtD(s2Pipe + 30));
+
+  // Stage 3
+  setAll('.v-s3-pipe', fmtD(s2Pipe));
+  setAll('.v-s3-pipe2', fmtD(s2Pipe));
+  setAll('.v-s3-total', fmtD(s2Pipe + 36));
+
+  // Stage 4
+  const s4Mech = bar + 50;
+  setAll('.v-s4-mech', fmtD(s4Mech));
+  setAll('.v-s4-mech2', fmtD(s4Mech));
+  setAll('.v-s4-total', fmtD(s4Mech + 36));
+
+  // Stage 5 - Concrete revolution
+  // Main: mech parts (no temper yet). Byproduct: concrete brick $360 per 2 stones ($180/ore)
+  setAll('.v-s5-mech', fmtD(s4Mech));
+  setAll('.v-s5-mech2', fmtD(s4Mech));
+  setAll('.v-s5-total', fmtD(s4Mech + 180));
+
+  // Stage 6 - Tempering
+  const s6Mech = temperedBar + 50;
+  setAll('.v-s6-mech', fmtD(s6Mech));
+  setAll('.v-s6-mech2', fmtD(s6Mech));
+  setAll('.v-s6-mech3', fmtD(s6Mech + 180));
+  setAll('.v-s6-total', fmtD(s6Mech + 180));
+  setAll('.v-s6-total2', fmtD(s6Mech + 180));
+
+  // Stage 7 - Casings
+  const bolt = temperedBar + 15;
+  const plate = temperedBar + 20;
+  const frame = (temperedBar + bolt) * 1.25;
+  const casing = (frame + bolt + plate) * 1.30;
+  const casingPerOre = casing / 4 + 180; // 4 ores, $180 concrete brick share per ore
+  setAll('.v-s7-casing', fmtD(casing));
+  setAll('.v-s7-casing2', fmtD(casing));
+  setAll('.v-s7-perore', fmtD(casingPerOre));
+  setAll('.v-s7-perore2', fmtD(casingPerOre));
+
+  // Stage 8 - Superconductors & Electromagnets
+  const alloy = (temperedBar + temperedBar) * 1.2;
+  const ceramic = 150;
+  const sc = (alloy + ceramic) * 3.0;
+  const coil = temperedBar + 20;
+  const em = (coil + casing) * 1.5;
+  const scPerOre = sc / 2; // 2 ores, stones used for ceramic
+  setAll('.v-s8-sc', fmtD(sc));
+  setAll('.v-s8-sc2', fmtD(sc));
+  setAll('.v-s8-em', fmtD(em));
+  setAll('.v-s8-sc-perore', fmtD(scPerOre));
+  setAll('.v-s8-sc-perore2', fmtD(scPerOre));
+
+  // End game - Power Core
+  const casing1 = casing; // for power core
+  const casing2 = casing; // for electromagnet
+  const pc = (casing1 + sc + em) * 3.5;
+  const pcQA = pc * 1.2;
+  // 11 ores produce 11 stones, 2 used for superconductor ceramic
+  // Remaining 9 stones: 4 concrete bricks (8 stones) + 1 fired brick (1 stone)
+  const concreteBrickQA = 300 * 1.2 * 1.2; // brick mold $300 -> kiln 1.2 -> QA 1.2 = $432
+  const firedBrickQA = 30 * 1.2 * 1.2; // brick $30 -> kiln 1.2 -> QA 1.2 = $43.2
+  const pcBricks = 4 * concreteBrickQA + 1 * firedBrickQA;
+  const pcGrand = pcQA + pcBricks;
+  const pcPerOre = pcGrand / 11;
+
+  setAll('.v-eg-casing', fmtD(casing1));
+  setAll('.v-eg-sc', fmtD(sc));
+  setAll('.v-eg-em', fmtD(em));
+  setAll('.v-eg-pc', fmtD(pc));
+  setAll('.v-eg-pc-qa', fmtD(pcQA));
+  setAll('.v-eg-bricks', fmtD(pcBricks - firedBrickQA));
+  setAll('.v-eg-grand', fmtD(pcGrand));
+  setAll('.v-eg-perore', fmtD(pcPerOre));
+  setAll('.v-eg-perore2', fmtD(pcPerOre));
+
+  // Tablet
+  const glass = 30;
+  const circuit = (glass + coil) * 2.0;
+  const tablet = (casing + glass + circuit) * 3.0;
+  const tabletTuned = tablet + 50;
+  const tabletQA = tabletTuned * 1.2;
+  // 5 ores, 2 stones for glass, 3 remaining: 1 concrete brick (2 stones) + 1 fired brick
+  const tabBricks = 1 * concreteBrickQA + 1 * firedBrickQA;
+  const tabGrand = tabletQA + tabBricks;
+  const tabPerOre = tabGrand / 5;
+
+  setAll('.v-tab-casing', fmtD(casing));
+  setAll('.v-tab-coil', fmtD(coil));
+  setAll('.v-tab-final', fmtD(tabletQA));
+  setAll('.v-tab-final2', fmtD(tabletQA));
+  setAll('.v-tab-perore', fmtD(tabPerOre));
+  setAll('.v-tab-perore2', fmtD(tabPerOre));
+
+  // Engine
+  const mech = temperedBar + 50;
+  const pipe = temperedBar + 40;
+  const engine = (mech + pipe + casing) * 1.2;
+  const engineQA = engine * 1.2;
+  // 6 ores, 6 stones: 3 concrete bricks
+  const engBricks = 3 * concreteBrickQA;
+  const engGrand = engineQA + engBricks;
+  const engPerOre = engGrand / 6;
+
+  setAll('.v-eng-mp', fmtD(mech));
+  setAll('.v-eng-pipe', fmtD(pipe));
+  setAll('.v-eng-casing', fmtD(casing));
+  setAll('.v-eng-final', fmtD(engineQA));
+  setAll('.v-eng-final2', fmtD(engineQA));
+  setAll('.v-eng-perore', fmtD(engPerOre));
+
+  // Comparison table
+  const compData = [
+    { name: "Power Core + QA", ores: 11, val: pc, qa: pcQA, byp: pcBricks, total: pcGrand, factCost: "~$8.7M" },
+    { name: "Tablet + Tuner + QA", ores: 5, val: tablet, qa: tabletQA, byp: tabBricks, total: tabGrand, factCost: "~$5.5M" },
+    { name: "Superconductor + QA", ores: 2, val: sc, qa: sc * 1.2, byp: 0, total: sc * 1.2, factCost: "~$1.3M" },
+    { name: "Engine + QA", ores: 6, val: engine, qa: engineQA, byp: engBricks, total: engGrand, factCost: "~$1.2M" },
+    { name: "Electromagnet + QA", ores: 5, val: em, qa: em * 1.2, byp: 2 * concreteBrickQA + firedBrickQA, total: em * 1.2 + 2 * concreteBrickQA + firedBrickQA, factCost: "~$350K" },
+    { name: "Tempered Mech Parts + QA", ores: 1, val: mech, qa: mech * 1.2, byp: 180, total: mech * 1.2 + 180, factCost: "~$90K" },
+    { name: "Tempered Pipe + QA", ores: 1, val: pipe, qa: pipe * 1.2, byp: 180, total: pipe * 1.2 + 180, factCost: "~$90K" },
+  ];
+
+  compData.sort((a, b) => (b.total / b.ores) - (a.total / a.ores));
+
+  const tbody = document.querySelector('#compTable tbody');
+  tbody.innerHTML = '';
+  compData.forEach((d, i) => {
+    const perOre = d.total / d.ores;
+    const cls = i === 0 ? 'rank-1' : i === 1 ? 'rank-2' : i === 2 ? 'rank-3' : '';
+    const medal = i === 0 ? '👑 ' : i === 1 ? '🥈 ' : i === 2 ? '🥉 ' : '';
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td class="${cls}">${medal}${d.name}</td>
+      <td>${d.ores}</td>
+      <td>$${fmtD(d.val)}</td>
+      <td>$${fmtD(d.qa)}</td>
+      <td>$${fmtD(d.total)}</td>
+      <td class="${cls}">$${fmtD(perOre)}/ore</td>
+      <td style="color:var(--muted);font-size:0.85em;">${d.factCost}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function setAll(selector, value) {
+  document.querySelectorAll(selector).forEach(el => el.textContent = value);
+}
+
+// Initial calc
+recalc();
+</script>
+
+</body>
+</html>
