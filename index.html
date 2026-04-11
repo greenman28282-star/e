@@ -226,23 +226,41 @@
 
   /* Factory Layout Visualization */
   .fl-toggle-btn {
-    display: inline-flex; align-items: center; gap: 6px;
-    margin: 14px 0 6px; padding: 8px 16px;
-    background: var(--surface2); border: 1px solid var(--border);
-    border-radius: 8px; color: var(--accent); font-size: 0.85em;
+    display: inline-flex; align-items: center; gap: 8px;
+    margin: 16px 0 8px; padding: 10px 20px;
+    background: linear-gradient(135deg, var(--surface2), rgba(108,140,255,0.06));
+    border: 1px solid var(--border);
+    border-radius: 10px; color: var(--accent); font-size: 0.88em;
     font-weight: 600; cursor: pointer; transition: all var(--transition);
-    user-select: none;
+    user-select: none; letter-spacing: 0.01em;
   }
-  .fl-toggle-btn:hover { background: rgba(108,140,255,0.12); border-color: var(--accent); }
-  .fl-toggle-btn.active { background: rgba(108,140,255,0.15); border-color: var(--accent); color: var(--text); }
+  .fl-toggle-btn:hover { background: linear-gradient(135deg, rgba(108,140,255,0.12), rgba(108,140,255,0.08)); border-color: var(--accent); transform: translateY(-1px); }
+  .fl-toggle-btn.active { background: linear-gradient(135deg, rgba(108,140,255,0.15), rgba(108,140,255,0.10)); border-color: var(--accent); color: var(--text); }
   .factory-layout {
-    display: none; margin: 10px 0 14px; overflow-x: auto;
-    -webkit-overflow-scrolling: touch; background: var(--bg);
-    border: 1px solid var(--border); border-radius: 10px; padding: 12px;
+    display: none; margin: 12px 0 18px; overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    background: linear-gradient(180deg, #0d0f14, #111420);
+    border: 1px solid var(--border); border-radius: 12px; padding: 16px 16px 10px;
   }
   .factory-layout.visible { display: block; }
-  .factory-layout svg { display: block; }
+  .factory-layout svg { display: block; max-width: 100%; height: auto; }
   .factory-layout svg text { pointer-events: none; }
+  .fl-legend {
+    display: flex; flex-wrap: wrap; gap: 8px 14px;
+    padding: 10px 4px 4px; border-top: 1px solid var(--border); margin-top: 8px;
+  }
+  .fl-legend-item {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 0.72em; color: var(--muted); font-weight: 500;
+  }
+  .fl-legend-swatch {
+    width: 12px; height: 12px; border-radius: 3px; border: 1px solid rgba(255,255,255,0.12);
+    flex-shrink: 0;
+  }
+  @media (max-width: 600px) {
+    .fl-legend { gap: 6px 10px; }
+    .fl-legend-item { font-size: 0.65em; }
+  }
   @media print { .fl-toggle-btn, .factory-layout { display: none !important; } }
 
   .value-result {
@@ -2815,30 +2833,44 @@ recalc();
 
 // === FACTORY LAYOUT VISUALIZATION ===
 (function() {
-  var CW = 96, CH = 30, GX = 12, GY = 12;
-  var GW = CW + GX, GH = CH + GY;
-  var PAD = 24;
-  var NS = 'http://www.w3.org/2000/svg';
+  // Dimensions: wider boxes, more padding for readability
+  var CELL_W = 110, CELL_H = 36, GAP_X = 16, GAP_Y = 18;
+  var GRID_W = CELL_W + GAP_X, GRID_H = CELL_H + GAP_Y;
+  var PADDING = 32;
+  var SVG_NS = 'http://www.w3.org/2000/svg';
 
-  // Building type colors
-  var BC = {
-    source:     { bg:'#3b2a1a', bd:'#7a5c3a', tx:'#e0b070' },
-    upgrade:    { bg:'#1a3b2a', bd:'#3a7a5c', tx:'#70e0b0' },
-    machine:    { bg:'#1a2a3b', bd:'#3a5c7a', tx:'#70b0e0' },
-    prospector: { bg:'#2a1a3b', bd:'#5c3a7a', tx:'#b070e0' },
-    filter:     { bg:'#242836', bd:'#556',    tx:'#8b8fa3' },
-    gem:        { bg:'#3b1a3b', bd:'#7a3a7a', tx:'#e070e0' },
-    seller:     { bg:'#3b3a1a', bd:'#7a7a3a', tx:'#e0e070' },
-    special:    { bg:'#3b2a1a', bd:'#b8860b', tx:'#f5c542' },
-    assembly:   { bg:'#1a1a3b', bd:'#5050a0', tx:'#9090ff' },
-    splitter:   { bg:'#2a2a2a', bd:'#505050', tx:'#999'    }
+  // Building type colors - richer palette with better contrast
+  var BUILDING_COLORS = {
+    source:     { bg:'#3d2c18', bd:'#8a6838', tx:'#f0c070' },
+    upgrade:    { bg:'#1a3d2a', bd:'#3a8a5c', tx:'#70f0b0' },
+    machine:    { bg:'#1a2c3d', bd:'#3a6088', tx:'#78b8e8' },
+    prospector: { bg:'#2c1a3d', bd:'#6838a0', tx:'#c088f0' },
+    filter:     { bg:'#282c38', bd:'#505868', tx:'#a0a8b8' },
+    gem:        { bg:'#3d1a3d', bd:'#883888', tx:'#f078f0' },
+    seller:     { bg:'#3d3a18', bd:'#8a8838', tx:'#f0e070' },
+    special:    { bg:'#3d2c10', bd:'#c8960b', tx:'#ffd04a' },
+    assembly:   { bg:'#1c1c40', bd:'#5858b0', tx:'#a0a0ff' },
+    splitter:   { bg:'#2c2c2c', bd:'#606060', tx:'#b0b0b0' }
   };
 
-  // Line/flow colors
-  var LC = {
-    ore:'#c09060', bar:'#5090c0', stone:'#9060c0',
-    gem:'#c060c0', brick:'#d08040', product:'#60c090', 'default':'#555'
+  // Line/flow colors - brighter for visibility
+  var LINE_COLORS = {
+    ore:'#d0a070', bar:'#60a0d0', stone:'#a070d0',
+    gem:'#d070d0', brick:'#e09050', product:'#70d0a0', 'default':'#666'
   };
+
+  // Legend definitions
+  var LEGEND = [
+    ['Source / Input', BUILDING_COLORS.source],
+    ['Upgrade', BUILDING_COLORS.upgrade],
+    ['Machine', BUILDING_COLORS.machine],
+    ['Prospector', BUILDING_COLORS.prospector],
+    ['Gem Processing', BUILDING_COLORS.gem],
+    ['Special', BUILDING_COLORS.special],
+    ['Assembly', BUILDING_COLORS.assembly],
+    ['Splitter / Filter', BUILDING_COLORS.splitter],
+    ['Seller', BUILDING_COLORS.seller]
+  ];
 
   // Layout data per stage: b=[id,label,type,col,row], c=[from,to,flowType,label?,dirHint?], a=[text,col,row,color?]
   var LAYOUTS = [
@@ -2855,10 +2887,10 @@ recalc();
       ['sml','coi','bar','bars'],['coi','sl1','bar'],
       ['sml','tp','stone','stones'],['tp','flt','stone'],
       ['flt','gp','gem','gems'],['gp','sl2','gem'],
-      ['flt','cru','stone','stones'],['cru','dp','brick','dust'],['dp','sl3','brick']
+      ['flt','cru','stone','surviving'],['cru','dp','brick','dust'],['dp','sl3','brick']
     ], a:[
-      ['MAIN BAR LINE -->',0.8,-.42,'#5090c0'],
-      ['BYPRODUCT LINE |',3.3,.7,'#9060c0']
+      ['BAR LINE',0.5,-.35,'#60a0d0'],
+      ['STONE BYPRODUCTS',3.2,.7,'#a070d0']
     ]},
 
     // === STAGE 2 ===
@@ -2875,10 +2907,10 @@ recalc();
       ['sml','plt','bar'],['plt','pip','bar','bars'],['pip','sl1','bar'],
       ['sml','tp','stone','stones'],['tp','ep','stone'],['ep','flt','stone'],
       ['flt','gp','gem','gems'],['gp','sl2','gem'],
-      ['flt','cru','stone','stones'],['cru','brk','brick'],['brk','bp','brick','bricks'],['bp','sl3','brick']
+      ['flt','cru','stone','surviving'],['cru','brk','brick'],['brk','bp','brick','bricks'],['bp','sl3','brick']
     ], a:[
-      ['MAIN BAR LINE -->',0.8,-.42,'#5090c0'],
-      ['BYPRODUCT LINE |',3.3,.7,'#9060c0']
+      ['BAR LINE',0.5,-.35,'#60a0d0'],
+      ['STONE BYPRODUCTS',3.2,.7,'#a070d0']
     ]},
 
     // === STAGE 3 ===
@@ -2886,7 +2918,7 @@ recalc();
       ['unl','Unloader','source',0,0],['cln','Ore Cleaner','upgrade',1,0],
       ['pol','Polisher','upgrade',2,0],['sml','Ore Smelter','machine',3,0],
       ['plt','Plate Stamper','machine',4,0],['pip','Pipe Maker','machine',5,0],['sl1','Seller','seller',6,0],
-      ['tp','Topaz','prospector',3,1.5],['ep','Emerald','prospector',4,1.5],['sp','Sapphire','prospector',5,1.5],
+      ['tp','Topaz Prosp.','prospector',3,1.5],['ep','Emerald Prosp.','prospector',4,1.5],['sp','Sapphire Prosp.','prospector',5,1.5],
       ['flt','Filter','filter',6,1.5],['gp','Polisher','gem',7,1.5],['sl2','Seller','seller',8,1.5],
       ['cru','Crusher','machine',6,3],['brk','Brick Mold','machine',7,3],['kln','Kiln','upgrade',8,3],
       ['bp','Polisher','upgrade',9,3],['sl3','Seller','seller',10,3]
@@ -2895,11 +2927,11 @@ recalc();
       ['sml','plt','bar'],['plt','pip','bar','bars'],['pip','sl1','bar'],
       ['sml','tp','stone','stones'],['tp','ep','stone'],['ep','sp','stone'],['sp','flt','stone'],
       ['flt','gp','gem','gems'],['gp','sl2','gem'],
-      ['flt','cru','stone','stones'],['cru','brk','brick'],['brk','kln','brick'],['kln','bp','brick','fired bricks'],['bp','sl3','brick']
+      ['flt','cru','stone','surviving'],['cru','brk','brick'],['brk','kln','brick'],['kln','bp','brick','fired bricks'],['bp','sl3','brick']
     ], a:[
-      ['MAIN BAR LINE -->',0.8,-.42,'#5090c0'],
-      ['3 PROSPECTORS -->',3.3,.7,'#9060c0'],
-      ['FIRED BRICK LINE -->',6.5,2.4,'#d08040']
+      ['BAR LINE',0.5,-.35,'#60a0d0'],
+      ['3 PROSPECTORS',3.2,.7,'#a070d0'],
+      ['FIRED BRICKS',6.5,2.35,'#e09050']
     ]},
 
     // === STAGE 4 ===
@@ -2907,8 +2939,8 @@ recalc();
       ['unl','Unloader','source',0,0],['cln','Ore Cleaner','upgrade',1,0],
       ['pol','Polisher','upgrade',2,0],['sml','Ore Smelter','machine',3,0],
       ['plt','Plate Stamper','machine',4,0],['mch','Mech Parts','machine',5,0],['sl1','Seller','seller',6,0],
-      ['tp','Topaz','prospector',3,1.5],['ep','Emerald','prospector',4,1.5],
-      ['sp','Sapphire','prospector',5,1.5],['rp','Ruby','prospector',6,1.5],
+      ['tp','Topaz Prosp.','prospector',3,1.5],['ep','Emerald Prosp.','prospector',4,1.5],
+      ['sp','Sapphire Prosp.','prospector',5,1.5],['rp','Ruby Prosp.','prospector',6,1.5],
       ['flt','Filter','filter',7,1.5],['gp','Polisher','gem',8,1.5],['sl2','Seller','seller',9,1.5],
       ['cru','Crusher','machine',7,3],['brk','Brick Mold','machine',8,3],['kln','Kiln','upgrade',9,3],
       ['bp','Polisher','upgrade',10,3],['sl3','Seller','seller',11,3]
@@ -2917,11 +2949,11 @@ recalc();
       ['sml','plt','bar'],['plt','mch','bar','bars'],['mch','sl1','bar'],
       ['sml','tp','stone','stones'],['tp','ep','stone'],['ep','sp','stone'],['sp','rp','stone'],['rp','flt','stone'],
       ['flt','gp','gem','gems'],['gp','sl2','gem'],
-      ['flt','cru','stone','stones'],['cru','brk','brick'],['brk','kln','brick'],['kln','bp','brick','fired bricks'],['bp','sl3','brick']
+      ['flt','cru','stone','surviving'],['cru','brk','brick'],['brk','kln','brick'],['kln','bp','brick','fired bricks'],['bp','sl3','brick']
     ], a:[
-      ['MAIN BAR LINE -->',0.8,-.42,'#5090c0'],
-      ['4 PROSPECTORS -->',3.3,.7,'#9060c0'],
-      ['FIRED BRICK LINE -->',7.5,2.4,'#d08040']
+      ['BAR LINE',0.5,-.35,'#60a0d0'],
+      ['4 PROSPECTORS',3.2,.7,'#a070d0'],
+      ['FIRED BRICKS',7.5,2.35,'#e09050']
     ]},
 
     // === STAGE 5: CONCRETE REVOLUTION ===
@@ -2929,8 +2961,8 @@ recalc();
       ['unl','Unloader','source',0,0],['cln','Ore Cleaner','upgrade',1,0],
       ['pol','Polisher','upgrade',2,0],['sml','Ore Smelter','machine',3,0],
       ['plt','Plate Stamper','machine',4,0],['mch','Mech Parts','machine',5,0],['sl1','Seller','seller',6,0],
-      ['tp','Topaz','prospector',3,1.5],['ep','Emerald','prospector',4,1.5],
-      ['sp','Sapphire','prospector',5,1.5],['rp','Ruby','prospector',6,1.5],
+      ['tp','Topaz Prosp.','prospector',3,1.5],['ep','Emerald Prosp.','prospector',4,1.5],
+      ['sp','Sapphire Prosp.','prospector',5,1.5],['rp','Ruby Prosp.','prospector',6,1.5],
       ['flt','Filter','filter',7,1.5],['gp','Polisher','gem',8,1.5],['sl2','Seller','seller',9,1.5],
       ['spt','L/R Splitter','splitter',7,3],['cru','Crusher','machine',8.5,3],
       ['cmx','Cement Mixer','special',7.5,4.2],['brk','Brick Mold','machine',8.5,4.2],
@@ -2940,124 +2972,124 @@ recalc();
       ['sml','plt','bar'],['plt','mch','bar','bars'],['mch','sl1','bar'],
       ['sml','tp','stone','stones'],['tp','ep','stone'],['ep','sp','stone'],['sp','rp','stone'],['rp','flt','stone'],
       ['flt','gp','gem','gems'],['gp','sl2','gem'],
-      ['flt','spt','stone','stones'],
-      ['spt','cru','stone','crush'],['spt','cmx','stone','stone','v'],
+      ['flt','spt','stone','surviving'],
+      ['spt','cru','stone','crush half'],['spt','cmx','stone','keep half','v'],
       ['cru','cmx','brick','dust'],
       ['cmx','brk','brick','cement'],['brk','kln','brick'],['kln','bp','brick','concrete'],['bp','sl3','brick']
     ], a:[
-      ['MAIN BAR LINE -->',0.8,-.42,'#5090c0'],
-      ['4 PROSPECTORS -->',3.3,.7,'#9060c0'],
-      ['CONCRETE BRICK PAIRING |',7.3,2.35,'#d08040']
+      ['BAR LINE',0.5,-.35,'#60a0d0'],
+      ['4 PROSPECTORS',3.2,.7,'#a070d0'],
+      ['CONCRETE BRICK PAIRING',7.2,2.3,'#e09050']
     ]},
 
     // === STAGE 6: DIAMOND + GEM CUTTER + TEMPERING ===
     { b:[
       ['unl','Unloader','source',0,0],['cln','Ore Cleaner','upgrade',1,0],
       ['pol','Polisher','upgrade',2,0],['sml','Ore Smelter','machine',3,0],
-      ['tmp','Temper Forge','special',4.5,0],['plt','Plate Stamper','machine',5.5,0],
+      ['tmp','Tempering Forge','special',4.5,0],['plt','Plate Stamper','machine',5.5,0],
       ['mch','Mech Parts','machine',6.5,0],['sl1','Seller','seller',7.5,0],
-      ['tp','Topaz','prospector',3,1.5],['ep','Emerald','prospector',4,1.5],
-      ['sp','Sapphire','prospector',5,1.5],['rp','Ruby','prospector',6,1.5],
-      ['dp','Diamond','prospector',7,1.5],['flt','Filter','filter',8,1.5],
+      ['tp','Topaz Prosp.','prospector',3,1.5],['ep','Emerald Prosp.','prospector',4,1.5],
+      ['sp','Sapphire Prosp.','prospector',5,1.5],['rp','Ruby Prosp.','prospector',6,1.5],
+      ['dp','Diamond Prosp.','prospector',7,1.5],['flt','Filter','filter',8,1.5],
       ['gp','Polisher','gem',9,1.5],['gc','Gem Cutter','gem',10,1.5],['sl2','Seller','seller',11,1.5],
       ['spt','L/R Splitter','splitter',8,3],['cru','Crusher','machine',9.5,3],
       ['cmx','Cement Mixer','special',8.5,4.2],['brk','Brick Mold','machine',9.5,4.2],
       ['kln','Kiln','upgrade',10.5,4.2],['bp','Polisher','upgrade',11.5,4.2],['sl3','Seller','seller',12.5,4.2]
     ], c:[
       ['unl','cln','ore'],['cln','pol','ore'],['pol','sml','ore'],
-      ['sml','tmp','bar','tempered'],['tmp','plt','bar'],['plt','mch','bar','bars'],['mch','sl1','bar'],
+      ['sml','tmp','bar','temper'],['tmp','plt','bar'],['plt','mch','bar','bars'],['mch','sl1','bar'],
       ['sml','tp','stone','stones'],['tp','ep','stone'],['ep','sp','stone'],['sp','rp','stone'],
       ['rp','dp','stone'],['dp','flt','stone'],
       ['flt','gp','gem','gems'],['gp','gc','gem','cut'],['gc','sl2','gem'],
-      ['flt','spt','stone','stones'],
-      ['spt','cru','stone','crush'],['spt','cmx','stone','stone','v'],
+      ['flt','spt','stone','surviving'],
+      ['spt','cru','stone','crush half'],['spt','cmx','stone','keep half','v'],
       ['cru','cmx','brick','dust'],
       ['cmx','brk','brick'],['brk','kln','brick'],['kln','bp','brick','concrete'],['bp','sl3','brick']
     ], a:[
-      ['TEMPERED BAR LINE -->',0.8,-.42,'#f5c542'],
-      ['5 PROSPECTORS + GEM CUTTER -->',4,.7,'#c060c0'],
-      ['CONCRETE BRICK PAIRING |',8.3,2.35,'#d08040']
+      ['TEMPERED BAR LINE',0.5,-.35,'#ffd04a'],
+      ['5 PROSPECTORS + GEM CUTTER',3.8,.7,'#d070d0'],
+      ['CONCRETE BRICK PAIRING',8.2,2.3,'#e09050']
     ]},
 
     // === STAGE 7: CASINGS & FRAMES ===
     { b:[
       ['unl','Unloader','source',0,0],['cln','Ore Cleaner','upgrade',1,0],
       ['pol','Polisher','upgrade',2,0],['sml','Ore Smelter','machine',3,0],
-      ['tmp','Temper Forge','special',4,0],['bsp','Bar Splitter','splitter',5.5,0],
-      ['blt','Bolt Mach.','machine',6.5,1],['frm','Frame Maker','assembly',8,0],
-      ['blt2','Bolt Mach.','machine',6.5,2],['plt','Plate Stamper','machine',6.5,3],
-      ['cas','Casing Mach.','assembly',9.5,2],['sl1','Seller','seller',10.5,2],
-      ['tp','Topaz','prospector',0,5],['ep','Emerald','prospector',1,5],
-      ['sp','Sapphire','prospector',2,5],['rp','Ruby','prospector',3,5],
-      ['dp','Diamond','prospector',4,5],['flt','Filter','filter',5,5],
+      ['tmp','Tempering Forge','special',4,0],['spt1','Splitter','splitter',5.5,0],
+      ['blt','Bolt Machine','machine',6.5,1],['frm','Frame Maker','assembly',8,0],
+      ['blt2','Bolt Machine','machine',6.5,2],['plt','Plate Stamper','machine',6.5,3],
+      ['cas','Casing Machine','assembly',9.5,2],['sl1','Seller','seller',10.5,2],
+      ['tp','Topaz Prosp.','prospector',0,5],['ep','Emerald Prosp.','prospector',1,5],
+      ['sp','Sapphire Prosp.','prospector',2,5],['rp','Ruby Prosp.','prospector',3,5],
+      ['dp','Diamond Prosp.','prospector',4,5],['flt','Filter','filter',5,5],
       ['gp','Polisher','gem',6,5],['gc','Gem Cutter','gem',7,5],['sl2','Seller','seller',8,5],
-      ['spt','L/R Splitter','splitter',5,6.5],['cru','Crusher','machine',6.5,6.5],
+      ['spt2','L/R Splitter','splitter',5,6.5],['cru','Crusher','machine',6.5,6.5],
       ['cmx','Cement Mixer','special',5.5,7.7],['brk','Brick Mold','machine',6.5,7.7],
       ['kln','Kiln','upgrade',7.5,7.7],['bp','Polisher','upgrade',8.5,7.7],['sl3','Seller','seller',9.5,7.7]
     ], c:[
       ['unl','cln','ore'],['cln','pol','ore'],['pol','sml','ore'],
-      ['sml','tmp','bar'],['tmp','bsp','bar'],
-      ['bsp','frm','bar','bar','h'],['bsp','blt','bar','bolt #1','v'],
-      ['bsp','blt2','bar','bolt #2','v'],['bsp','plt','bar','plate','v'],
+      ['sml','tmp','bar'],['tmp','spt1','bar'],
+      ['spt1','frm','bar','bar','h'],['spt1','blt','bar','bolt #1','v'],
+      ['spt1','blt2','bar','bolt #2','v'],['spt1','plt','bar','plate','v'],
       ['blt','frm','bar','bolt'],
       ['frm','cas','product','frame'],['blt2','cas','bar','bolt'],['plt','cas','bar','plate'],
       ['cas','sl1','product'],
       ['sml','tp','stone','4 stones','v'],['tp','ep','stone'],['ep','sp','stone'],['sp','rp','stone'],
       ['rp','dp','stone'],['dp','flt','stone'],
       ['flt','gp','gem','gems'],['gp','gc','gem'],['gc','sl2','gem'],
-      ['flt','spt','stone','stones'],
-      ['spt','cru','stone'],['spt','cmx','stone','stone','v'],
+      ['flt','spt2','stone','surviving'],
+      ['spt2','cru','stone'],['spt2','cmx','stone','stone','v'],
       ['cru','cmx','brick','dust'],
       ['cmx','brk','brick'],['brk','kln','brick'],['kln','bp','brick'],['bp','sl3','brick']
     ], a:[
-      ['CASING ASSEMBLY (4 ores --> 1 casing)',1,-.42,'#9090ff'],
-      ['bar + bolt --> frame',7.2,-.42,'#5090c0'],
-      ['frame + bolt + plate --> casing',8,1.35,'#9090ff'],
-      ['5 PROSPECTORS -->',0.3,4.3,'#c060c0'],
-      ['CONCRETE BRICKS |',5.3,5.85,'#d08040']
+      ['CASING ASSEMBLY (4 ores)',0.5,-.35,'#a0a0ff'],
+      ['bar + bolt = frame',7,-.35,'#60a0d0'],
+      ['frame + bolt + plate = casing',8,1.3,'#a0a0ff'],
+      ['5 PROSPECTORS',0.3,4.25,'#d070d0'],
+      ['CONCRETE BRICKS',5.2,5.8,'#e09050']
     ]},
 
     // === STAGE 8: ALLOY & SUPERCONDUCTORS ===
     { b:[
       ['unl','Unloader','source',0,0],['cln','Ore Cleaner','upgrade',1,0],
       ['pol','Polisher','upgrade',2,0],['sml','Ore Smelter','machine',3,0],
-      ['tmp','Temper Forge','special',4,0],['bsp','Bar Splitter','splitter',5.5,0],
+      ['tmp','Tempering Forge','special',4,0],['spt1','Splitter','splitter',5.5,0],
       ['aly','Alloy Furnace','assembly',7,0],
       ['coi','Coiler','machine',7,1.3],
-      ['cas','(Casing Line)','assembly',7,2.5],
-      ['clm','Clay Mixer','machine',9,2.5],['cer','Ceramic Furn.','machine',10,2.5],
-      ['scc','Superconductor','assembly',9,0.65],['sl1','Seller','seller',10.5,0.65],
+      ['cas','Casing Machine','assembly',7,2.5],
+      ['clm','Clay Mixer','machine',9,2.5],['cer','Ceramic Furnace','machine',10,2.5],
+      ['scc','SC Constructor','assembly',9,0.65],['sl1','Seller','seller',10.5,0.65],
       ['mag','Magnetic Mach.','assembly',9,1.6],
-      ['tp','Topaz','prospector',0,4.5],['ep','Emerald','prospector',1,4.5],
-      ['sp','Sapphire','prospector',2,4.5],['rp','Ruby','prospector',3,4.5],
-      ['dp','Diamond','prospector',4,4.5],['flt','Filter','filter',5,4.5],
+      ['tp','Topaz Prosp.','prospector',0,4.5],['ep','Emerald Prosp.','prospector',1,4.5],
+      ['sp','Sapphire Prosp.','prospector',2,4.5],['rp','Ruby Prosp.','prospector',3,4.5],
+      ['dp','Diamond Prosp.','prospector',4,4.5],['flt','Filter','filter',5,4.5],
       ['gp','Polisher','gem',6,4.5],['gc','Gem Cutter','gem',7,4.5],['sl2','Seller','seller',8,4.5],
-      ['spt','L/R Splitter','splitter',5,6],['cru','Crusher','machine',6.5,6],
+      ['spt2','L/R Splitter','splitter',5,6],['cru','Crusher','machine',6.5,6],
       ['cmx','Cement Mixer','special',5.5,7.2],['brk','Brick Mold','machine',6.5,7.2],
       ['kln','Kiln','upgrade',7.5,7.2],['bp','Polisher','upgrade',8.5,7.2],['sl3','Seller','seller',9.5,7.2]
     ], c:[
       ['unl','cln','ore'],['cln','pol','ore'],['pol','sml','ore'],
-      ['sml','tmp','bar'],['tmp','bsp','bar'],
-      ['bsp','aly','bar','2 bars','h'],['bsp','coi','bar','coil','v'],['bsp','cas','bar','casings','v'],
+      ['sml','tmp','bar'],['tmp','spt1','bar'],
+      ['spt1','aly','bar','2 bars','h'],['spt1','coi','bar','coil','v'],['spt1','cas','bar','casings','v'],
       ['aly','scc','product','alloy'],
       ['coi','mag','bar','coil'],['cas','mag','product','casing'],
       ['clm','cer','brick','clay'],['cer','scc','product','ceramic'],
-      ['mag','sl1','product','sell'],
+      ['mag','sl1','product'],
       ['scc','sl1','product'],
       ['sml','tp','stone','stones','v'],['tp','ep','stone'],['ep','sp','stone'],['sp','rp','stone'],
       ['rp','dp','stone'],['dp','flt','stone'],
       ['flt','gp','gem','gems'],['gp','gc','gem'],['gc','sl2','gem'],
-      ['flt','spt','stone','stones'],
-      ['spt','cru','stone'],['spt','cmx','stone','stone','v'],
+      ['flt','spt2','stone','surviving'],
+      ['spt2','cru','stone'],['spt2','cmx','stone','stone','v'],
       ['cru','cmx','brick','dust'],['cru','clm','brick','dust for clay'],
       ['cmx','brk','brick'],['brk','kln','brick'],['kln','bp','brick'],['bp','sl3','brick']
     ], a:[
-      ['ALLOY + SUPERCONDUCTOR LINE',1,-.42,'#9090ff'],
-      ['2 bars --> alloy',6.5,-.42,'#5090c0'],
-      ['alloy + ceramic --> SC',8.5,-.05,'#60c090'],
-      ['coil + casing --> electromagnet',8,1,'#9090ff'],
-      ['5 PROSPECTORS -->',0.3,3.8,'#c060c0'],
-      ['CONCRETE + CERAMIC |',5.3,5.35,'#d08040']
+      ['ALLOY + SUPERCONDUCTOR',0.5,-.35,'#a0a0ff'],
+      ['2 bars = alloy',6.3,-.35,'#60a0d0'],
+      ['alloy + ceramic = SC',8.5,0,'#70d0a0'],
+      ['coil + casing = electromagnet',7.8,1,'#a0a0ff'],
+      ['5 PROSPECTORS',0.3,3.75,'#d070d0'],
+      ['CONCRETE + CERAMIC',5.2,5.3,'#e09050']
     ]}
   ];
 
@@ -3070,65 +3102,71 @@ recalc();
     for (var i = 0; i < data.b.length; i++) {
       var d = data.b[i];
       var b = { id:d[0], label:d[1], type:d[2], col:d[3], row:d[4] };
-      b.x = PAD + b.col * GW;
-      b.y = PAD + b.row * GH;
-      b.w = CW; b.h = CH;
-      b.cx = b.x + CW/2;
-      b.cy = b.y + CH/2;
+      b.x = PADDING + b.col * GRID_W;
+      b.y = PADDING + b.row * GRID_H;
+      b.w = CELL_W; b.h = CELL_H;
+      b.cx = b.x + CELL_W / 2;
+      b.cy = b.y + CELL_H / 2;
       bIdx[b.id] = b;
       buildings.push(b);
       if (b.col > maxCol) maxCol = b.col;
       if (b.row > maxRow) maxRow = b.row;
     }
 
-    var svgW = PAD * 2 + Math.ceil(maxCol + 1) * GW;
-    var svgH = PAD * 2 + Math.ceil(maxRow + 1) * GH;
+    var svgW = PADDING * 2 + Math.ceil(maxCol + 1) * GRID_W;
+    var svgH = PADDING * 2 + Math.ceil(maxRow + 1) * GRID_H;
 
-    var svg = document.createElementNS(NS, 'svg');
+    var svg = document.createElementNS(SVG_NS, 'svg');
     svg.setAttribute('viewBox', '0 0 ' + svgW + ' ' + svgH);
     svg.setAttribute('width', svgW);
     svg.setAttribute('height', svgH);
+    svg.style.minWidth = Math.min(svgW, 600) + 'px';
 
-    // Defs: arrow markers + grid pattern
-    var defs = document.createElementNS(NS, 'defs');
+    // Defs: arrow markers + grid pattern + glow filter
+    var defs = document.createElementNS(SVG_NS, 'defs');
     var types = ['ore','bar','stone','gem','brick','product','default'];
     for (var t = 0; t < types.length; t++) {
       var tp = types[t];
-      var marker = document.createElementNS(NS, 'marker');
+      var marker = document.createElementNS(SVG_NS, 'marker');
       marker.setAttribute('id', 'arr' + sfx + '-' + tp);
-      marker.setAttribute('markerWidth', '7');
-      marker.setAttribute('markerHeight', '5');
-      marker.setAttribute('refX', '6');
-      marker.setAttribute('refY', '2.5');
+      marker.setAttribute('markerWidth', '8');
+      marker.setAttribute('markerHeight', '6');
+      marker.setAttribute('refX', '7');
+      marker.setAttribute('refY', '3');
       marker.setAttribute('orient', 'auto');
-      var mp = document.createElementNS(NS, 'path');
-      mp.setAttribute('d', 'M0,0 L7,2.5 L0,5 Z');
-      mp.setAttribute('fill', LC[tp] || LC['default']);
+      var mp = document.createElementNS(SVG_NS, 'path');
+      mp.setAttribute('d', 'M0,0.5 L7,3 L0,5.5 Z');
+      mp.setAttribute('fill', LINE_COLORS[tp] || LINE_COLORS['default']);
       marker.appendChild(mp);
       defs.appendChild(marker);
     }
     // Subtle grid dots
-    var pat = document.createElementNS(NS, 'pattern');
+    var pat = document.createElementNS(SVG_NS, 'pattern');
     pat.setAttribute('id', 'grid' + sfx);
-    pat.setAttribute('width', '18');
-    pat.setAttribute('height', '18');
+    pat.setAttribute('width', '20');
+    pat.setAttribute('height', '20');
     pat.setAttribute('patternUnits', 'userSpaceOnUse');
-    var dot = document.createElementNS(NS, 'circle');
-    dot.setAttribute('cx', '9'); dot.setAttribute('cy', '9');
-    dot.setAttribute('r', '0.6');
-    dot.setAttribute('fill', '#2a2d3a');
+    var dot = document.createElementNS(SVG_NS, 'circle');
+    dot.setAttribute('cx', '10'); dot.setAttribute('cy', '10');
+    dot.setAttribute('r', '0.7');
+    dot.setAttribute('fill', '#252838');
     pat.appendChild(dot);
     defs.appendChild(pat);
     svg.appendChild(defs);
 
-    // Background
-    var bg = document.createElementNS(NS, 'rect');
+    // Background with grid
+    var bg = document.createElementNS(SVG_NS, 'rect');
     bg.setAttribute('width', svgW); bg.setAttribute('height', svgH);
-    bg.setAttribute('fill', 'url(#grid' + sfx + ')');
-    bg.setAttribute('rx', '8');
+    bg.setAttribute('fill', '#0e1018');
+    bg.setAttribute('rx', '10');
     svg.appendChild(bg);
+    var gridBg = document.createElementNS(SVG_NS, 'rect');
+    gridBg.setAttribute('width', svgW); gridBg.setAttribute('height', svgH);
+    gridBg.setAttribute('fill', 'url(#grid' + sfx + ')');
+    gridBg.setAttribute('rx', '10');
+    svg.appendChild(gridBg);
 
-    // Draw connections
+    // Draw connections (behind buildings)
     for (var i = 0; i < data.c.length; i++) {
       var conn = data.c[i];
       var from = bIdx[conn[0]], to = bIdx[conn[1]];
@@ -3136,24 +3174,21 @@ recalc();
       var flowType = conn[2] || 'default';
       var label = conn[3] || null;
       var hint = conn[4] || null;
-      var color = LC[flowType] || LC['default'];
+      var color = LINE_COLORS[flowType] || LINE_COLORS['default'];
 
       var dx = to.cx - from.cx, dy = to.cy - from.cy;
       var absX = Math.abs(dx), absY = Math.abs(dy);
       var x1, y1, x2, y2, pts;
 
-      if (absY < GH * 0.4) {
-        // Horizontal
+      if (absY < GRID_H * 0.4) {
         x1 = dx > 0 ? from.x + from.w : from.x; y1 = from.cy;
         x2 = dx > 0 ? to.x : to.x + to.w; y2 = to.cy;
         pts = x1+','+y1+' '+x2+','+y2;
-      } else if (absX < GW * 0.4) {
-        // Vertical
+      } else if (absX < GRID_W * 0.4) {
         x1 = from.cx; y1 = dy > 0 ? from.y + from.h : from.y;
         x2 = to.cx; y2 = dy > 0 ? to.y : to.y + to.h;
         pts = x1+','+y1+' '+x2+','+y2;
       } else {
-        // L-shaped: check hint or auto-detect
         var useHoriz = hint === 'h' || (hint !== 'v' && absX >= absY);
         if (useHoriz) {
           x1 = dx > 0 ? from.x + from.w : from.x; y1 = from.cy;
@@ -3166,30 +3201,31 @@ recalc();
         }
       }
 
-      var line = document.createElementNS(NS, 'polyline');
+      var line = document.createElementNS(SVG_NS, 'polyline');
       line.setAttribute('points', pts);
       line.setAttribute('fill', 'none');
       line.setAttribute('stroke', color);
-      line.setAttribute('stroke-width', '1.5');
-      line.setAttribute('stroke-opacity', '0.65');
-      line.setAttribute('stroke-dasharray', '6 3');
+      line.setAttribute('stroke-width', '2');
+      line.setAttribute('stroke-opacity', '0.55');
       line.setAttribute('marker-end', 'url(#arr' + sfx + '-' + flowType + ')');
       svg.appendChild(line);
 
-      // Optional label on connection
+      // Connection label
       if (label) {
         var pArr = pts.split(' ');
         var midIdx = Math.floor(pArr.length / 2);
         var mid = pArr[midIdx].split(',');
-        var lx = parseFloat(mid[0]), ly = parseFloat(mid[1]) - 5;
-        var lt = document.createElementNS(NS, 'text');
+        var lx = parseFloat(mid[0]), ly = parseFloat(mid[1]) - 6;
+        // Background pill for label readability
+        var lt = document.createElementNS(SVG_NS, 'text');
         lt.setAttribute('x', lx);
         lt.setAttribute('y', ly);
         lt.setAttribute('text-anchor', 'middle');
         lt.setAttribute('fill', color);
-        lt.setAttribute('font-size', '7.5');
+        lt.setAttribute('font-size', '8');
         lt.setAttribute('font-family', 'Inter,system-ui,sans-serif');
-        lt.setAttribute('opacity', '0.75');
+        lt.setAttribute('font-weight', '500');
+        lt.setAttribute('opacity', '0.8');
         lt.textContent = label;
         svg.appendChild(lt);
       }
@@ -3199,18 +3235,18 @@ recalc();
     if (data.a) {
       for (var i = 0; i < data.a.length; i++) {
         var ann = data.a[i];
-        var ax = PAD + ann[1] * GW;
-        var ay = PAD + ann[2] * GH + CH / 2;
-        var at = document.createElementNS(NS, 'text');
+        var ax = PADDING + ann[1] * GRID_W;
+        var ay = PADDING + ann[2] * GRID_H + CELL_H / 2;
+        var at = document.createElementNS(SVG_NS, 'text');
         at.setAttribute('x', ax);
         at.setAttribute('y', ay);
         at.setAttribute('fill', ann[3] || '#555');
-        at.setAttribute('font-size', '8.5');
+        at.setAttribute('font-size', '9.5');
         at.setAttribute('font-weight', '700');
         at.setAttribute('font-family', 'Inter,system-ui,sans-serif');
-        at.setAttribute('letter-spacing', '0.5');
-        at.setAttribute('opacity', '0.55');
-        at.textContent = ann[0];
+        at.setAttribute('letter-spacing', '0.8');
+        at.setAttribute('opacity', '0.5');
+        at.textContent = ann[0].toUpperCase();
         svg.appendChild(at);
       }
     }
@@ -3218,41 +3254,64 @@ recalc();
     // Draw buildings on top
     for (var i = 0; i < buildings.length; i++) {
       var b = buildings[i];
-      var colors = BC[b.type] || BC.machine;
+      var colors = BUILDING_COLORS[b.type] || BUILDING_COLORS.machine;
 
-      // Shadow
-      var sh = document.createElementNS(NS, 'rect');
-      sh.setAttribute('x', b.x + 1); sh.setAttribute('y', b.y + 1);
+      // Drop shadow
+      var sh = document.createElementNS(SVG_NS, 'rect');
+      sh.setAttribute('x', b.x + 2); sh.setAttribute('y', b.y + 2);
       sh.setAttribute('width', b.w); sh.setAttribute('height', b.h);
-      sh.setAttribute('rx', '5'); sh.setAttribute('fill', 'rgba(0,0,0,0.3)');
+      sh.setAttribute('rx', '6'); sh.setAttribute('fill', 'rgba(0,0,0,0.35)');
       svg.appendChild(sh);
 
-      // Box
-      var rect = document.createElementNS(NS, 'rect');
+      // Main box
+      var rect = document.createElementNS(SVG_NS, 'rect');
       rect.setAttribute('x', b.x); rect.setAttribute('y', b.y);
       rect.setAttribute('width', b.w); rect.setAttribute('height', b.h);
-      rect.setAttribute('rx', '5');
+      rect.setAttribute('rx', '6');
       rect.setAttribute('fill', colors.bg);
       rect.setAttribute('stroke', colors.bd);
       rect.setAttribute('stroke-width', '1.5');
       svg.appendChild(rect);
 
-      // Label
-      var text = document.createElementNS(NS, 'text');
+      // Inner highlight (subtle top edge glow)
+      var hl = document.createElementNS(SVG_NS, 'rect');
+      hl.setAttribute('x', b.x + 1); hl.setAttribute('y', b.y + 1);
+      hl.setAttribute('width', b.w - 2); hl.setAttribute('height', '1');
+      hl.setAttribute('rx', '1');
+      hl.setAttribute('fill', 'rgba(255,255,255,0.06)');
+      svg.appendChild(hl);
+
+      // Label text
+      var text = document.createElementNS(SVG_NS, 'text');
       text.setAttribute('x', b.cx);
       text.setAttribute('y', b.cy + 1);
       text.setAttribute('text-anchor', 'middle');
       text.setAttribute('dominant-baseline', 'central');
       text.setAttribute('fill', colors.tx);
-      text.setAttribute('font-size', '8.5');
+      text.setAttribute('font-size', '9.5');
       text.setAttribute('font-weight', '600');
       text.setAttribute('font-family', 'Inter,system-ui,sans-serif');
       text.textContent = b.label;
       svg.appendChild(text);
     }
 
-    container.innerHTML = '';
     container.appendChild(svg);
+
+    // Add legend below SVG
+    var legend = document.createElement('div');
+    legend.className = 'fl-legend';
+    for (var li = 0; li < LEGEND.length; li++) {
+      var item = document.createElement('span');
+      item.className = 'fl-legend-item';
+      var sw = document.createElement('span');
+      sw.className = 'fl-legend-swatch';
+      sw.style.background = LEGEND[li][1].bg;
+      sw.style.borderColor = LEGEND[li][1].bd;
+      item.appendChild(sw);
+      item.appendChild(document.createTextNode(LEGEND[li][0]));
+      legend.appendChild(item);
+    }
+    container.appendChild(legend);
   }
 
   // Initialize: find stage cards and add toggle buttons + layout containers
@@ -3270,16 +3329,13 @@ recalc();
         var flowDiagram = card.querySelector('.flow-diagram');
         if (!flowDiagram) return;
 
-        // Create toggle button
         var btn = document.createElement('button');
         btn.className = 'fl-toggle-btn';
-        btn.textContent = '\uD83D\uDCD0 Show Factory Layout';
+        btn.textContent = '\uD83C\uDFED Show Factory Layout';
 
-        // Create layout container
         var layoutDiv = document.createElement('div');
         layoutDiv.className = 'factory-layout';
 
-        // Insert after flow-diagram (inside collapsible wrapper)
         var parent = flowDiagram.parentNode;
         var next = flowDiagram.nextSibling;
         parent.insertBefore(btn, next);
@@ -3292,7 +3348,7 @@ recalc();
             rendered = true;
           }
           var visible = layoutDiv.classList.toggle('visible');
-          btn.textContent = visible ? '\uD83D\uDCD0 Hide Factory Layout' : '\uD83D\uDCD0 Show Factory Layout';
+          btn.textContent = visible ? '\uD83C\uDFED Hide Factory Layout' : '\uD83C\uDFED Show Factory Layout';
           btn.classList.toggle('active', visible);
         });
       })(cards[i], i);
