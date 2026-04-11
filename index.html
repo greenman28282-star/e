@@ -3273,7 +3273,7 @@ recalc();
         // Create toggle button
         var btn = document.createElement('button');
         btn.className = 'fl-toggle-btn';
-        btn.innerHTML = '\uD83D\uDCD0 Show Factory Layout';
+        btn.textContent = '\uD83D\uDCD0 Show Factory Layout';
 
         // Create layout container
         var layoutDiv = document.createElement('div');
@@ -3292,7 +3292,7 @@ recalc();
             rendered = true;
           }
           var visible = layoutDiv.classList.toggle('visible');
-          btn.innerHTML = visible ? '\uD83D\uDCD0 Hide Factory Layout' : '\uD83D\uDCD0 Show Factory Layout';
+          btn.textContent = visible ? '\uD83D\uDCD0 Hide Factory Layout' : '\uD83D\uDCD0 Show Factory Layout';
           btn.classList.toggle('active', visible);
         });
       })(cards[i], i);
