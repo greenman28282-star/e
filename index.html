@@ -666,7 +666,7 @@
 <!-- STAGES -->
 <section id="stages">
   <h2><span class="icon">📈</span> Stage-by-Stage Optimal Setups</h2>
-  <p class="desc">Each stage includes prospectors in the stone byproduct flow. The Ore Smelter produces <strong>1 stone per 2 ores</strong>. Expected gem value (EV) is calculated per stone based on available prospectors, then scaled by 0.5 stones/ore for per-ore totals. Investment costs are <strong>cumulative</strong> (total spent including all previous stages). <span class="building-tag new" style="display:inline;font-size:0.8em;">Green = new this stage</span></p>
+  <p class="desc">Each stage includes prospectors in the stone byproduct flow. The Ore Smelter produces <strong>1 stone per 2 ores</strong> — all per-ore totals include stone byproducts scaled by this rate. Investment costs are <strong>cumulative</strong>. <span class="building-tag new" style="display:inline;font-size:0.8em;">Green = new this stage</span></p>
 
   <!-- STAGE 1 -->
   <div class="stage-card">
@@ -1657,10 +1657,10 @@ function fmtDollar(n) {
   return Math.round(n).toLocaleString();
 }
 
-// Build building table (if present)
+// Build building table (if present on page)
 (function() {
   const tbody = document.querySelector('#buildingTable tbody');
-  if (!tbody) return;
+  if (!tbody) return; // Table lives in docs/building-reference.html now
   const catColors = {
     "Upgrade": "var(--green)", "Smelting": "var(--orange)", "Processing": "var(--muted)",
     "Bar Processing": "var(--cyan)", "Gems": "var(--purple)", "Stone Processing": "var(--pink)",
@@ -1747,8 +1747,8 @@ function recalc() {
   // Polished brick (no kiln): $35
   var polishedBrickValue = 35;
 
-  // Stone rate: Ore Smelter produces 1 stone per 2 ores (0.5 stones/ore)
-  // This affects ALL per-ore byproduct calculations
+  // Stone rate: Ore Smelter produces 1 stone per 2 ores (wiki-verified)
+  // All per-ore byproduct calculations are multiplied by this rate
   var STONE_RATE = 0.5;
 
   // Ore display
