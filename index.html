@@ -844,7 +844,7 @@
       <span class="sub"> (Pipe: $<span class="v-s3-pipe2">100</span> + 85.7% Fired Brick: $<span class="v-s3-brick">30.87</span> + Gem EV: $<span class="v-s3-gem-ev2">25.98</span>)</span>
     </div>
     <div class="transport-tip">
-      🚂 <strong>Transport:</strong> Same as Stage 2 but extend the prospector chain: …→ Sapphire Prosp → <strong>Filter</strong> (gems → Polisher → Seller). Surviving stones → Crusher → Brick Mold → <strong>Kiln</strong> → Seller.
+      🚂 <strong>Transport:</strong> Same as Stage 2 but extend the prospector chain: …→ Sapphire Prosp → <strong>Filter</strong> (gems → Polisher → Seller). Surviving stones → Crusher → Brick Mold → <strong>Kiln</strong> → Polisher → Seller.
     </div>
   </div>
 
@@ -1035,19 +1035,21 @@
 
   <!-- PROGRESSION SHIFT NOTE -->
   <div class="tip-box warn" style="margin: 24px 0; border-color: var(--orange);">
-    <strong>🔀 Stages 7–8 work differently!</strong> Up to Stage 6 each upgrade directly replaced your old setup. From here on, you're building <em>new parallel production lines alongside your existing Stage 6 setup</em>. Your tempered mech parts line remains your primary income source — stages 7 and 8 add new recipe chains that prepare components for end-game products. Don't tear anything down; expand outward.
+    <strong>🔀 Stages 7–10 work differently!</strong> Up to Stage 6 each upgrade directly replaced your old setup. From here on, you're building <em>new parallel production lines alongside your existing Stage 6 setup</em>. Your tempered mech parts line remains your primary income source — stages 7 through 10 add new recipe chains that prepare components for end-game products. Don't tear anything down; expand outward.
   </div>
 
   <!-- STAGE 7 -->
   <div class="stage-card">
     <div class="stage-header">
-      <div class="stage-title">Stage 7: Casings & Frames <span style="font-size:0.7em; color:var(--muted);">(End-Game Prep)</span></div>
-      <div class="stage-cost">Investment: $226,100</div>
+      <div class="stage-title">Stage 7: Casings, Circuits & Frames <span style="font-size:0.7em; color:var(--muted);">(End-Game Prep)</span></div>
+      <div class="stage-cost">Investment: $254,100</div>
     </div>
     <div class="stage-buildings">
       <span class="building-tag">All previous</span>
       <span class="building-tag new">Bolt Machine $3,000</span>
+      <span class="building-tag new">Electronic Tuner $8,000</span>
       <span class="building-tag new">Frame Maker $10,000</span>
+      <span class="building-tag new">Circuit Maker $20,000</span>
       <span class="building-tag new">Casing Machine $50,000</span>
     </div>
 
@@ -1055,7 +1057,11 @@
       <strong>✅ Keep your Stage 6 lines running!</strong> Your tempered mech parts line ($<span class="v-s6-mech3">170</span>/ore) and concrete brick byproduct line stay active. Casings are <em>not</em> a direct upgrade — they're a new parallel production chain that you build <em>in addition to</em> your existing setup. You'll stockpile casings now and use them in end-game recipes (Power Cores, Tablets, Engines) where their value multiplies dramatically.
     </div>
 
-    <p>Metal casings are the foundation of end-game products. A casing needs 4 ores (1 bar + 1 bolt → frame, then frame + 1 bolt + 1 plate). Save casings for end-game recipes. All 4 stones from these ores run through prospectors first.</p>
+    <div class="tip-box" style="margin-bottom: 12px;">
+      <strong>🔗 Circuit Maker + Electronic Tuner:</strong> The Circuit Maker combines Glass (from Kiln) + Coil → Circuit (×2.0). Circuits are required for <strong>Tablets</strong> (2nd best product!) and <strong>Lasers</strong>. The Electronic Tuner adds +$50 to Tablets before QA. Buy both now — you'll need them as soon as you unlock the Tablet Factory. <strong>Reactivate your Coiler</strong> from Stage 1 — it's needed again for circuits and electromagnets.
+    </div>
+
+    <p>Metal casings are the foundation of end-game products. A casing needs 4 ores (1 bar + 1 bolt → frame, then frame + 1 bolt + 1 plate). The Circuit Maker prepares for Tablet production by combining glass + coils. Save casings and circuits for end-game recipes. All 4 stones from these ores run through prospectors first.</p>
 
     <div class="flow-diagram">
       <div style="margin-bottom: 4px; color: var(--muted); font-size: 0.8em; font-weight: 600;">CASING RECIPE (4 ores → 1 casing + 4 stones for prospecting):</div>
@@ -1093,9 +1099,10 @@
     </div>
     <div class="transport-tip">
       🚂 <strong>Transport (VERY COMPLEX):</strong><br>
-      • <strong>Bar routing:</strong> 4 ores smelt into 4 tempered bars. Use <strong>splitters</strong> to route bars: some to Bolt Machine, some to Plate Stamper, and some pass through for Frame Maker input<br>
+      • <strong>Bar routing:</strong> 4 ores smelt into 4 tempered bars. Use <strong>splitters</strong> to route bars: some to Bolt Machine, some to Plate Stamper, some to Coiler, and some pass through for Frame Maker input<br>
       • Frame Maker takes Bar + Bolt; Casing Machine takes Frame + Bolt + Plate — use Overflow Splitters to buffer components<br>
-      • All 4 smelters output stones automatically → feed into prospector chain → <strong>Filter</strong> (gems → Polisher → Gem Cutter → Seller)<br>
+      • <strong>Circuit Maker:</strong> Route one surviving stone → Crusher → Kiln → Glass ($30), then combine with a Coil → Circuit (×2.0). Store circuits for Tablet production<br>
+      • All smelter stone outputs → feed into prospector chain → <strong>Filter</strong> (gems → Polisher → Gem Cutter → Seller)<br>
       • Surviving stones → concrete brick pairing (L/R Splitter → Crusher/Cement → Brick Mold → Kiln → Polisher → Seller)<br>
       • <strong>Elevators</strong> highly recommended — put bar processing on Floor 1, stone/gem on Floor 2, assembly on Floor 3<br>
       • Consider <strong>multiple sellers</strong>: one for casings, one for gems, one for bricks
@@ -1106,7 +1113,7 @@
   <div class="stage-card">
     <div class="stage-header">
       <div class="stage-title">Stage 8: Alloy & Superconductors</div>
-      <div class="stage-cost">Investment: $1,476,100</div>
+      <div class="stage-cost">Investment: $1,504,100</div>
     </div>
     <div class="stage-buildings">
       <span class="building-tag">All previous</span>
@@ -1118,7 +1125,7 @@
     </div>
 
     <div class="tip-box good" style="margin-bottom: 12px;">
-      <strong>✅ What stays from earlier stages:</strong> Your Stage 6 mech parts line and Stage 7 casing line both remain active. Stage 8 adds <em>another</em> parallel chain — alloy bars and ceramic casings — which combine into superconductors. You're still expanding, not replacing. Eventually these chains all feed into the end-game assemblers (Power Cores, Tablets, etc.).
+      <strong>✅ What stays from earlier stages:</strong> Your Stage 6 mech parts line, Stage 7 casing + circuit lines all remain active. Stage 8 adds <em>another</em> parallel chain — alloy bars and ceramic casings — which combine into superconductors. You're still expanding, not replacing. Eventually these chains all feed into the end-game assemblers (Power Cores, Tablets, etc.).
     </div>
 
     <p>Alloy bars merge 2 tempered bars (+20%). Ceramic casings from clay ($150). Superconductors combine alloy + ceramic for ×3 value! Stones that survive prospectors now split: some for ceramics, rest for concrete bricks.</p>
@@ -1167,6 +1174,126 @@
     </div>
   </div>
 
+  <!-- STAGE 9 -->
+  <div class="stage-card" style="border-color: var(--cyan);">
+    <div class="stage-header">
+      <div class="stage-title">🖥️ Stage 9: Tablet Production</div>
+      <div class="stage-cost">Investment: $6,504,100</div>
+    </div>
+    <div class="stage-buildings">
+      <span class="building-tag">All previous</span>
+      <span class="building-tag new">Quality Assurance Machine $2M</span>
+      <span class="building-tag new">Tablet Factory $2.5M</span>
+    </div>
+
+    <div class="tip-box good" style="margin-bottom: 12px;">
+      <strong>🚀 Tablets are the 2nd best $/ore product in the game!</strong> You already have everything else from earlier stages — Circuit Maker (Stage 7), Casing line (Stage 7), Kiln for glass (Stage 3), Coiler (Stage 1). The QA Machine alone transforms your entire factory by adding +20% to ALL final products (tablets, bricks, gems). This is a massive investment but the QA Machine pays for itself quickly.
+    </div>
+
+    <p>Tablets combine Casing + Glass + Circuit with ×3.0 multiplier, then Electronic Tuner adds +$50, then QA adds +20%. Uses 5 ores total. All 5 stones from smelting get prospected first.</p>
+
+    <div class="flow-diagram">
+      <div style="margin-bottom: 4px; color: var(--muted); font-size: 0.8em; font-weight: 600;">TABLET RECIPE (5 ores → 5 stones prospected):</div>
+      <div class="flow-row">
+        <span class="flow-item fi-ore">4 Ores → Casing ($<span class="v-tab-casing">607</span>)</span>
+        <span class="flow-arrow">┐</span>
+      </div>
+      <div class="flow-row">
+        <span class="flow-item fi-byproduct">1 Surv. Stone → Glass ($30)</span>
+        <span class="flow-arrow">┤</span>
+        <span class="flow-item fi-machine">Tablet (×3.0)</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-machine">Tuner (+$50)</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-machine">QA (+20%)</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-sell">💰 $<span class="v-tab-final">4,504</span></span>
+      </div>
+      <div class="flow-row">
+        <span class="flow-item fi-ore">1 Ore → Coil ($<span class="v-tab-coil">120</span>)</span>
+        <span class="flow-arrow">+ Glass → Circuit (×2.0) ┘</span>
+      </div>
+    </div>
+
+    <div class="gem-ev-box">
+      💎 <strong>Total gem EV from 5 stones:</strong> <span class="val">$<span class="v-tab-gem-total">689</span></span>
+    </div>
+
+    <div class="value-result">
+      <span class="val">Tablet (QA'd + Tuned): $<span class="v-tab-final2">4,504</span></span>
+      <span class="sub"> from 5 ores | Per ore (with byproducts + gems): $<span class="v-tab-perore">1,090</span></span>
+    </div>
+    <div class="transport-tip">
+      🚂 <strong>Transport:</strong><br>
+      • <strong>Circuit production:</strong> Surviving stone → Crusher → Kiln → Glass ($30), then combine with Coil in Circuit Maker → Circuit (×2.0)<br>
+      • <strong>Tablet Factory:</strong> Casing + Glass + Circuit → Tablet (×3.0) → Electronic Tuner (+$50) → QA Machine (+20%) → Seller<br>
+      • The Tablet needs a 2nd glass input (separate from the circuit's glass) — route 2 surviving stones to Kiln for glass<br>
+      • <strong>QA Machine placement:</strong> Put it on your final output conveyor, just before the Seller. QA everything: tablets, concrete bricks, high-value gems
+    </div>
+  </div>
+
+  <!-- STAGE 10 -->
+  <div class="stage-card">
+    <div class="stage-header">
+      <div class="stage-title">🔧 Stage 10: Engine Line</div>
+      <div class="stage-cost">Investment: $7,504,100</div>
+    </div>
+    <div class="stage-buildings">
+      <span class="building-tag">All previous</span>
+      <span class="building-tag new">Engine Factory $1M</span>
+    </div>
+
+    <p>Engines combine Mech Parts + Pipe + Casing with a ×1.2 multiplier. Decent mid-tier product — lower $/ore than Tablets or Power Cores, but a good parallel line if you have spare throughput. <strong>Reactivate your Pipe Maker</strong> from Stage 2 — Engines need Pipes alongside Mech Parts.</p>
+
+    <div class="flow-diagram">
+      <div style="margin-bottom: 4px; color: var(--muted); font-size: 0.8em; font-weight: 600;">ENGINE RECIPE (6 ores → 6 stones prospected):</div>
+      <div class="flow-row">
+        <span class="flow-item fi-ore">1 Ore → Mech Parts ($<span class="v-eng-mp">170</span>)</span>
+        <span class="flow-arrow">┐</span>
+      </div>
+      <div class="flow-row">
+        <span class="flow-item fi-ore">1 Ore → Pipe ($<span class="v-eng-pipe">160</span>)</span>
+        <span class="flow-arrow">┤</span>
+        <span class="flow-item fi-machine">Engine (×1.2)</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-machine">QA (+20%)</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item fi-sell">💰 $<span class="v-eng-final">1,367</span></span>
+      </div>
+      <div class="flow-row">
+        <span class="flow-item fi-ore">4 Ores → Casing ($<span class="v-eng-casing">607</span>)</span>
+        <span class="flow-arrow">┘</span>
+      </div>
+    </div>
+
+    <div class="gem-ev-box">
+      💎 <strong>Total gem EV from 6 stones:</strong> <span class="val">$<span class="v-eng-gem-total">827</span></span>
+    </div>
+
+    <div class="value-result">
+      <span class="val">Engine (QA'd): $<span class="v-eng-final2">1,367</span></span>
+      <span class="sub"> from 6 ores | Per ore (with byproducts + gems): $<span class="v-eng-perore">593</span></span>
+    </div>
+    <div class="transport-tip">
+      🚂 <strong>Transport:</strong><br>
+      • Split tempered bars: some to Plate → Mech Parts, some to Plate → Pipe, rest to Casing line<br>
+      • Engine Factory takes all 3 inputs simultaneously — use Overflow Splitters to buffer<br>
+      • The Pipe Maker you bought in Stage 2 now comes back into use!
+    </div>
+  </div>
+
+  <!-- BEYOND STAGES NOTE -->
+  <div class="tip-box" style="margin: 24px 0; border-color: var(--purple);">
+    <strong>💎 Beyond Stage 10: Gem Products</strong><br>
+    The remaining end-game machines focus on gem-based recipes. These are <em>optional</em> and situational — they only make sense with high-value gems:<br>
+    • <strong>Lens Cutter</strong> ($75K) + <strong>Optics Machine</strong> ($300K) → Optics for Laser production<br>
+    • <strong>Prismatic Gem Crucible</strong> ($100K) → Merge 2 cut gems for Amulets or Lasers<br>
+    • <strong>Ring Maker</strong> ($10K) + <strong>Amulet Maker</strong> ($2M) → Gem-consuming recipe (×2.0)<br>
+    • <strong>Filigree Cutter</strong> ($50K) + <strong>Glider</strong> ($500K) → Bonus multiplier on Amulets (×1.5)<br>
+    • <strong>Laser Maker</strong> ($3.5M) → Highest gem multiplier (×2.75) but complex setup<br>
+    See the <a href="#comparison" style="color: var(--accent);">Comparison Table</a> and <a href="#gems" style="color: var(--accent);">Gem Strategy</a> section for when these become worthwhile.
+  </div>
+
 </section>
 
 <!-- END GAME -->
@@ -1175,16 +1302,16 @@
   <p class="desc">All stone byproducts run through 5 prospectors first. Gem EV is included in all totals.</p>
 
   <div class="tip-box" style="margin-bottom: 24px;">
-    <strong>🧩 How it all comes together:</strong> End-game products combine the components you've been building in stages 6–8. Your mech parts line (Stage 6), casing line (Stage 7), and superconductor/alloy line (Stage 8) all feed into the assemblers below. Nothing was wasted — every chain you built is an ingredient. The recipes below show exactly which components each product needs, so you can scale whichever lines are required.
+    <strong>🧩 How it all comes together:</strong> End-game products combine the components you've been building in stages 6–10. Your mech parts line (Stage 6), casing + circuit lines (Stage 7), superconductor/alloy line (Stage 8), tablet line (Stage 9), and engine line (Stage 10) all feed into the assemblers below. Nothing was wasted — every chain you built is an ingredient. The recipes below show exactly which components each product needs, so you can scale whichever lines are required.
   </div>
 
   <!-- POWER CORE -->
   <div class="stage-card" style="border-color: var(--gold);">
     <div class="stage-header">
       <div class="stage-title" style="color: var(--gold);">👑 Power Core (THE BEST)</div>
-      <div class="stage-cost">Total Factory: ~$9M+</div>
+      <div class="stage-cost">Total Factory: ~$12M+</div>
     </div>
-    <p style="margin-bottom: 16px;">The Power Core combines casing + superconductor + electromagnet with ×3.5 value increase. All 11 stones from smelting get prospected first.</p>
+    <p style="margin-bottom: 16px;">The Power Core combines casing + superconductor + electromagnet with ×3.5 value increase. All 11 stones from smelting get prospected first. Requires the Power Core Assembler ($4.5M) — the most expensive single machine in the game.</p>
 
     <div class="flow-diagram">
       <div style="margin-bottom: 4px; color: var(--muted); font-size: 0.8em; font-weight: 600;">POWER CORE RECIPE (11 ores → 11 stones prospected):</div>
@@ -1233,86 +1360,6 @@
       <span class="val" style="font-size: 1.3em;">Grand Total from 11 ores: $<span class="v-eg-grand">17,753</span></span><br>
       <span class="per-ore" style="font-size: 1.1em;">📈 Per ore: $<span class="v-eg-perore">1,614</span></span>
       <span class="sub"> (Product: $<span class="v-eg-pc-qa2">14,508</span> + Bricks: $<span class="v-eg-bricks2">1,728</span> + Gems: $<span class="v-eg-gem-total2">1,517</span>)</span>
-    </div>
-  </div>
-
-  <!-- TABLET -->
-  <div class="stage-card">
-    <div class="stage-header">
-      <div class="stage-title">🖥️ Electronic Tablet</div>
-      <div class="stage-cost">~$5.5M factory</div>
-    </div>
-    <p>Strong option before Power Core. Uses electronic Tuner bonus (+$50). All 5 stones prospected.</p>
-
-    <div class="flow-diagram">
-      <div style="margin-bottom: 4px; color: var(--muted); font-size: 0.8em; font-weight: 600;">TABLET RECIPE (5 ores → 5 stones prospected):</div>
-      <div class="flow-row">
-        <span class="flow-item fi-ore">4 Ores → Casing ($<span class="v-tab-casing">607</span>)</span>
-        <span class="flow-arrow">┐</span>
-      </div>
-      <div class="flow-row">
-        <span class="flow-item fi-byproduct">1 Surv. Stone → Glass ($30)</span>
-        <span class="flow-arrow">┤</span>
-        <span class="flow-item fi-machine">Tablet (×3.0)</span>
-        <span class="flow-arrow">→</span>
-        <span class="flow-item fi-machine">Tuner (+$50)</span>
-        <span class="flow-arrow">→</span>
-        <span class="flow-item fi-machine">QA (+20%)</span>
-        <span class="flow-arrow">→</span>
-        <span class="flow-item fi-sell">💰 $<span class="v-tab-final">4,504</span></span>
-      </div>
-      <div class="flow-row">
-        <span class="flow-item fi-ore">1 Ore → Coil ($<span class="v-tab-coil">120</span>)</span>
-        <span class="flow-arrow">+ Glass → Circuit (×2.0) ┘</span>
-      </div>
-    </div>
-
-    <div class="gem-ev-box">
-      💎 <strong>Total gem EV from 5 stones:</strong> <span class="val">$<span class="v-tab-gem-total">689</span></span>
-    </div>
-
-    <div class="value-result">
-      <span class="val">Tablet (QA'd + Tuned): $<span class="v-tab-final2">4,504</span></span>
-      <span class="sub"> from 5 ores | Per ore (with byproducts + gems): $<span class="v-tab-perore">1,090</span></span>
-    </div>
-  </div>
-
-  <!-- ENGINE -->
-  <div class="stage-card">
-    <div class="stage-header">
-      <div class="stage-title">🔧 Engine</div>
-      <div class="stage-cost">~$1.2M factory</div>
-    </div>
-    <p>Engines combine Mech Parts + Pipe + Casing with a ×1.2 multiplier. Decent mid-tier product but lower $/ore than Tablets or Power Cores. Useful as a stepping stone if you can't afford the full Tablet/PC factory yet.</p>
-
-    <div class="flow-diagram">
-      <div style="margin-bottom: 4px; color: var(--muted); font-size: 0.8em; font-weight: 600;">ENGINE RECIPE (6 ores → 6 stones prospected):</div>
-      <div class="flow-row">
-        <span class="flow-item fi-ore">1 Ore → Mech Parts ($<span class="v-eng-mp">170</span>)</span>
-        <span class="flow-arrow">┐</span>
-      </div>
-      <div class="flow-row">
-        <span class="flow-item fi-ore">1 Ore → Pipe ($<span class="v-eng-pipe">160</span>)</span>
-        <span class="flow-arrow">┤</span>
-        <span class="flow-item fi-machine">Engine (×1.2)</span>
-        <span class="flow-arrow">→</span>
-        <span class="flow-item fi-machine">QA (+20%)</span>
-        <span class="flow-arrow">→</span>
-        <span class="flow-item fi-sell">💰 $<span class="v-eng-final">1,367</span></span>
-      </div>
-      <div class="flow-row">
-        <span class="flow-item fi-ore">4 Ores → Casing ($<span class="v-eng-casing">607</span>)</span>
-        <span class="flow-arrow">┘</span>
-      </div>
-    </div>
-
-    <div class="gem-ev-box">
-      💎 <strong>Total gem EV from 6 stones:</strong> <span class="val">$<span class="v-eng-gem-total">827</span></span>
-    </div>
-
-    <div class="value-result">
-      <span class="val">Engine (QA'd): $<span class="v-eng-final2">1,367</span></span>
-      <span class="sub"> from 6 ores | Per ore (with byproducts + gems): $<span class="v-eng-perore">593</span></span>
     </div>
   </div>
 
@@ -1455,6 +1502,23 @@
         <h4>Ceramic Furnace <span class="machine-status status-situational">⚠️ Situational</span></h4>
         <p>Clay Block → Ceramic Casing ($150). Only useful as a component for Superconductors.</p>
         <div class="feeds"><strong>Feeds into:</strong> Superconductor Constructor | <strong>Obsolete?</strong> N/A — specific to SC recipe.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GLASS PROCESSING -->
+  <div class="machine-group">
+    <h3>🔮 Glass Processing</h3>
+    <div class="machine-grid">
+      <div class="machine-card">
+        <h4>Lens Cutter <span class="machine-status status-situational">⚠️ Situational</span></h4>
+        <p>Glass → Lens (+$50). Only useful as input for Optics Machine → Lasers. $75K is steep for a niche upgrade.</p>
+        <div class="feeds"><strong>Fed by:</strong> Kiln (glass) | <strong>Feeds:</strong> Optics Machine → Laser Maker</div>
+      </div>
+      <div class="machine-card">
+        <h4>Optics Machine <span class="machine-status status-situational">⚠️ Situational</span></h4>
+        <p>Lens + Pipe → Optics (×1.25 combined). Only useful as input for Laser Maker. Requires both Lens Cutter and Pipe Maker.</p>
+        <div class="feeds"><strong>Fed by:</strong> Lens Cutter + Pipe Maker | <strong>Feeds:</strong> Laser Maker</div>
       </div>
     </div>
   </div>
@@ -1603,9 +1667,24 @@
         <div class="feeds"><strong>Needs:</strong> Optics (Lens+Pipe) + Cut Gem + Circuit | Complex setup</div>
       </div>
       <div class="machine-card">
+        <h4>Amulet Maker <span class="machine-status status-situational">⚠️ Situational</span></h4>
+        <p>Ring + Frame + Prismatic Gem → Amulet (×2.0). Good gem multiplier, but consumes 2 gems for the prismatic. Can be further boosted with Glider (×1.5).</p>
+        <div class="feeds"><strong>Needs:</strong> Ring Maker + Frame Maker + Prismatic Gem Crucible | 4 ores + 2 gems</div>
+      </div>
+      <div class="machine-card">
+        <h4>Glider <span class="machine-status status-situational">⚠️ Situational</span></h4>
+        <p>Filigree + Amulet → Glider (×1.5 on top of Amulet). Extra multiplier stacks with Amulet's ×2.0. Niche but powerful with high-value gems.</p>
+        <div class="feeds"><strong>Needs:</strong> Filigree Cutter + Amulet Maker | 5 ores + 2 gems</div>
+      </div>
+      <div class="machine-card">
+        <h4>Electronic Tuner <span class="machine-status status-useful">🔗 Useful</span></h4>
+        <p>Adds +$50 to untuned electronics (Tablets). Place between Tablet Factory and QA Machine. Small flat bonus but applies before QA's ×1.2, making it +$60 effective.</p>
+        <div class="feeds"><strong>Fed by:</strong> Tablet Factory | <strong>Feeds:</strong> QA Machine → Seller | <strong>Introduced:</strong> Stage 7</div>
+      </div>
+      <div class="machine-card">
         <h4>Quality Assurance Machine <span class="machine-status status-core">✅ Core</span></h4>
         <p>Adds 20% to untested items. <strong>Always apply last</strong> — to your most expensive finished product. Items can only be QA'd once.</p>
-        <div class="feeds"><strong>Feeds:</strong> Seller | <strong>Obsolete?</strong> Never. Final multiplier on everything.</div>
+        <div class="feeds"><strong>Feeds:</strong> Seller | <strong>Obsolete?</strong> Never. Final multiplier on everything. | <strong>Introduced:</strong> Stage 9</div>
       </div>
     </div>
   </div>
@@ -1629,6 +1708,8 @@
           <tr><td>Crusher</td><td>—</td><td style="color:var(--green);">✅ Always needed</td><td>Every stone processing path starts with crushing.</td></tr>
           <tr><td>Fired Bricks</td><td>Concrete Bricks</td><td style="color:var(--orange);">⚠️ Mostly replaced</td><td>Concrete = ~4× value/pair. Fired only for odd stones.</td></tr>
           <tr><td>Prospectors</td><td>—</td><td style="color:var(--green);">✅ All 5 needed</td><td>They STACK, not replace. 22.6% combined gem chance.</td></tr>
+          <tr><td>Circuit Maker</td><td>—</td><td style="color:var(--accent);">🔗 Needed for recipes</td><td>Required for Tablets and Lasers. Introduced Stage 7.</td></tr>
+          <tr><td>Electronic Tuner</td><td>—</td><td style="color:var(--accent);">🔗 Needed for recipes</td><td>+$50 to Tablets before QA. Introduced Stage 7.</td></tr>
         </tbody>
       </table>
     </div>
@@ -1904,20 +1985,23 @@ Smelter Stone Out → Elevator ↓
     </div>
 
     <div class="machine-card" style="margin-bottom: 12px;">
-      <h4>Late Game (Stages 7-8): Three-Floor Multi-Line</h4>
-      <p>Casings, Alloys, and Superconductors require multiple bar inputs. Use parallel bar lines:</p>
+      <h4>Late Game (Stages 7-10): Three-Floor Multi-Line</h4>
+      <p>Casings, Circuits, Alloys, Superconductors, Tablets, and Engines require multiple bar inputs. Use parallel bar lines:</p>
       <pre style="background:var(--card);padding:10px;border-radius:6px;font-size:0.8em;overflow-x:auto;color:var(--muted);line-height:1.5;">
 <strong>Floor 1 — Bar Processing (4 parallel lines from Tempered Bars):</strong>
 Tempered Bar → 3-Way Splitter ─┬→ Line A: Bolt Machine → (wait for frame)
-                                ├→ Line B: Plate Stamper → Mech Parts Maker
-                                └→ Line C: Coiler → (Circuit Maker with Glass)
+                                ├→ Line B: Plate Stamper → Mech Parts Maker / Pipe Maker
+                                └→ Line C: Coiler → Circuit Maker (with Glass from Floor 2)
 Frame Maker ← Bar + Bolt | Casing Machine ← Frame + Bolt + Plate
 
 <strong>Floor 2 — Stone + Gem + Ceramic Processing:</strong>
 Stones → 5 Prospectors → Filter → Gem Line / Stone Pairing Line / Ceramic Line
+Glass production: Surviving Stone → Crusher → Kiln → Glass (for Circuits + Tablets)
 
 <strong>Floor 3 — End-Game Assembly:</strong>
 Alloy Furnace (2 bars) → Superconductor Constructor (+ Ceramic)
+Tablet Factory ← Casing + Glass + Circuit → Tuner → QA → Seller
+Engine Factory ← Mech Parts + Pipe + Casing → QA → Seller
 Casing + SC + Electromagnet → Power Core Assembler → QA → Seller</pre>
       <p class="sub"><strong>Machine counts for Power Core (per ore cycle):</strong> Each Power Core needs 11 ores (4 bars for casing components, 2 for alloy, 2 for electromagnet coil+casing, 1 for circuit coil, 1 for mech parts pipe, 1 for glass lens pipe). Plan conveyor throughput accordingly—you need <strong>multiple sellers</strong> for high-volume output.</p>
     </div>
