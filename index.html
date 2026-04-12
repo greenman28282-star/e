@@ -666,7 +666,7 @@
 <!-- STAGES -->
 <section id="stages">
   <h2><span class="icon">📈</span> Stage-by-Stage Optimal Setups</h2>
-  <p class="desc">Each stage includes prospectors in the stone byproduct flow. Expected gem value (EV) is calculated per stone based on available prospectors. Investment costs are <strong>cumulative</strong> (total spent including all previous stages). <span class="building-tag new" style="display:inline;font-size:0.8em;">Green = new this stage</span></p>
+  <p class="desc">Each stage includes prospectors in the stone byproduct flow. The Ore Smelter produces <strong>1 stone per 2 ores</strong>. Expected gem value (EV) is calculated per stone based on available prospectors, then scaled by 0.5 stones/ore for per-ore totals. Investment costs are <strong>cumulative</strong> (total spent including all previous stages). <span class="building-tag new" style="display:inline;font-size:0.8em;">Green = new this stage</span></p>
 
   <!-- STAGE 1 -->
   <div class="stage-card">
@@ -1061,10 +1061,10 @@
       <strong>🔗 Circuit Maker + Electronic Tuner:</strong> The Circuit Maker combines Glass (from Kiln) + Coil → Circuit (×2.0). Circuits are required for <strong>Tablets</strong> (2nd best product!) and <strong>Lasers</strong>. The Electronic Tuner adds a flat +$50 to Tablets before QA (+$60 effective after QA's ×1.2). Buy both now — you'll need them as soon as you unlock the Tablet Factory. <strong>Reactivate your Coiler</strong> from Stage 1 — it's needed again for circuits and electromagnets.
     </div>
 
-    <p>Metal casings are the foundation of end-game products. A casing needs 4 ores (1 bar + 1 bolt → frame, then frame + 1 bolt + 1 plate). The Circuit Maker prepares for Tablet production by combining glass + coils. Save casings and circuits for end-game recipes. All 4 stones from these ores run through prospectors first.</p>
+    <p>Metal casings are the foundation of end-game products. A casing needs 4 ores (1 bar + 1 bolt → frame, then frame + 1 bolt + 1 plate). The Circuit Maker prepares for Tablet production by combining glass + coils. Save casings and circuits for end-game recipes. ~2 stones from these 4 ores run through prospectors first (Smelter: 1 stone per 2 ores).</p>
 
     <div class="flow-diagram">
-      <div style="margin-bottom: 4px; color: var(--muted); font-size: 0.8em; font-weight: 600;">CASING RECIPE (4 ores → 1 casing + 4 stones for prospecting):</div>
+      <div style="margin-bottom: 4px; color: var(--muted); font-size: 0.8em; font-weight: 600;">CASING RECIPE (4 ores → 1 casing + ~2 stones for prospecting):</div>
       <div class="flow-row">
         <span class="flow-item fi-ore">Ore #1 → Tempered Bar</span>
         <span class="flow-arrow">┐</span>
@@ -1131,7 +1131,7 @@
     <p>Alloy bars merge 2 tempered bars (+20%). Ceramic casings from clay ($150). Superconductors combine alloy + ceramic for ×3 value! Stones that survive prospectors now split: some for ceramics, rest for concrete bricks.</p>
 
     <div class="flow-diagram">
-      <div style="margin-bottom: 4px; color: var(--muted); font-size: 0.8em; font-weight: 600;">SUPERCONDUCTOR (2 ores + 2 stones for ceramic):</div>
+      <div style="margin-bottom: 4px; color: var(--muted); font-size: 0.8em; font-weight: 600;">SUPERCONDUCTOR (2 ores + 2 surviving stones for ceramic):</div>
       <div class="flow-row">
         <span class="flow-item fi-ore">2 Ores → 2 Tempered Bars</span>
         <span class="flow-arrow">→</span>
@@ -1156,7 +1156,7 @@
     </div>
 
     <div class="tip-box good">
-      <strong>⚡ Best immediate sell:</strong> Superconductors give $<span class="v-s8-sc-perore">749</span>/ore from the product (2 ores). Plus gem EV from 2 prospected stones: $<span class="v-s8-gem-2stones">276</span>. Total per ore: $<span class="v-s8-total-perore">1,025</span>. Note: the ceramic recipe requires 2 stones that survive prospecting (77.4% each), so some batches may need extra stones from other lines.
+      <strong>⚡ Best immediate sell:</strong> Superconductors give $<span class="v-s8-sc-perore">749</span>/ore from the product (2 ores). Plus gem EV from ~1 prospected stone (0.5/ore): $<span class="v-s8-gem-2stones">138</span>. Total per ore: $<span class="v-s8-total-perore">887</span>. Note: the ceramic recipe requires 2 surviving stones — these come from extra ore smelting or stone reserves.
     </div>
 
     <div class="value-result">
@@ -1190,10 +1190,10 @@
       <strong>🚀 Tablets are the 2nd best $/ore product in the game!</strong> You already have everything else from earlier stages — Circuit Maker (Stage 7), Casing line (Stage 7), Kiln for glass (Stage 3), Coiler (Stage 1). The QA Machine alone transforms your entire factory by adding +20% to ALL final products (tablets, bricks, gems). This is a massive investment but the QA Machine pays for itself quickly.
     </div>
 
-    <p>Tablets combine Casing + Glass + Circuit with ×3.0 multiplier, then Electronic Tuner adds +$50, then QA adds +20%. Uses 5 ores total. All 5 stones from smelting get prospected first.</p>
+    <p>Tablets combine Casing + Glass + Circuit with ×3.0 multiplier, then Electronic Tuner adds +$50, then QA adds +20%. Uses 5 ores total. ~2.5 stones from smelting (0.5/ore) get prospected first.</p>
 
     <div class="flow-diagram">
-      <div style="margin-bottom: 4px; color: var(--muted); font-size: 0.8em; font-weight: 600;">TABLET RECIPE (5 ores → 5 stones prospected):</div>
+      <div style="margin-bottom: 4px; color: var(--muted); font-size: 0.8em; font-weight: 600;">TABLET RECIPE (5 ores → ~2.5 stones prospected):</div>
       <div class="flow-row">
         <span class="flow-item fi-ore">4 Ores → Casing ($<span class="v-tab-casing">607</span>)</span>
         <span class="flow-arrow">┐</span>
@@ -1216,7 +1216,7 @@
     </div>
 
     <div class="gem-ev-box">
-      💎 <strong>Total gem EV from 5 stones:</strong> <span class="val">$<span class="v-tab-gem-total">689</span></span>
+      💎 <strong>Total gem EV from ~2.5 stones:</strong> <span class="val">$<span class="v-tab-gem-total">345</span></span>
     </div>
 
     <div class="value-result">
@@ -1246,7 +1246,7 @@
     <p>Engines combine Mech Parts + Pipe + Casing with a ×2.5 multiplier. Decent mid-tier product — lower $/ore than Tablets or Power Cores, but a good parallel line if you have spare throughput. <strong>Reactivate your Pipe Maker</strong> from Stage 2 — Engines need Pipes alongside Mech Parts.</p>
 
     <div class="flow-diagram">
-      <div style="margin-bottom: 4px; color: var(--muted); font-size: 0.8em; font-weight: 600;">ENGINE RECIPE (6 ores → 6 stones prospected):</div>
+      <div style="margin-bottom: 4px; color: var(--muted); font-size: 0.8em; font-weight: 600;">ENGINE RECIPE (6 ores → ~3 stones prospected):</div>
       <div class="flow-row">
         <span class="flow-item fi-ore">1 Ore → Mech Parts ($<span class="v-eng-mp">170</span>)</span>
         <span class="flow-arrow">┐</span>
@@ -1267,7 +1267,7 @@
     </div>
 
     <div class="gem-ev-box">
-      💎 <strong>Total gem EV from 6 stones:</strong> <span class="val">$<span class="v-eng-gem-total">827</span></span>
+      💎 <strong>Total gem EV from ~3 stones:</strong> <span class="val">$<span class="v-eng-gem-total">414</span></span>
     </div>
 
     <div class="value-result">
@@ -1311,10 +1311,10 @@
       <div class="stage-title" style="color: var(--gold);">👑 Power Core (THE BEST)</div>
       <div class="stage-cost">Power Core Assembler: $4.5M (cumulative with Stages 1–10: ~$11.5M+)</div>
     </div>
-    <p style="margin-bottom: 16px;">The Power Core combines casing + superconductor + electromagnet with ×2.5 value increase. All 11 stones from smelting get prospected first. Requires the Power Core Assembler ($4.5M) — the most expensive single machine in the game.</p>
+    <p style="margin-bottom: 16px;">The Power Core combines casing + superconductor + electromagnet with ×2.5 value increase. The 11 ores produce ~5.5 stones (Smelter: 1 per 2 ores) — all prospected first. Requires the Power Core Assembler ($4.5M) — the most expensive single machine in the game.</p>
 
     <div class="flow-diagram">
-      <div style="margin-bottom: 4px; color: var(--muted); font-size: 0.8em; font-weight: 600;">POWER CORE RECIPE (11 ores → 11 stones prospected):</div>
+      <div style="margin-bottom: 4px; color: var(--muted); font-size: 0.8em; font-weight: 600;">POWER CORE RECIPE (11 ores → ~5.5 stones prospected):</div>
       <div class="flow-row">
         <span class="flow-item fi-ore">4 Ores</span>
         <span class="flow-arrow">→</span>
@@ -1343,16 +1343,16 @@
           <span class="flow-item fi-sell" style="font-size: 1.1em; border-color: var(--gold); color: var(--gold);">💰💰💰 $<span class="v-eg-pc-qa">14,508</span></span>
         </div>
       </div>
-      <div style="margin-top: 14px; margin-bottom: 4px; color: var(--muted); font-size: 0.8em; font-weight: 600;">ALL 11 STONES → 5 Prospectors first! Then surviving stones:</div>
+      <div style="margin-top: 14px; margin-bottom: 4px; color: var(--muted); font-size: 0.8em; font-weight: 600;">~5.5 STONES → 5 Prospectors first! Then surviving stones:</div>
       <div class="flow-row">
-        <span class="flow-item fi-byproduct">~8.5 surviving → 4 Concrete Bricks → Kiln → QA</span>
+        <span class="flow-item fi-byproduct">~4.3 surviving → 2 Concrete Bricks → Kiln → QA</span>
         <span class="flow-arrow">→</span>
         <span class="flow-item fi-sell">💰 $<span class="v-eg-bricks">1,728</span></span>
       </div>
     </div>
 
     <div class="gem-ev-box">
-      💎 <strong>Total gem EV from 11 stones:</strong> <span class="val">$<span class="v-eg-gem-total">1,517</span></span>
+      💎 <strong>Total gem EV from ~5.5 stones:</strong> <span class="val">$<span class="v-eg-gem-total">762</span></span>
       <span class="sub">(11 × $<span class="v-eg-gem-per">137.87</span> per stone — avg ~2.5 gems found per batch)</span>
     </div>
 
@@ -1368,7 +1368,7 @@
 <!-- COMPARISON TABLE -->
 <section id="comparison">
   <h2><span class="icon">📊</span> Product Value Comparison</h2>
-  <p class="desc">All values include QA (+20%), prospector gem EV, and concrete brick byproducts. Based on ore value $<span class="v-ore3">30</span>. Products that consume gems (Laser, Amulet, Glider) show net gem EV after subtracting the consumed gem's value.</p>
+  <p class="desc">All values include QA (+20%), prospector gem EV (at 0.5 stones/ore), and concrete brick byproducts. Based on ore value $<span class="v-ore3">30</span>. Products that consume gems (Laser, Amulet, Glider) show net gem EV after subtracting the consumed gem's value.</p>
 
   <div class="tip-box" style="margin-bottom: 20px;">
     <strong>⚡ Throughput vs $/ore tradeoff:</strong> This table ranks by <em>value per ore consumed</em>, which is ideal for maximizing income per ore. However, simpler products (like Tempered Mech Parts) process much faster — a 1-ore recipe runs at full belt speed, while an 11-ore Power Core factory has many bottlenecks. <strong>If your factory throughput is low, a simpler product at higher volume can out-earn a complex one.</strong> Consider your actual ores/minute when choosing what to build.
@@ -1747,6 +1747,10 @@ function recalc() {
   // Polished brick (no kiln): $35
   var polishedBrickValue = 35;
 
+  // Stone rate: Ore Smelter produces 1 stone per 2 ores (0.5 stones/ore)
+  // This affects ALL per-ore byproduct calculations
+  var STONE_RATE = 0.5;
+
   // Ore display
   setAll('.v-ore', fmtDollar(V));
   setAll('.v-ore2', fmtDollar(V));
@@ -1758,7 +1762,8 @@ function recalc() {
   var s1GemEV = gem1.ev;
   // Stage 1: no Brick Mold, so dust is sold polished ($1 + $10 polish = $11)
   var s1DustVal = gem1.survivalRate * 11;
-  var s1Total = s1Coil + s1GemEV + s1DustVal;
+  // Per ore: bar product + stone byproducts × STONE_RATE (0.5 stones/ore from Smelter)
+  var s1Total = s1Coil + (s1GemEV + s1DustVal) * STONE_RATE;
   setAll('.v-s1-coil', fmtDollar(s1Coil));
   setAll('.v-s1-coil2', fmtDollar(s1Coil));
   setAll('.v-s1-gem-ev', fmtD(s1GemEV));
@@ -1770,7 +1775,7 @@ function recalc() {
   var s2Pipe = bar + 40;
   var s2GemEV = gem2.ev;
   var s2BrickVal = gem2.survivalRate * polishedBrickValue; // surviving → brick $25 + polish $10 = $35 (no kiln yet)
-  var s2Total = s2Pipe + s2GemEV + s2BrickVal;
+  var s2Total = s2Pipe + (s2GemEV + s2BrickVal) * STONE_RATE;
   setAll('.v-s2-pipe', fmtDollar(s2Pipe));
   setAll('.v-s2-pipe2', fmtDollar(s2Pipe));
   setAll('.v-s2-gem-ev', fmtD(s2GemEV));
@@ -1781,7 +1786,7 @@ function recalc() {
   // === STAGE 3 ===
   var s3GemEV = gem3.ev;
   var s3BrickVal = gem3.survivalRate * firedBrickValue;
-  var s3Total = s2Pipe + s3GemEV + s3BrickVal;
+  var s3Total = s2Pipe + (s3GemEV + s3BrickVal) * STONE_RATE;
   setAll('.v-s3-pipe', fmtDollar(s2Pipe));
   setAll('.v-s3-pipe2', fmtDollar(s2Pipe));
   setAll('.v-s3-gem-ev', fmtD(s3GemEV));
@@ -1793,7 +1798,7 @@ function recalc() {
   var s4Mech = bar + 50;
   var s4GemEV = gem4.ev;
   var s4BrickVal = gem4.survivalRate * firedBrickValue;
-  var s4Total = s4Mech + s4GemEV + s4BrickVal;
+  var s4Total = s4Mech + (s4GemEV + s4BrickVal) * STONE_RATE;
   setAll('.v-s4-mech', fmtDollar(s4Mech));
   setAll('.v-s4-mech2', fmtDollar(s4Mech));
   setAll('.v-s4-gem-ev', fmtD(s4GemEV));
@@ -1802,10 +1807,10 @@ function recalc() {
   setAll('.v-s4-total', fmtDollar(s4Total));
 
   // === STAGE 5 === (4 prospectors, no cut yet, concrete bricks)
-  // Surviving stones pair up. Per stone: survival_rate * (180 per stone as concrete brick share)
+  // Surviving stones pair up. Per stone: survival_rate * (concrete brick share per stone)
   var s5ConcretePerStone = gem4.survivalRate * (concreteBrickPairValue / 2);
   var s5GemEV = gem4.ev;
-  var s5Total = s4Mech + s5GemEV + s5ConcretePerStone;
+  var s5Total = s4Mech + (s5GemEV + s5ConcretePerStone) * STONE_RATE;
   setAll('.v-s5-mech', fmtDollar(s4Mech));
   setAll('.v-s5-mech2', fmtDollar(s4Mech));
   setAll('.v-s5-gem-ev', fmtD(s5GemEV));
@@ -1817,7 +1822,7 @@ function recalc() {
   var s6Mech = temperedBar + 50;
   var s6GemEV = gem5.ev;
   var s6ConcretePerStone = gem5.survivalRate * (concreteBrickPairValue / 2);
-  var s6Total = s6Mech + s6GemEV + s6ConcretePerStone;
+  var s6Total = s6Mech + (s6GemEV + s6ConcretePerStone) * STONE_RATE;
   // Average gem value when found
   var s6AvgGemEV = 0;
   var s6TotalChance = 0;
@@ -1845,7 +1850,9 @@ function recalc() {
   var frame = (temperedBar + bolt) * 1.25;
   var casing = (frame + bolt + plate) * 1.30;
   var casingPerOre = casing / 4;
-  var s7ByproPerOre = s6GemEV + s6ConcretePerStone;
+  // Stone byproducts: 4 ores produce 4 × STONE_RATE stones
+  var s7StonesPerOre = STONE_RATE;
+  var s7ByproPerOre = (s6GemEV + s6ConcretePerStone) * s7StonesPerOre;
   var s7Perore = casingPerOre + s7ByproPerOre;
   setAll('.v-s7-casing', fmtDollar(casing));
   setAll('.v-s7-casing2', fmtDollar(casing));
@@ -1859,16 +1866,18 @@ function recalc() {
   var coil = temperedBar + 20;
   var em = (coil + casing) * 1.5;
   var scPerOre = sc / 2;
-  // SC recipe: 2 ores → 2 stones prospected (each has 77.4% survival chance, so ~1.55 survive on avg)
-  // Ceramic needs 2 surviving stones — on average there's a shortfall, so brick bonus is near zero
-  // Any rare extra survivors go to concrete bricks
-  var s8Gem2Stones = 2 * gem5.ev;
-  var s8Survivors = 2 * gem5.survivalRate;
-  var s8ForBricks = Math.max(0, s8Survivors - 2);
+  // SC recipe: 2 ores → 2 × STONE_RATE = 1 stone. Ceramic needs 2 surviving stones.
+  // With 0.5 stones/ore, 2 ores only produce 1 stone — not enough for ceramic (needs 2).
+  // In practice, ceramic stones come from a separate stone reserve (extra smelts).
+  // For simplicity, account for gem EV from the stones these ores produce.
+  var s8NumStones = 2 * STONE_RATE;  // 1 stone from 2 ores
+  var s8Gem2Stones = s8NumStones * gem5.ev;
+  var s8Survivors = s8NumStones * gem5.survivalRate;
+  var s8ForBricks = Math.max(0, s8Survivors - 2); // stones needed for ceramic (if any surplus)
   var s8BrickPairs = Math.floor(s8ForBricks / 2);
   var s8Odd = s8ForBricks - s8BrickPairs * 2;
   var s8BrickValue = s8BrickPairs * concreteBrickPairQA + (s8Odd > 0.5 ? firedBrickQA : 0);
-  var s8TotalPerOre = scPerOre + gem5.ev + s8BrickValue / 2;
+  var s8TotalPerOre = scPerOre + s8Gem2Stones / 2 + s8BrickValue / 2;
   setAll('.v-s8-sc', fmtDollar(sc));
   setAll('.v-s8-sc2', fmtDollar(sc));
   setAll('.v-s8-em', fmtDollar(em));
@@ -1884,10 +1893,11 @@ function recalc() {
   var pc = (casing1 + sc + em) * 2.5;
   var pcQA = pc * 1.2;
 
-  // 11 ores → 11 stones, all prospected. 2 surviving stones used for ceramic.
-  // Remaining ~(11 × survivalRate - 2) surviving stones → concrete bricks
-  var totalGemEV11 = 11 * gem5.ev;
-  var expectedSurviving = 11 * gem5.survivalRate;
+  // 11 ores → 11 × STONE_RATE = 5.5 stones, all prospected. 2 surviving stones used for ceramic.
+  // Remaining ~(5.5 × survivalRate - 2) surviving stones → concrete bricks
+  var pcNumStones = 11 * STONE_RATE;
+  var totalGemEV11 = pcNumStones * gem5.ev;
+  var expectedSurviving = pcNumStones * gem5.survivalRate;
   // 2 survivors for ceramic, rest for concrete bricks
   var survivorsForBricks = Math.max(0, expectedSurviving - 2);
   var brickPairs = Math.floor(survivorsForBricks / 2);
@@ -1918,9 +1928,10 @@ function recalc() {
   var tablet = (casing + glass + circuit) * 3.0;
   var tabletTuned = tablet + 50;
   var tabletQA = tabletTuned * 1.2;
-  // 5 ores → 5 stones prospected. 1 surviving stone for glass (circuit), rest for bricks
-  var totalGemEV5 = 5 * gem5.ev;
-  var tabSurvivors = 5 * gem5.survivalRate;
+  // 5 ores → 5 × STONE_RATE = 2.5 stones prospected. 2 surviving stones for glass (circuit + tablet)
+  var tabNumStones = 5 * STONE_RATE;
+  var totalGemEV5 = tabNumStones * gem5.ev;
+  var tabSurvivors = tabNumStones * gem5.survivalRate;
   var tabForBricks = Math.max(0, tabSurvivors - 2); // 1 for glass in circuit, 1 for glass in tablet
   var tabBrickPairs = Math.floor(tabForBricks / 2);
   var tabOdd = tabForBricks - tabBrickPairs * 2;
@@ -1941,8 +1952,9 @@ function recalc() {
   var pipe = temperedBar + 40;
   var engine = (mech + pipe + casing) * 2.5;
   var engineQA = engine * 1.2;
-  var totalGemEV6 = 6 * gem5.ev;
-  var engSurvivors = 6 * gem5.survivalRate;
+  var engNumStones = 6 * STONE_RATE;
+  var totalGemEV6 = engNumStones * gem5.ev;
+  var engSurvivors = engNumStones * gem5.survivalRate;
   var engBrickPairs = Math.floor(engSurvivors / 2);
   var engOdd = engSurvivors - engBrickPairs * 2;
   var engBrickValue = engBrickPairs * concreteBrickPairQA + (engOdd > 0.5 ? firedBrickQA : 0);
@@ -1966,12 +1978,13 @@ function recalc() {
   var laser = (optics + avgCutGem + circuit) * 1.75;
   var laserQA = laser * 1.2;
   var laserOres = 2;
-  var totalGemEVLaser = laserOres * gem5.ev;
+  var laserNumStones = laserOres * STONE_RATE;
+  var totalGemEVLaser = laserNumStones * gem5.ev;
   // One gem consumed by laser recipe, reducing sellable gem EV
   // Approximate: reduce total gem EV by one average gem occurrence
   var laserGemConsumed = avgCutGem; // opportunity cost of using gem in laser
   var laserNetGemEV = Math.max(0, totalGemEVLaser - laserGemConsumed);
-  var laserSurvivors = laserOres * gem5.survivalRate;
+  var laserSurvivors = laserNumStones * gem5.survivalRate;
   var laserForBricks = Math.max(0, laserSurvivors - 2); // 2 survivors for glass
   var laserBrickPairs = Math.floor(laserForBricks / 2);
   var laserOdd = laserForBricks - laserBrickPairs * 2;
@@ -1991,10 +2004,11 @@ function recalc() {
   var amulet = (ring + frame + prismaticGem) * 2.0;
   var amuletQA = amulet * 1.2;
   var amuletOres = 4;
-  var totalGemEVAmulet = amuletOres * gem5.ev;
+  var amuletNumStones = amuletOres * STONE_RATE;
+  var totalGemEVAmulet = amuletNumStones * gem5.ev;
   var amuletGemConsumed = 2 * avgCutGem; // 2 gems used for prismatic
   var amuletNetGemEV = Math.max(0, totalGemEVAmulet - amuletGemConsumed);
-  var amuletSurvivors = amuletOres * gem5.survivalRate;
+  var amuletSurvivors = amuletNumStones * gem5.survivalRate;
   var amuletBrickPairs = Math.floor(amuletSurvivors / 2);
   var amuletOdd = amuletSurvivors - amuletBrickPairs * 2;
   var amuletBrickValue = amuletBrickPairs * concreteBrickPairQA + (amuletOdd > 0.5 ? firedBrickQA : 0);
@@ -2006,10 +2020,11 @@ function recalc() {
   var glider = (filigree + amulet) * 1.5;
   var gliderQA = glider * 1.2;
   var gliderOres = 5; // 4 for amulet + 1 for filigree plate
-  var totalGemEVGlider = gliderOres * gem5.ev;
+  var gliderNumStones = gliderOres * STONE_RATE;
+  var totalGemEVGlider = gliderNumStones * gem5.ev;
   var gliderGemConsumed = 2 * avgCutGem;
   var gliderNetGemEV = Math.max(0, totalGemEVGlider - gliderGemConsumed);
-  var gliderSurvivors = gliderOres * gem5.survivalRate;
+  var gliderSurvivors = gliderNumStones * gem5.survivalRate;
   var gliderBrickPairs = Math.floor(gliderSurvivors / 2);
   var gliderOdd = gliderSurvivors - gliderBrickPairs * 2;
   var gliderBrickValue = gliderBrickPairs * concreteBrickPairQA + (gliderOdd > 0.5 ? firedBrickQA : 0);
@@ -2026,8 +2041,8 @@ function recalc() {
     { name: "Tablet + Tuner + QA", ores: 5, product: tabletQA, gems: totalGemEV5, bricks: tabBrickValue, total: tabGrand },
     { name: "Superconductor + QA", ores: 2, product: sc * 1.2, gems: s8Gem2Stones, bricks: s8BrickValue, total: sc * 1.2 + s8Gem2Stones + s8BrickValue },
     { name: "Engine + QA", ores: 6, product: engineQA, gems: totalGemEV6, bricks: engBrickValue, total: engGrand },
-    { name: "Electromagnet + QA", ores: 5, product: em * 1.2, gems: 5 * gem5.ev, bricks: 1 * concreteBrickPairQA, total: em * 1.2 + 5 * gem5.ev + concreteBrickPairQA },
-    { name: "Tempered Mech Parts + QA", ores: 1, product: mech * 1.2, gems: gem5.ev, bricks: gem5.survivalRate * concreteBrickPairValue / 2, total: mech * 1.2 + gem5.ev + gem5.survivalRate * concreteBrickPairValue / 2 },
+    { name: "Electromagnet + QA", ores: 5, product: em * 1.2, gems: 5 * STONE_RATE * gem5.ev, bricks: Math.max(0, 5 * STONE_RATE * gem5.survivalRate - 0) * concreteBrickPairQA / 2, total: em * 1.2 + 5 * STONE_RATE * gem5.ev + Math.max(0, 5 * STONE_RATE * gem5.survivalRate) * concreteBrickPairValue / 2 },
+    { name: "Tempered Mech Parts + QA", ores: 1, product: mech * 1.2, gems: STONE_RATE * gem5.ev, bricks: STONE_RATE * gem5.survivalRate * concreteBrickPairValue / 2, total: mech * 1.2 + STONE_RATE * gem5.ev + STONE_RATE * gem5.survivalRate * concreteBrickPairValue / 2 },
     { name: "Laser + QA", ores: laserOres, product: laserQA, gems: laserNetGemEV, bricks: laserBrickValue, total: laserGrand },
     { name: "Amulet + QA", ores: amuletOres, product: amuletQA, gems: amuletNetGemEV, bricks: amuletBrickValue, total: amuletGrand },
     { name: "Glider + QA", ores: gliderOres, product: gliderQA, gems: gliderNetGemEV, bricks: gliderBrickValue, total: gliderGrand },
@@ -2067,8 +2082,8 @@ function recalc() {
   var emNP = (coilNP + casingNP) * 1.5;
   var pcNP = (casingNP + scNP + emNP) * 2.5;
   var pcQANP = pcNP * 1.2;
-  var totalGemEV11NP = 11 * gem5.ev;
-  var expectedSurvNP = 11 * gem5.survivalRate;
+  var totalGemEV11NP = 11 * STONE_RATE * gem5.ev;
+  var expectedSurvNP = 11 * STONE_RATE * gem5.survivalRate;
   var survBricksNP = Math.max(0, expectedSurvNP - 2);
   var brickPairsNP = Math.floor(survBricksNP / 2);
   var oddNP = survBricksNP - brickPairsNP * 2;
@@ -2788,7 +2803,7 @@ recalc();
       ['blt','frm','bar','bolt'],
       ['frm','cas','product','frame'],['blt2','cas','bar','bolt'],['plt','cas','bar','plate'],
       // Elevator to Floor 2
-      ['sml','elv','stone','11 stones','v'],['elv','tp','stone'],
+      ['sml','elv','stone','~5.5 stones','v'],['elv','tp','stone'],
       // Floor 2: Stone processing
       ['tp','ep','stone'],['ep','sp','stone'],['sp','rp','stone'],
       ['rp','dp','stone'],['dp','flt','stone'],
