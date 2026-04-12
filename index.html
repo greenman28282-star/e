@@ -3111,27 +3111,29 @@ recalc();
       ['unl','Unloader','source',0,0],['cln','Ore Cleaner','upgrade',1,0],
       ['pol','Polisher','upgrade',2,0],['sml','Ore Smelter','machine',3,0],
       ['plt','Plate Stamper','machine',4,0],['mch','Mech Parts','machine',5,0],
-      ['tp','Topaz Prosp.','prospector',3,1.5],['ep','Emerald Prosp.','prospector',4,1.5],
-      ['sp','Sapphire Prosp.','prospector',5,1.5],['rp','Ruby Prosp.','prospector',6,1.5],
-      ['flt','Filter','filter',7,1.5],['gp','Polisher','gem',8,1.5],
-      ['spt','L/R Splitter','splitter',7,3],['cru','Crusher','machine',8.5,3],
-      ['cmx','Cement Mixer','special',7.5,4.2],['brk','Brick Mold','machine',8.5,4.2],
-      ['kln','Kiln','upgrade',9.5,4.2],['bp','Polisher','upgrade',10.5,4.2],
-      ['sell','Sell Zone','seller',11.5,2]
+      ['elv','Elevator','special',2,1.3],
+      ['tp','Topaz Prosp.','prospector',3,2.5],['ep','Emerald Prosp.','prospector',4,2.5],
+      ['sp','Sapphire Prosp.','prospector',5,2.5],['rp','Ruby Prosp.','prospector',6,2.5],
+      ['flt','Filter','filter',7,2.5],['gp','Polisher','gem',8,2.5],
+      ['spt','L/R Splitter','splitter',7,4],['cru','Crusher','machine',8.5,4],
+      ['cmx','Cement Mixer','special',7.5,5.2],['brk','Brick Mold','machine',8.5,5.2],
+      ['kln','Kiln','upgrade',9.5,5.2],['bp','Polisher','upgrade',10.5,5.2],
+      ['sell','Sell Zone','seller',11.5,3]
     ], c:[
       ['unl','cln','ore'],['cln','pol','ore'],['pol','sml','ore'],
       ['sml','plt','bar'],['plt','mch','bar','bars'],['mch','sell','bar'],
-      ['sml','tp','stone','stones'],['tp','ep','stone'],['ep','sp','stone'],['sp','rp','stone'],['rp','flt','stone'],
+      ['sml','elv','stone','stones','v'],['elv','tp','stone'],
+      ['tp','ep','stone'],['ep','sp','stone'],['sp','rp','stone'],['rp','flt','stone'],
       ['flt','gp','gem','gems'],['gp','sell','gem'],
       ['flt','spt','stone','stones'],
       ['spt','cru','stone','crush'],['spt','cmx','stone','stone','v'],
       ['cru','cmx','brick','dust'],
       ['cmx','brk','brick','cement'],['brk','kln','brick'],['kln','bp','brick','concrete'],['bp','sell','brick']
     ], a:[
-      ['BAR LINE',0.5,-.35,'#60a0d0'],
-      ['4 PROSPECTORS',3.2,.7,'#a070d0'],
-      ['CONCRETE BRICK PAIRING',7.2,2.3,'#e09050']
-    ]},
+      ['FLOOR 1: BAR LINE',0.5,-.35,'#60a0d0'],
+      ['FLOOR 2: STONE PROCESSING',2.5,1.7,'#a070d0'],
+      ['CONCRETE BRICK PAIRING',7.2,3.3,'#e09050']
+    ], floors:[[1.8,'#3a5c7a']]},
 
     // === STAGE 6: DIAMOND + GEM CUTTER + TEMPERING ===
     { b:[
@@ -3139,18 +3141,20 @@ recalc();
       ['pol','Polisher','upgrade',2,0],['sml','Ore Smelter','machine',3,0],
       ['tmp','Tempering Forge','special',4.5,0],['plt','Plate Stamper','machine',5.5,0],
       ['mch','Mech Parts','machine',6.5,0],
-      ['tp','Topaz Prosp.','prospector',3,1.5],['ep','Emerald Prosp.','prospector',4,1.5],
-      ['sp','Sapphire Prosp.','prospector',5,1.5],['rp','Ruby Prosp.','prospector',6,1.5],
-      ['dp','Diamond Prosp.','prospector',7,1.5],['flt','Filter','filter',8,1.5],
-      ['gp','Polisher','gem',9,1.5],['gc','Gem Cutter','gem',10,1.5],
-      ['spt','L/R Splitter','splitter',8,3],['cru','Crusher','machine',9.5,3],
-      ['cmx','Cement Mixer','special',8.5,4.2],['brk','Brick Mold','machine',9.5,4.2],
-      ['kln','Kiln','upgrade',10.5,4.2],['bp','Polisher','upgrade',11.5,4.2],
-      ['sell','Sell Zone','seller',12.5,2]
+      ['elv','Elevator','special',2,1.3],
+      ['tp','Topaz Prosp.','prospector',3,2.5],['ep','Emerald Prosp.','prospector',4,2.5],
+      ['sp','Sapphire Prosp.','prospector',5,2.5],['rp','Ruby Prosp.','prospector',6,2.5],
+      ['dp','Diamond Prosp.','prospector',7,2.5],['flt','Filter','filter',8,2.5],
+      ['gp','Polisher','gem',9,2.5],['gc','Gem Cutter','gem',10,2.5],
+      ['spt','L/R Splitter','splitter',8,4],['cru','Crusher','machine',9.5,4],
+      ['cmx','Cement Mixer','special',8.5,5.2],['brk','Brick Mold','machine',9.5,5.2],
+      ['kln','Kiln','upgrade',10.5,5.2],['bp','Polisher','upgrade',11.5,5.2],
+      ['sell','Sell Zone','seller',12.5,3]
     ], c:[
       ['unl','cln','ore'],['cln','pol','ore'],['pol','sml','ore'],
       ['sml','tmp','bar','temper'],['tmp','plt','bar'],['plt','mch','bar','bars'],['mch','sell','bar'],
-      ['sml','tp','stone','stones'],['tp','ep','stone'],['ep','sp','stone'],['sp','rp','stone'],
+      ['sml','elv','stone','stones','v'],['elv','tp','stone'],
+      ['tp','ep','stone'],['ep','sp','stone'],['sp','rp','stone'],
       ['rp','dp','stone'],['dp','flt','stone'],
       ['flt','gp','gem','gems'],['gp','gc','gem','cut'],['gc','sell','gem'],
       ['flt','spt','stone','stones'],
@@ -3158,10 +3162,10 @@ recalc();
       ['cru','cmx','brick','dust'],
       ['cmx','brk','brick'],['brk','kln','brick'],['kln','bp','brick','concrete'],['bp','sell','brick']
     ], a:[
-      ['TEMPERED BAR LINE',0.5,-.35,'#ffd04a'],
-      ['5 PROSPECTORS + GEM CUTTER',3.8,.7,'#d070d0'],
-      ['CONCRETE BRICK PAIRING',8.2,2.3,'#e09050']
-    ]},
+      ['FLOOR 1: TEMPERED BAR LINE',0.5,-.35,'#ffd04a'],
+      ['FLOOR 2: 5 PROSPECTORS + GEM CUTTER',2.5,1.7,'#d070d0'],
+      ['CONCRETE BRICK PAIRING',8.2,3.3,'#e09050']
+    ], floors:[[1.8,'#3a5c7a']]},
 
     // === STAGE 7: CASINGS & FRAMES ===
     { b:[
@@ -3171,6 +3175,7 @@ recalc();
       ['blt','Bolt Machine','machine',6.5,1],['frm','Frame Maker','assembly',8,0],
       ['blt2','Bolt Machine','machine',6.5,2],['plt','Plate Stamper','machine',6.5,3],
       ['cas','Casing Machine','assembly',9.5,2],
+      ['elv','Elevator','special',1.5,3.8],
       ['tp','Topaz Prosp.','prospector',0,5],['ep','Emerald Prosp.','prospector',1,5],
       ['sp','Sapphire Prosp.','prospector',2,5],['rp','Ruby Prosp.','prospector',3,5],
       ['dp','Diamond Prosp.','prospector',4,5],['flt','Filter','filter',5,5],
@@ -3187,7 +3192,8 @@ recalc();
       ['blt','frm','bar','bolt'],
       ['frm','cas','product','frame'],['blt2','cas','bar','bolt'],['plt','cas','bar','plate'],
       ['cas','sell','product'],
-      ['sml','tp','stone','4 stones','v'],['tp','ep','stone'],['ep','sp','stone'],['sp','rp','stone'],
+      ['sml','elv','stone','4 stones','v'],['elv','tp','stone'],
+      ['tp','ep','stone'],['ep','sp','stone'],['sp','rp','stone'],
       ['rp','dp','stone'],['dp','flt','stone'],
       ['flt','gp','gem','gems'],['gp','gc','gem'],['gc','sell','gem'],
       ['flt','spt2','stone','stones'],
@@ -3195,12 +3201,12 @@ recalc();
       ['cru','cmx','brick','dust'],
       ['cmx','brk','brick'],['brk','kln','brick'],['kln','bp','brick'],['bp','sell','brick']
     ], a:[
-      ['CASING ASSEMBLY (4 ores)',0.5,-.35,'#a0a0ff'],
+      ['FLOOR 1: CASING ASSEMBLY (4 ores)',0.5,-.35,'#a0a0ff'],
       ['bar + bolt = frame',7,-.35,'#60a0d0'],
       ['frame + bolt + plate = casing',8,1.3,'#a0a0ff'],
-      ['5 PROSPECTORS',0.3,4.25,'#d070d0'],
+      ['FLOOR 2: 5 PROSPECTORS',0.3,4.25,'#d070d0'],
       ['CONCRETE BRICKS',5.2,5.8,'#e09050']
-    ]},
+    ], floors:[[4.3,'#3a5c7a']]},
 
     // === STAGE 8: ALLOY & SUPERCONDUCTORS ===
     { b:[
@@ -3213,6 +3219,7 @@ recalc();
       ['clm','Clay Mixer','machine',9,2.5],['cer','Ceramic Furnace','machine',10,2.5],
       ['scc','SC Constructor','assembly',9,0.65],
       ['mag','Magnetic Mach.','assembly',9,1.6],
+      ['elv','Elevator','special',1.5,3.2],
       ['tp','Topaz Prosp.','prospector',0,4.5],['ep','Emerald Prosp.','prospector',1,4.5],
       ['sp','Sapphire Prosp.','prospector',2,4.5],['rp','Ruby Prosp.','prospector',3,4.5],
       ['dp','Diamond Prosp.','prospector',4,4.5],['flt','Filter','filter',5,4.5],
@@ -3230,7 +3237,8 @@ recalc();
       ['clm','cer','brick','clay'],['cer','scc','product','ceramic'],
       ['mag','sell','product'],
       ['scc','sell','product'],
-      ['sml','tp','stone','stones','v'],['tp','ep','stone'],['ep','sp','stone'],['sp','rp','stone'],
+      ['sml','elv','stone','stones','v'],['elv','tp','stone'],
+      ['tp','ep','stone'],['ep','sp','stone'],['sp','rp','stone'],
       ['rp','dp','stone'],['dp','flt','stone'],
       ['flt','gp','gem','gems'],['gp','gc','gem'],['gc','sell','gem'],
       ['flt','spt2','stone','stones'],
@@ -3238,13 +3246,231 @@ recalc();
       ['cru','cmx','brick','dust'],['cru','clm','brick','clay dust'],
       ['cmx','brk','brick'],['brk','kln','brick'],['kln','bp','brick'],['bp','sell','brick']
     ], a:[
-      ['ALLOY + SUPERCONDUCTOR',0.5,-.35,'#a0a0ff'],
+      ['FLOOR 1: ALLOY + SUPERCONDUCTOR',0.5,-.35,'#a0a0ff'],
       ['2 bars = alloy',6.3,-.35,'#60a0d0'],
       ['alloy + ceramic = SC',8.5,0,'#70d0a0'],
       ['coil + casing = electromagnet',7.8,1,'#a0a0ff'],
-      ['5 PROSPECTORS',0.3,3.75,'#d070d0'],
+      ['FLOOR 2: 5 PROSPECTORS',0.3,3.75,'#d070d0'],
       ['CONCRETE + CERAMIC',5.2,5.3,'#e09050']
-    ]}
+    ], floors:[[3.7,'#3a5c7a']]},
+
+    // === STAGE 9: TABLET PRODUCTION ===
+    { b:[
+      // Floor 1: Bar Processing + Casing + Coiler
+      ['unl','Unloader','source',0,0],['cln','Ore Cleaner','upgrade',1,0],
+      ['pol','Polisher','upgrade',2,0],['sml','Ore Smelter','machine',3,0],
+      ['tmp','Tempering Forge','special',4,0],['spt1','Splitter','splitter',5.5,0],
+      ['blt','Bolt Machine','machine',6.5,1],['frm','Frame Maker','assembly',8,0],
+      ['blt2','Bolt Machine','machine',6.5,2],['plt','Plate Stamper','machine',6.5,3],
+      ['cas','Casing Machine','assembly',9.5,2],
+      ['coi','Coiler','machine',8,3.5],
+      // Elevator Floor 1 → Floor 2
+      ['elv','Elevator','special',1.5,4.5],
+      // Floor 2: Stone + Gem + Glass
+      ['tp','Topaz Prosp.','prospector',0,6],['ep','Emerald Prosp.','prospector',1,6],
+      ['sp','Sapphire Prosp.','prospector',2,6],['rp','Ruby Prosp.','prospector',3,6],
+      ['dp','Diamond Prosp.','prospector',4,6],['flt','Filter','filter',5,6],
+      ['gp','Polisher','gem',6,6],['gc','Gem Cutter','gem',7,6],
+      ['spt2','Splitter','splitter',5,7.5],
+      ['cru','Crusher','machine',6.5,7.5],['kln','Kiln','upgrade',8,7.5],
+      // Concrete brick sub-line
+      ['spt3','L/R Splitter','splitter',5,9],['cru2','Crusher','machine',6.5,9],
+      ['cmx','Cement Mixer','special',5.5,10.2],['brk','Brick Mold','machine',6.5,10.2],
+      ['kln2','Kiln','upgrade',7.5,10.2],['bp','Polisher','upgrade',8.5,10.2],
+      // Floor 3: Assembly
+      ['elv2','Elevator','special',1.5,11],
+      ['cir','Circuit Maker','assembly',5,12],
+      ['tab','Tablet Factory','assembly',7,12],
+      ['etn','E-Tuner','upgrade',8.5,12],
+      ['qa','QA Machine','special',10,12],
+      ['qa2','QA (bricks)','special',9.5,10.2],
+      // Sell
+      ['sell','Sell Zone','seller',12,8]
+    ], c:[
+      // Floor 1: Bar processing
+      ['unl','cln','ore'],['cln','pol','ore'],['pol','sml','ore'],
+      ['sml','tmp','bar'],['tmp','spt1','bar'],
+      ['spt1','frm','bar','bar','h'],['spt1','blt','bar','bolt #1','v'],
+      ['spt1','blt2','bar','bolt #2','v'],['spt1','plt','bar','plate','v'],
+      ['blt','frm','bar','bolt'],
+      ['frm','cas','product','frame'],['blt2','cas','bar','bolt'],['plt','cas','bar','plate'],
+      ['spt1','coi','bar','coil','v'],
+      // Elevator to Floor 2
+      ['sml','elv','stone','stones','v'],['elv','tp','stone'],
+      // Floor 2: Stone processing
+      ['tp','ep','stone'],['ep','sp','stone'],['sp','rp','stone'],
+      ['rp','dp','stone'],['dp','flt','stone'],
+      ['flt','gp','gem','gems'],['gp','gc','gem'],['gc','sell','gem'],
+      ['flt','spt2','stone','stones'],
+      ['spt2','cru','stone','glass'],['cru','kln','brick','glass'],
+      // Concrete bricks
+      ['flt','spt3','stone','concrete'],
+      ['spt3','cru2','stone'],['spt3','cmx','stone','stone','v'],
+      ['cru2','cmx','brick','dust'],
+      ['cmx','brk','brick'],['brk','kln2','brick'],['kln2','bp','brick'],['bp','qa2','brick'],['qa2','sell','brick'],
+      // Floor 3: Assembly (glass + coil → circuit, casing + glass + circuit → tablet)
+      ['kln','cir','product','glass'],['coi','cir','bar','coil'],
+      ['cas','tab','product','casing'],['kln','tab','product','glass'],['cir','tab','product','circuit'],
+      ['tab','etn','product'],['etn','qa','product'],['qa','sell','product']
+    ], a:[
+      ['FLOOR 1: BAR + CASING + COIL',0.5,-.35,'#60a0d0'],
+      ['casing assembly (4 ores)',7,-.35,'#a0a0ff'],
+      ['FLOOR 2: STONE + GLASS',0.3,5.25,'#a070d0'],
+      ['FLOOR 3: TABLET ASSEMBLY',0.3,11.3,'#70d0a0'],
+      ['glass + coil = circuit',4,11.3,'#70d0a0'],
+      ['casing + glass + circuit = tablet',6,11.3,'#a0a0ff']
+    ], floors:[[5,'#3a5c7a'],[11.3,'#3a5c7a']]},
+
+    // === STAGE 10: ENGINE LINE ===
+    { b:[
+      // Floor 1: Bar Processing + Casing + Coiler + Pipe + Mech
+      ['unl','Unloader','source',0,0],['cln','Ore Cleaner','upgrade',1,0],
+      ['pol','Polisher','upgrade',2,0],['sml','Ore Smelter','machine',3,0],
+      ['tmp','Tempering Forge','special',4,0],['spt1','Splitter','splitter',5.5,0],
+      ['blt','Bolt Machine','machine',6.5,1],['frm','Frame Maker','assembly',8,0],
+      ['blt2','Bolt Machine','machine',6.5,2],['plt','Plate Stamper','machine',6.5,3],
+      ['cas','Casing Machine','assembly',9.5,2],
+      ['coi','Coiler','machine',8,3.5],
+      ['plt2','Plate Stamper','machine',10.5,3.5],
+      ['mch','Mech Parts','machine',11.5,3],['pip','Pipe Maker','machine',11.5,4],
+      // Elevator Floor 1 → Floor 2
+      ['elv','Elevator','special',1.5,4.5],
+      // Floor 2: Stone + Gem + Glass
+      ['tp','Topaz Prosp.','prospector',0,6],['ep','Emerald Prosp.','prospector',1,6],
+      ['sp','Sapphire Prosp.','prospector',2,6],['rp','Ruby Prosp.','prospector',3,6],
+      ['dp','Diamond Prosp.','prospector',4,6],['flt','Filter','filter',5,6],
+      ['gp','Polisher','gem',6,6],['gc','Gem Cutter','gem',7,6],
+      ['spt2','Splitter','splitter',5,7.5],
+      ['cru','Crusher','machine',6.5,7.5],['kln','Kiln','upgrade',8,7.5],
+      // Concrete brick sub-line
+      ['spt3','L/R Splitter','splitter',5,9],['cru2','Crusher','machine',6.5,9],
+      ['cmx','Cement Mixer','special',5.5,10.2],['brk','Brick Mold','machine',6.5,10.2],
+      ['kln2','Kiln','upgrade',7.5,10.2],['bp','Polisher','upgrade',8.5,10.2],
+      // Floor 3: Assembly
+      ['elv2','Elevator','special',1.5,11],
+      ['cir','Circuit Maker','assembly',5,12],
+      ['tab','Tablet Factory','assembly',7,12],
+      ['etn','E-Tuner','upgrade',8.5,12],
+      ['eng','Engine Factory','assembly',7,13.5],
+      ['qa','QA Machine','special',10,12],
+      ['qa2','QA (engines)','special',9,13.5],
+      ['qa3','QA (bricks)','special',9.5,10.2],
+      // Sell
+      ['sell','Sell Zone','seller',12,10]
+    ], c:[
+      // Floor 1: Bar processing
+      ['unl','cln','ore'],['cln','pol','ore'],['pol','sml','ore'],
+      ['sml','tmp','bar'],['tmp','spt1','bar'],
+      ['spt1','frm','bar','bar','h'],['spt1','blt','bar','bolt #1','v'],
+      ['spt1','blt2','bar','bolt #2','v'],['spt1','plt','bar','plate','v'],
+      ['blt','frm','bar','bolt'],
+      ['frm','cas','product','frame'],['blt2','cas','bar','bolt'],['plt','cas','bar','plate'],
+      ['spt1','coi','bar','coil','v'],
+      ['spt1','plt2','bar','plate','v'],
+      ['plt2','mch','bar','mech parts'],['plt2','pip','bar','pipe'],
+      // Elevator to Floor 2
+      ['sml','elv','stone','stones','v'],['elv','tp','stone'],
+      // Floor 2: Stone processing
+      ['tp','ep','stone'],['ep','sp','stone'],['sp','rp','stone'],
+      ['rp','dp','stone'],['dp','flt','stone'],
+      ['flt','gp','gem','gems'],['gp','gc','gem'],['gc','sell','gem'],
+      ['flt','spt2','stone','stones'],
+      ['spt2','cru','stone','glass'],['cru','kln','brick','glass'],
+      // Concrete bricks
+      ['flt','spt3','stone','concrete'],
+      ['spt3','cru2','stone'],['spt3','cmx','stone','stone','v'],
+      ['cru2','cmx','brick','dust'],
+      ['cmx','brk','brick'],['brk','kln2','brick'],['kln2','bp','brick'],['bp','qa3','brick'],['qa3','sell','brick'],
+      // Floor 3: Assembly
+      ['kln','cir','product','glass'],['coi','cir','bar','coil'],
+      ['cas','tab','product','casing'],['kln','tab','product','glass'],['cir','tab','product','circuit'],
+      ['tab','etn','product'],['etn','qa','product'],['qa','sell','product'],
+      // Engine: Mech Parts + Pipe + Casing → Engine
+      ['mch','eng','bar','mech parts'],['pip','eng','bar','pipe'],['cas','eng','product','casing'],
+      ['eng','qa2','product'],['qa2','sell','product']
+    ], a:[
+      ['FLOOR 1: BAR + CASING + COIL + PIPE + MECH',0.5,-.35,'#60a0d0'],
+      ['casing assembly (4 ores)',7,-.35,'#a0a0ff'],
+      ['FLOOR 2: STONE + GLASS',0.3,5.25,'#a070d0'],
+      ['FLOOR 3: TABLET + ENGINE ASSEMBLY',0.3,11.3,'#70d0a0'],
+      ['mech + pipe + casing = engine',6,12.8,'#a0a0ff']
+    ], floors:[[5,'#3a5c7a'],[11.3,'#3a5c7a']]}
+  ];
+
+  // End-game product layouts
+  var ENDGAME_LAYOUTS = [
+    // === POWER CORE (THE BEST) ===
+    { b:[
+      // Floor 1: Bar Processing
+      ['unl','Unloader','source',0,0],['cln','Ore Cleaner','upgrade',1,0],
+      ['pol','Polisher','upgrade',2,0],['sml','Ore Smelter','machine',3,0],
+      ['tmp','Tempering Forge','special',4,0],['spt1','Splitter','splitter',5.5,0],
+      // Alloy line (2 bars → alloy)
+      ['aly','Alloy Furnace','assembly',7,0],
+      // Coiler (for electromagnet)
+      ['coi','Coiler','machine',7,1.3],
+      // Casing line (4 bars → casing)
+      ['cas','Casing Machine','assembly',7,2.5],
+      // Elevator Floor 1 → Floor 2
+      ['elv','Elevator','special',1.5,3.5],
+      // Floor 2: Stone + Gem + Ceramic + Glass
+      ['tp','Topaz Prosp.','prospector',0,5],['ep','Emerald Prosp.','prospector',1,5],
+      ['sp','Sapphire Prosp.','prospector',2,5],['rp','Ruby Prosp.','prospector',3,5],
+      ['dp','Diamond Prosp.','prospector',4,5],['flt','Filter','filter',5,5],
+      ['gp','Polisher','gem',6,5],['gc','Gem Cutter','gem',7,5],
+      // Ceramic line (for SC)
+      ['cru','Crusher','machine',5,6.5],['clm','Clay Mixer','machine',6.5,6.5],
+      ['cer','Ceramic Furnace','machine',8,6.5],
+      // Concrete brick line
+      ['spt2','L/R Splitter','splitter',5,8],['cru2','Crusher','machine',6.5,8],
+      ['cmx','Cement Mixer','special',5.5,9.2],['brk','Brick Mold','machine',6.5,9.2],
+      ['kln','Kiln','upgrade',7.5,9.2],['bp','Polisher','upgrade',8.5,9.2],
+      // Floor 3: Assembly
+      ['elv2','Elevator','special',1.5,10.2],
+      // Superconductor
+      ['scc','SC Constructor','assembly',5,11.5],
+      // Electromagnet
+      ['mag','Magnetic Mach.','assembly',7,11.5],
+      // Power Core
+      ['pca','Power Core Asm.','assembly',9,11.5],
+      ['qa','QA Machine','special',10.5,11.5],
+      ['qa2','QA (bricks)','special',9.5,9.2],
+      // Sell
+      ['sell','Sell Zone','seller',12,8]
+    ], c:[
+      // Floor 1: Bar processing
+      ['unl','cln','ore'],['cln','pol','ore'],['pol','sml','ore'],
+      ['sml','tmp','bar'],['tmp','spt1','bar'],
+      ['spt1','aly','bar','2 bars','h'],
+      ['spt1','coi','bar','coil','v'],
+      ['spt1','cas','bar','casing','v'],
+      // Elevator to Floor 2
+      ['sml','elv','stone','11 stones','v'],['elv','tp','stone'],
+      // Floor 2: Stone processing
+      ['tp','ep','stone'],['ep','sp','stone'],['sp','rp','stone'],
+      ['rp','dp','stone'],['dp','flt','stone'],
+      ['flt','gp','gem','gems'],['gp','gc','gem'],['gc','sell','gem'],
+      // Ceramic path
+      ['flt','cru','stone','ceramic'],['cru','clm','brick','clay dust'],['clm','cer','brick','clay'],
+      // Concrete brick path
+      ['flt','spt2','stone','concrete'],
+      ['spt2','cru2','stone'],['spt2','cmx','stone','stone','v'],
+      ['cru2','cmx','brick','dust'],
+      ['cmx','brk','brick'],['brk','kln','brick'],['kln','bp','brick'],['bp','qa2','brick'],['qa2','sell','brick'],
+      // Floor 3: Assembly
+      ['aly','scc','product','alloy'],['cer','scc','product','ceramic'],
+      ['coi','mag','bar','coil'],['cas','mag','product','casing'],
+      ['cas','pca','product','casing'],['scc','pca','product','SC'],['mag','pca','product','EM'],
+      ['pca','qa','product'],['qa','sell','product']
+    ], a:[
+      ['FLOOR 1: BAR PROCESSING (11 ores)',0.5,-.35,'#60a0d0'],
+      ['alloy (2 bars)',6.3,-.35,'#60a0d0'],
+      ['FLOOR 2: STONE + CERAMIC + BRICKS',0.3,4.25,'#a070d0'],
+      ['FLOOR 3: POWER CORE ASSEMBLY',0.3,10.7,'#ffd04a'],
+      ['alloy + ceramic = SC',4,10.8,'#70d0a0'],
+      ['coil + casing = EM',6,10.8,'#a0a0ff'],
+      ['casing + SC + EM = POWER CORE',8,10.8,'#ffd04a']
+    ], floors:[[4.2,'#3a5c7a'],[10.5,'#3a5c7a']]}
   ];
 
   function renderLayout(container, data, idx) {
@@ -3324,6 +3550,25 @@ recalc();
     gridBg.setAttribute('width', bgSize * 3); gridBg.setAttribute('height', bgSize * 3);
     gridBg.setAttribute('fill', 'url(#grid' + sfx + ')');
     vp.appendChild(gridBg);
+
+    // Draw floor divider lines
+    if (data.floors) {
+      for (var fi = 0; fi < data.floors.length; fi++) {
+        var fd = data.floors[fi];
+        var fdY = PADDING + fd[0] * GRID_H + CELL_H / 2;
+        var fdColor = fd[1] || '#444';
+        var dashLine = document.createElementNS(SVG_NS, 'line');
+        dashLine.setAttribute('x1', 4);
+        dashLine.setAttribute('y1', fdY);
+        dashLine.setAttribute('x2', contentW - 4);
+        dashLine.setAttribute('y2', fdY);
+        dashLine.setAttribute('stroke', fdColor);
+        dashLine.setAttribute('stroke-width', '1.5');
+        dashLine.setAttribute('stroke-dasharray', '8 4');
+        dashLine.setAttribute('opacity', '0.35');
+        vp.appendChild(dashLine);
+      }
+    }
 
     // Draw connections
     for (var i = 0; i < data.c.length; i++) {
@@ -3651,17 +3896,17 @@ recalc();
   }
 
   // Initialize
-  function initLayouts() {
-    var stageSection = document.getElementById('stages');
-    if (!stageSection) return;
-    var allCards = stageSection.querySelectorAll('.stage-card');
+  function attachLayouts(sectionId, layouts, idxOffset) {
+    var section = document.getElementById(sectionId);
+    if (!section || !layouts || !layouts.length) return;
+    var allCards = section.querySelectorAll('.stage-card');
     var cards = [];
     for (var i = 0; i < allCards.length; i++) {
-      if (allCards[i].parentNode === stageSection) cards.push(allCards[i]);
+      if (allCards[i].parentNode === section) cards.push(allCards[i]);
     }
 
-    for (var i = 0; i < cards.length && i < LAYOUTS.length; i++) {
-      (function(card, layoutIdx) {
+    for (var i = 0; i < cards.length && i < layouts.length; i++) {
+      (function(card, layoutIdx, globalIdx) {
         var flowDiagram = card.querySelector('.flow-diagram');
         if (!flowDiagram) return;
 
@@ -3679,17 +3924,21 @@ recalc();
 
         var rendered = false;
         btn.addEventListener('click', function() {
-          // Toggle visibility first so container has dimensions for fitToView
           var visible = layoutDiv.classList.toggle('visible');
           if (!rendered && visible) {
-            renderLayout(layoutDiv, LAYOUTS[layoutIdx], layoutIdx);
+            renderLayout(layoutDiv, layouts[layoutIdx], globalIdx);
             rendered = true;
           }
           btn.textContent = visible ? '\uD83C\uDFED Hide Factory Layout' : '\uD83C\uDFED Show Factory Layout';
           btn.classList.toggle('active', visible);
         });
-      })(cards[i], i);
+      })(cards[i], i, (idxOffset || 0) + i);
     }
+  }
+
+  function initLayouts() {
+    attachLayouts('stages', LAYOUTS, 0);
+    attachLayouts('endgame', ENDGAME_LAYOUTS, LAYOUTS.length);
   }
 
   initLayouts();
