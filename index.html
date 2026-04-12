@@ -1986,24 +1986,65 @@ Smelter Stone Out → Elevator ↓
 
     <div class="machine-card" style="margin-bottom: 12px;">
       <h4>Late Game (Stages 7-10): Three-Floor Multi-Line</h4>
-      <p>Casings, Circuits, Alloys, Superconductors, Tablets, and Engines require multiple bar inputs. Use parallel bar lines:</p>
+      <p>Casings, Circuits, Alloys, Superconductors, Tablets, Engines, and Power Cores require multiple bar inputs. Use parallel bar lines with the <strong>Coiler reactivated from Stage 1</strong> for circuits and electromagnets:</p>
       <pre style="background:var(--card);padding:10px;border-radius:6px;font-size:0.8em;overflow-x:auto;color:var(--muted);line-height:1.5;">
-<strong>Floor 1 — Bar Processing (4 parallel lines from Tempered Bars):</strong>
-Tempered Bar → 3-Way Splitter ─┬→ Line A: Bolt Machine → (wait for frame)
-                                ├→ Line B: Plate Stamper → Mech Parts Maker / Pipe Maker
-                                └→ Line C: Coiler → Circuit Maker (with Glass from Floor 2)
-Frame Maker ← Bar + Bolt | Casing Machine ← Frame + Bolt + Plate
+<strong>Floor 1 — Bar Processing (5 parallel lines from Tempered Bars):</strong>
+Unloader → Cleaner → Polisher → Smelter → Tempering Forge → Splitter
+                                                              │
+  ┌──────────────────────────────────────────────────────────┐│
+  │                                                          ││
+  ├→ Line A: Bolt Machine (+$15) ──────────────────────────→ Frame Maker (Bar + Bolt, ×1.25)
+  │                                                               │
+  ├→ Line B: Plate Stamper (+$20) ──┬→ Mech Parts (+$30) ──→ [Engine Factory input]
+  │                                 ├→ Pipe Maker (+$20) ───→ [Engine Factory + Optics input]
+  │                                 └→ Filigree (+20%) ────→ [Glider input, if used]
+  │
+  ├→ Line C: Coiler (+$20) ─────────┬→ Circuit Maker (Glass + Coil, ×2.0) → [Tablet/Laser input]
+  │         (reactivated Stage 7)   └→ [Electromagnet input: Coil + Casing → Magnetic Machine ×1.5]
+  │
+  ├→ Line D: Raw Bars ──────────────→ Alloy Furnace (2 Bars, ×1.2) → [SC Constructor input]
+  │
+  └→ Line E: Frame Maker output ───→ Casing Machine (Frame + Bolt + Plate, ×1.30)
+                                          │
+                                          ├→ [Power Core input]
+                                          ├→ [Tablet Factory input]
+                                          ├→ [Engine Factory input]
+                                          └→ [Electromagnet input]
 
-<strong>Floor 2 — Stone + Gem + Ceramic Processing:</strong>
-Stones → 5 Prospectors → Filter → Gem Line / Stone Pairing Line / Ceramic Line
-Glass production: Surviving Stone → Crusher → Kiln → Glass (for Circuits + Tablets)
+<strong>Floor 2 — Stone + Gem + Ceramic + Glass Processing:</strong>
+Smelter Stone Out → Elevator ↓
+→ Topaz → Emerald → Sapphire → Ruby → Diamond → Filter
+    │                                                │
+    ├→ Gems: Polisher → Gem Cutter → Seller (or Laser/Amulet recipe)
+    │
+    └→ Surviving Stones: 3-Way Splitter
+         ├→ Path 1: L/R Splitter ─┬→ Crusher → Dust → Cement Mixer ─┐
+         │                        └→ Raw Stone ──────────────────────┘→ Brick Mold → Kiln → Polisher → QA → Seller
+         │
+         ├→ Path 2: Crusher → Dust → Clay Mixer (2 Dust → Clay) → Ceramic Furnace → Ceramic Casing
+         │                                                          └→ [SC Constructor input]
+         │
+         └→ Path 3: Crusher → Dust → Kiln → Glass Sheet
+                                              ├→ [Circuit Maker input]
+                                              ├→ [Tablet Factory input]
+                                              └→ [Lens Cutter → Optics Machine input]
 
-<strong>Floor 3 — End-Game Assembly:</strong>
-Alloy Furnace (2 bars) → Superconductor Constructor (+ Ceramic)
-Tablet Factory ← Casing + Glass + Circuit → Tuner → QA → Seller
-Engine Factory ← Mech Parts + Pipe + Casing → QA → Seller
-Casing + SC + Electromagnet → Power Core Assembler → QA → Seller</pre>
-      <p class="sub"><strong>Machine counts for Power Core (per ore cycle):</strong> Each Power Core needs 11 ores (4 bars for casing components, 2 for alloy, 2 for electromagnet coil+casing, 1 for circuit coil, 1 for mech parts pipe, 1 for glass lens pipe). Plan conveyor throughput accordingly—you need <strong>multiple sellers</strong> for high-volume output.</p>
+<strong>Floor 3 — End-Game Assembly (Stages 8-10):</strong>
+<em>Stage 8:</em>  Alloy Furnace (2 bars) + Ceramic Casing → SC Constructor (×3.0) → [Power Core input]
+<em>Stage 9:</em>  Casing + Glass + Circuit → Tablet Factory (×3.0) → E-Tuner (+$50) → QA (×1.2) → Seller
+<em>Stage 9:</em>  Coil + Casing → Electromagnet (via Magnetic Machine, ×1.5) → [Power Core input]
+<em>Stage 10:</em> Mech Parts + Pipe + Casing → Engine Factory (×1.2) → QA (×1.2) → Seller
+<em>End-Game:</em> Casing + Superconductor + Electromagnet → Power Core (×3.5) → QA (×1.2) → Seller</pre>
+      <p class="sub" style="margin-top: 8px;"><strong>Key changes from Stages 5-6:</strong><br>
+      • <strong>Coiler reactivated</strong> — dormant since Stage 1, now needed for Circuits (Stage 7) and Electromagnets (Stage 8+)<br>
+      • <strong>Glass production line</strong> — surviving stones → Crusher → Kiln → Glass feeds into Circuit Maker, Tablet Factory, and Lens Cutter<br>
+      • <strong>Ceramic line</strong> — separate stone path: Crusher → Clay Mixer → Ceramic Furnace → Ceramic Casing for Superconductors<br>
+      • <strong>Electronic Tuner</strong> — placed between Tablet Factory and QA Machine (+$50 → +$60 effective after QA)<br>
+      • <strong>QA Machine</strong> — placed LAST before Seller on your highest-value products (Power Cores, Tablets, concrete bricks)<br>
+      • <strong>Multiple sellers recommended</strong> — separate sellers for main products, gems, and bricks to prevent bottlenecks</p>
+      <p class="sub" style="margin-top: 8px;"><strong>Machine counts for Power Core (per ore cycle):</strong> Each Power Core needs 11 ores: 4 ores for casing (1 bar + 1 bolt via frame, 1 bolt, 1 plate), 2 ores for alloy bar, 1 ore for electromagnet coil, 4 ores for electromagnet casing, plus 2 surviving stones routed to ceramic. Plan conveyor throughput accordingly — you need <strong>multiple parallel lines and sellers</strong> for high-volume output.<br>
+      <strong>Tablet needs 5 ores:</strong> 4 ores for casing + 1 ore for coil (circuit). Plus 2 surviving stones used for glass (1 glass for circuit, 1 glass for tablet direct).<br>
+      <strong>Engine needs 6 ores:</strong> 4 ores for casing + 1 ore for mech parts (via plate) + 1 ore for pipe (via plate).</p>
     </div>
 
     <div class="machine-card" style="margin-bottom: 12px;">
@@ -2235,7 +2276,7 @@ Surviving Stones → Left/Right Splitter
   <div style="overflow-x: auto;">
     <table class="comp-table" id="buildingTable">
       <thead>
-        <tr><th>Building</th><th>Price</th><th>Category</th><th>Effect</th></tr>
+        <tr><th>Building</th><th>Price</th><th>Category</th><th>Effect &amp; Wiki Description</th></tr>
       </thead>
       <tbody></tbody>
     </table>
@@ -2293,61 +2334,61 @@ function gemEVPerStone(numProspectors, hasPolish, hasCut) {
 
 // === BUILDING DATA ===
 const buildings = [
-  { name: "Polisher", price: 850, cat: "Upgrade", effect: "Adds $10 value to any unpolished item" },
-  { name: "Ore Cleaner", price: 1000, cat: "Upgrade", effect: "Adds $10 value to uncleaned ores" },
-  { name: "Ore Smelter", price: 1500, cat: "Smelting", effect: "Ore → Bar (×1.2 value) + Stone" },
-  { name: "Crusher", price: 1750, cat: "Processing", effect: "Destroys items into Dust ($25), removing most effects" },
-  { name: "Coiler", price: 1750, cat: "Bar Processing", effect: "Bar → Coil (+$20)" },
-  { name: "Topaz Prospector", price: 2000, cat: "Gems", effect: "5% chance: Stone → Topaz ($75)" },
-  { name: "Brick Mold", price: 2000, cat: "Stone Processing", effect: "Dust → Brick ($30) or Cement → Concrete Brick ($300)" },
-  { name: "Bolt Machine", price: 3000, cat: "Bar Processing", effect: "Bar → Bolts (+$15)" },
-  { name: "Plate Stamper", price: 3500, cat: "Bar Processing", effect: "Bar → Plate (+$20)" },
-  { name: "Sifter", price: 4000, cat: "Stone Processing", effect: "10% chance: Dust → random ore (Tin/Iron/etc). Dust kept." },
-  { name: "Pipe Maker", price: 4000, cat: "Plate Processing", effect: "Plate → Pipe (+$20)" },
-  { name: "Kiln", price: 4750, cat: "Stone Processing", effect: "Dust → Glass ($30) or Bricks/Concrete Blocks ×1.2 value" },
-  { name: "Emerald Prospector", price: 6000, cat: "Gems", effect: "5% chance: Stone → Emerald ($200)" },
-  { name: "Mechanical Parts Maker", price: 6000, cat: "Plate Processing", effect: "Plate → Mech Parts (+$30)" },
-  { name: "Sapphire Prospector", price: 8000, cat: "Gems", effect: "5% chance: Stone → Sapphire ($250)" },
-  { name: "Electronic Tuner", price: 8000, cat: "Upgrade", effect: "Adds $50 to untuned electronics" },
-  { name: "Cement Mixer", price: 10000, cat: "Stone Processing", effect: "Dust + Stone → Cement ($50)" },
-  { name: "Frame Maker", price: 10000, cat: "Combination", effect: "Bar + Bolts → Frame (×1.25)" },
-  { name: "Ruby Prospector", price: 10000, cat: "Gems", effect: "5% chance: Stone → Ruby ($300)" },
-  { name: "Ring Maker", price: 10000, cat: "Combination", effect: "Metal Dust + Coil → Ring (×1.75)" },
-  { name: "Blasting Powder Chamber", price: 15000, cat: "Explosives", effect: "Metal Dust + Stone Dust → Blasting Powder ($52)" },
-  { name: "Explosives Maker", price: 15000, cat: "Explosives", effect: "Blasting Powder + Casing → Explosives (×1.5)" },
-  { name: "Circuit Maker", price: 20000, cat: "Combination", effect: "Glass + Coil → Circuit (×2.0)" },
-  { name: "Clay Mixer", price: 20000, cat: "Stone Processing", effect: "2 Dust → Clay Block ($50)" },
-  { name: "Gem Cutter", price: 20000, cat: "Gems", effect: "Uncut Gem → Cut Gem (×1.4)" },
-  { name: "Blast Furnace", price: 25000, cat: "Smelting", effect: "Ore → Bar (×0.9 value) + Stone ⚠️ WORSE" },
-  { name: "Ceramic Furnace", price: 30000, cat: "Stone Processing", effect: "Clay Block → Ceramic Casing ($150)" },
-  { name: "Diamond Prospector", price: 30000, cat: "Gems", effect: "5% chance: Stone → Diamond ($1,500)" },
-  { name: "Tempering Forge", price: 50000, cat: "Upgrade", effect: "Doubles untempered bar value (×2)" },
-  { name: "Casing Machine", price: 50000, cat: "Combination", effect: "Frame + Bolts + Plate → Casing (×1.30)" },
-  { name: "Filigree Cutter", price: 50000, cat: "Plate Processing", effect: "Plate → Filigree (+20% value)" },
-  { name: "Lens Cutter", price: 75000, cat: "Glass Processing", effect: "Glass → Lens (+$50)" },
-  { name: "Prismatic Gem Crucible", price: 100000, cat: "Gems", effect: "2 Gems → Prismatic Gem (×1.25 combined)" },
-  { name: "Alloy Furnace", price: 100000, cat: "Combination", effect: "2 Bars → Alloy Bar (×1.2 combined)" },
-  { name: "Magnetic Machine", price: 100000, cat: "Combination", effect: "Coil + Metal Casing → Electromagnet (×1.5)" },
-  { name: "Optics Machine", price: 300000, cat: "Combination", effect: "Lens + Pipe → Optics (×1.25)" },
-  { name: "Glider", price: 500000, cat: "Combination", effect: "Filigree + Jewellery → Glider (×1.5)" },
-  { name: "Engine Factory", price: 1000000, cat: "End-Game", effect: "Mech Parts + Pipe + Casing → Engine (×1.2)" },
-  { name: "Superconductor Constructor", price: 1000000, cat: "End-Game", effect: "Alloy Bar + Ceramic Casing → Superconductor (×3.0)" },
-  { name: "Quality Assurance Machine", price: 2000000, cat: "Upgrade", effect: "Adds 20% to untested items" },
-  { name: "Amulet Maker", price: 2000000, cat: "End-Game", effect: "Ring + Frame + Prismatic Gem → Amulet (×2.0)" },
-  { name: "Tablet Factory", price: 2500000, cat: "End-Game", effect: "Casing + Glass + Circuit → Tablet (×3.0)" },
-  { name: "Blasting Powder Refiner", price: 2500000, cat: "Explosives", effect: "Blasting Powder + Metal Dust → +$15 value" },
-  { name: "Laser Maker", price: 3500000, cat: "End-Game", effect: "Optics + Gem + Circuit → Laser (×2.75)" },
-  { name: "Power Core Assembler", price: 4500000, cat: "End-Game", effect: "Casing + Superconductor + Electromagnet → Power Core (×3.5)" },
+  { name: "Polisher", price: 850, cat: "Upgrade", effect: "Adds $10 value to any unpolished item", desc: "A multipurpose machine that polishes any unpolished item passing through it on a conveyor, adding a flat +$10 value. Works on ores, gems, bricks, dust, and electronics. Each item can only be polished once (tagged 'Polished'). Use on ores before smelting so the +$10 compounds through all multipliers, and on gems before cutting for maximum value." },
+  { name: "Ore Cleaner", price: 1000, cat: "Upgrade", effect: "Adds $10 value to uncleaned ores", desc: "Strips dirt from raw ores, adding a flat +$10 value to each uncleaned ore processed. Typically the first machine in any processing chain. Each ore can only be cleaned once (tagged 'Cleaned'). The pole part has no collision, so it can be creatively placed to save space. Combine with Polisher for +$20 total before smelting." },
+  { name: "Ore Smelter", price: 1500, cat: "Smelting", effect: "Ore → Bar (×1.2 value) + Stone", desc: "Smelts ores into metal bars, increasing value by ×1.2, and produces a Stone byproduct. Bars are tagged 'Smelted' and cannot be re-smelted. Stone must be removed (via filter or conveyor) or the machine jams and stops working. The stone byproduct is critical — it feeds prospectors for gems and cement/brick processing." },
+  { name: "Crusher", price: 1750, cat: "Processing", effect: "Destroys items into Dust ($25), removing most effects", desc: "Crushes any material into dust, resetting its value and removing most applied tags. The resulting dust is the foundation of all stone processing — it feeds into Brick Mold, Kiln (for glass), Cement Mixer, Clay Mixer, Sifter, and Ring Maker. Always process stones through prospectors before crushing." },
+  { name: "Coiler", price: 1750, cat: "Bar Processing", effect: "Bar → Coil (+$20)", desc: "Converts metal bars into coils by drawing them through a die, adding +$20 value. Coils are tagged 'Drawn' and cannot be re-coiled. Best early-game product from bars. Later becomes critical as an ingredient for Circuits (×2.0), Rings (×1.75), and Electromagnets (×1.5). Reactivate this machine in Stage 7 when circuits become relevant." },
+  { name: "Topaz Prospector", price: 2000, cat: "Gems", effect: "5% chance: Stone → Topaz ($75)", desc: "A gem prospector with a 5% chance to convert any stone passing through it into a Topaz gem worth $75. Stones that fail the check pass through unharmed. Stack with other prospectors — each checks independently. The cheapest prospector and the first gem income source." },
+  { name: "Brick Mold", price: 2000, cat: "Stone Processing", effect: "Dust → Brick ($30) or Cement → Concrete Brick ($300)", desc: "Shapes dust into bricks or cement into concrete bricks. Dust input produces a Brick (set value $30); Cement input produces a Concrete Brick (set value $300). Both can be further processed by the Kiln (+20%) and Polisher (+$10). The same machine handles both inputs — route the correct material to it." },
+  { name: "Bolt Machine", price: 3000, cat: "Bar Processing", effect: "Bar → Bolts (+$15)", desc: "Converts metal bars into bolts, adding +$15 value. Bolts are essential components for Frame Maker (Bar + Bolts → Frame) and Casing Machine (Frame + Bolts + Plate → Casing). Since every casing-based end-game product needs bolts, this $3K machine is critical despite its modest value-add." },
+  { name: "Plate Stamper", price: 3500, cat: "Bar Processing", effect: "Bar → Plate (+$20)", desc: "Stamps metal bars into flat plates, adding +$20 value. Plates are the foundation of the entire metalwork chain — they feed into Pipes, Mechanical Parts, Filigree, and Casings (via Frames). The plate path has more branches and higher total value potential than any other bar processing route." },
+  { name: "Sifter", price: 4000, cat: "Stone Processing", effect: "10% chance: Dust → random ore (Tin/Iron/etc). Dust kept.", desc: "Sifts dust with a 10% chance to produce a random low-tier ore (Tin, Iron, Cobalt, Uranium, or Gold). The dust is NOT destroyed on failure and continues down the conveyor for further processing. Each dust can only be sifted once per sifter. Replaced by the strictly superior Nano Sifter (prestige, 16.6% rate + rarer ores)." },
+  { name: "Pipe Maker", price: 4000, cat: "Plate Processing", effect: "Plate → Pipe (+$20)", desc: "Converts metal plates into pipes, adding +$20 value. Lower value-add than Mechanical Parts (+$30), but pipes are a required ingredient for Engines (Mech Parts + Pipe + Casing) and Optics (Lens + Pipe). Keep this machine even after switching your main line to Mech Parts — you'll reactivate it for Engines in Stage 10." },
+  { name: "Kiln", price: 4750, cat: "Stone Processing", effect: "Dust → Glass ($30) or Bricks/Concrete Blocks ×1.2 value", desc: "A multipurpose heat-treatment machine. Melts dust into Glass Sheets (set value $30, needed for Circuits and Tablets). Also fires bricks and concrete bricks, increasing their value by ×1.2 (applied to base value before polish). Glass, fired bricks, and kilned concrete bricks are all critical products. Polish bricks after kilning for best results." },
+  { name: "Emerald Prospector", price: 6000, cat: "Gems", effect: "5% chance: Stone → Emerald ($200)", desc: "A gem prospector with a 5% chance to convert stone into an Emerald worth $200. Checks independently after the Topaz Prospector — the stone must survive previous prospectors first. With 2 prospectors active, cumulative gem chance is 9.75% per stone." },
+  { name: "Mechanical Parts Maker", price: 6000, cat: "Plate Processing", effect: "Plate → Mech Parts (+$30)", desc: "Converts metal plates into mechanical parts, adding +$30 value — the highest flat value-add per plate for direct selling. Mechanical parts are also a required ingredient for Engines (Mech Parts + Pipe + Casing → Engine). Replaces Pipe Maker as the primary plate product for selling, but both are needed long-term." },
+  { name: "Sapphire Prospector", price: 8000, cat: "Gems", effect: "5% chance: Stone → Sapphire ($250)", desc: "A gem prospector with a 5% chance to convert stone into a Sapphire worth $250. Third in the prospector chain. With 3 prospectors active, cumulative gem chance is 14.26% per stone." },
+  { name: "Electronic Tuner", price: 8000, cat: "Upgrade", effect: "Adds $50 to untuned electronics", desc: "Adds a flat +$50 value to any electronic item that hasn't been tuned yet (tagged 'Tuned'). Applies to Circuits, Electromagnets, Tablets, and Power Cores. Place between the Tablet Factory and QA Machine for maximum effect — the +$50 becomes +$60 effective after QA's ×1.2 multiplier. Introduced in Stage 7." },
+  { name: "Cement Mixer", price: 10000, cat: "Stone Processing", effect: "Dust + Stone → Cement ($50)", desc: "Combines one dust and one raw stone to produce Cement (set value $50). The cement then feeds into Brick Mold to create Concrete Bricks ($300) — the single biggest upgrade in the game. Requires two simultaneous inputs; use a L/R Splitter to pair stones. The stone input must be unprocessed (not crushed)." },
+  { name: "Frame Maker", price: 10000, cat: "Combination", effect: "Bar + Bolts → Frame (×1.25)", desc: "Combines one metal bar and one set of bolts to produce a metal frame, increasing their combined value by ×1.25. Frames are an intermediate product — they feed into the Casing Machine (Frame + Bolts + Plate → Casing) and the Amulet Maker (Ring + Frame + Prismatic Gem → Amulet)." },
+  { name: "Ruby Prospector", price: 10000, cat: "Gems", effect: "5% chance: Stone → Ruby ($300)", desc: "A gem prospector with a 5% chance to convert stone into a Ruby worth $300. Fourth in the prospector chain. With 4 prospectors active, cumulative gem chance is 18.55% per stone." },
+  { name: "Ring Maker", price: 10000, cat: "Combination", effect: "Metal Dust + Coil → Ring (×1.75)", desc: "A jewelcrafting machine that combines metal dust and a coil to produce a ring, increasing their combined value by ×1.75. Rings are used in the Amulet Maker recipe (Ring + Frame + Prismatic Gem → Amulet ×2.0). The metal dust is obtained by crushing a metal bar back into dust." },
+  { name: "Blasting Powder Chamber", price: 15000, cat: "Explosives", effect: "Metal Dust + Stone Dust → Blasting Powder ($52)", desc: "Combines metal dust and stone dust to create blasting powder. The blasting powder can be enhanced by the Blasting Powder Refiner (+$15) or combined with a casing in the Explosives Maker. Also applies powder to ceramics and ceramic casings to improve their value. Generally a niche machine — casings are better used in Power Cores." },
+  { name: "Explosives Maker", price: 15000, cat: "Explosives", effect: "Blasting Powder + Casing → Explosives (×1.5)", desc: "Combines blasting powder with either a metal casing or ceramic casing to make explosives at ×1.5 combined value. The problem: using a casing here yields only ×1.5, whereas the same casing in a Power Core yields ×3.5. Only worthwhile if you have surplus ceramic casings not needed for Superconductors." },
+  { name: "Circuit Maker", price: 20000, cat: "Combination", effect: "Glass + Coil → Circuit (×2.0)", desc: "Combines a glass sheet and a metal coil to create an electronic circuit, doubling their combined value (×2.0). Circuits are required for Tablets (Casing + Glass + Circuit → ×3.0) and Lasers (Optics + Gem + Circuit → ×2.75). The glass comes from Kiln (dust → glass); the coil from the Coiler. Introduced in Stage 7." },
+  { name: "Clay Mixer", price: 20000, cat: "Stone Processing", effect: "2 Dust → Clay Block ($50)", desc: "Mixes two units of dust together to form a clay block (set value $50). Clay blocks are used exclusively as input for the Ceramic Furnace, which converts them into Ceramic Casings ($150) for the Superconductor recipe. Not to be confused with the Cement Mixer." },
+  { name: "Gem Cutter", price: 20000, cat: "Gems", effect: "Uncut Gem → Cut Gem (×1.4)", desc: "Cuts any uncut gem, increasing its value by ×1.4 (40% boost). This is a multiplier on ALL prospector output — every gem should be polished first (+$10), then cut. A polished Diamond ($1,510) becomes $2,114 after cutting. Cut gems can be further merged in the Prismatic Gem Crucible or used directly in Laser/Amulet recipes." },
+  { name: "Blast Furnace", price: 25000, cat: "Smelting", effect: "Ore → Bar (×0.9 value) + Stone ⚠️ WORSE", desc: "Smelts ore into bars at ×0.9 value — 10% LESS valuable than the Ore Smelter's ×1.2, despite costing ~17× more. Also produces stone byproduct. There is no scenario where this machine is better than the Ore Smelter. NEVER BUY — this is a trap for new players." },
+  { name: "Ceramic Furnace", price: 30000, cat: "Stone Processing", effect: "Clay Block → Ceramic Casing ($150)", desc: "Fires clay blocks into ceramic casings with a set value of $150 regardless of input quality. Ceramic casings are used exclusively as an ingredient in the Superconductor Constructor (Alloy Bar + Ceramic Casing → Superconductor ×3.0). Each ceramic casing requires 2 dust worth of clay from the Clay Mixer." },
+  { name: "Diamond Prospector", price: 30000, cat: "Gems", effect: "5% chance: Stone → Diamond ($1,500)", desc: "A gem prospector with a 5% chance to convert stone into a Diamond worth $1,500 — the highest-value prospector gem by far. Fifth and final in the prospector chain. With all 5 prospectors active, cumulative gem chance is 22.62% per stone. Diamond alone contributes ~$86 of the ~$141 total prospector EV per stone." },
+  { name: "Tempering Forge", price: 50000, cat: "Upgrade", effect: "Doubles untempered bar value (×2)", desc: "Tempers and strengthens metal bars or alloy bars, doubling their value (×2.0 multiplier). Only applies to untempered items (tagged 'Tempered'). Place AFTER the Ore Smelter but BEFORE any bar processing (Plate, Coil, Bolt). The ×2 multiplier compounds through all subsequent processing, making this the single most impactful bar upgrade." },
+  { name: "Casing Machine", price: 50000, cat: "Combination", effect: "Frame + Bolts + Plate → Casing (×1.30)", desc: "Produces a metal casing by combining a frame, bolts, and a plate, boosting the combined value by ×1.30. Casings are the most-used intermediate product in the game — they're required for Power Cores, Tablets, Engines, Electromagnets, and Explosives. Each casing consumes 4 ores worth of tempered bar inputs." },
+  { name: "Filigree Cutter", price: 50000, cat: "Plate Processing", effect: "Plate → Filigree (+20% value)", desc: "Cuts decorative patterns into metal plates, increasing value by +20%. Filigree is used exclusively as an ingredient in the Glider machine (Filigree + Amulet → Glider ×1.5). Only worth buying if you're pursuing the Amulet→Glider gem-product chain. Otherwise, Mech Parts give more value per plate." },
+  { name: "Lens Cutter", price: 75000, cat: "Glass Processing", effect: "Glass → Lens (+$50)", desc: "Cuts glass sheets into precision lenses, adding +$50 value. Lenses are used exclusively as input for the Optics Machine (Lens + Pipe → Optics ×1.25), which feeds into the Laser Maker. Only worth buying if you're pursuing the Laser production chain. At $75K, it's a steep investment for a niche upgrade." },
+  { name: "Prismatic Gem Crucible", price: 100000, cat: "Gems", effect: "2 Gems → Prismatic Gem (×1.25 combined)", desc: "Merges two different cut gems into a single Prismatic Gem, increasing their combined value by ×1.25. Prismatic gems are required for Amulets (Ring + Frame + Prismatic Gem → ×2.0) and can be used in Lasers. For direct selling, the +25% on two consumed gems is only worthwhile with high-value gems. Best used as an ingredient in end-game recipes." },
+  { name: "Alloy Furnace", price: 100000, cat: "Combination", effect: "2 Bars → Alloy Bar (×1.2 combined)", desc: "Combines two metal bars (same or different types) into an alloy bar, increasing their combined value by ×1.2. Alloy bars can replace regular bars in most recipes except the Alloy Furnace itself. Used primarily to create high-value bars for the Superconductor Constructor (Alloy + Ceramic → SC ×3.0). Does NOT replace single bars — you still need those for Plates/Coils/Bolts." },
+  { name: "Magnetic Machine", price: 100000, cat: "Combination", effect: "Coil + Metal Casing → Electromagnet (×1.5)", desc: "Combines a metal coil and a metal casing to create an electromagnet, increasing their combined value by ×1.5. Electromagnets are a required ingredient for Power Cores (Casing + Superconductor + Electromagnet → ×3.5). Each electromagnet consumes 5 ores total (1 for coil + 4 for casing)." },
+  { name: "Optics Machine", price: 300000, cat: "Combination", effect: "Lens + Pipe → Optics (×1.25)", desc: "Combines a lens and a pipe to create optical components, increasing their combined value by ×1.25. Optics are used exclusively as input for the Laser Maker (Optics + Gem + Circuit → Laser ×2.75). Requires both a Lens Cutter and Pipe Maker to be active. Part of the Laser production chain." },
+  { name: "Glider", price: 500000, cat: "Combination", effect: "Filigree + Jewellery → Glider (×1.5)", desc: "Combines filigree with an amulet to create a glider, applying a ×1.5 multiplier on top of the Amulet's ×2.0. This stacked multiplier can be powerful with high-value gems, but the complex setup (4 ores + 2 gems + filigree plate) makes it niche. Only worthwhile with Diamond+ gems where the compounding multipliers justify the complexity." },
+  { name: "Engine Factory", price: 1000000, cat: "End-Game", effect: "Mech Parts + Pipe + Casing → Engine (×1.2)", desc: "Combines mechanical parts, a metal pipe, and a metal casing to construct an engine at ×1.2 combined value. Consumes 6 ores total (1 mech parts + 1 pipe + 4 casing). A decent mid-tier end-game product with lower $/ore than Tablets or Power Cores but simpler throughput. Reactivates the Pipe Maker from Stage 2. Introduced in Stage 10." },
+  { name: "Superconductor Constructor", price: 1000000, cat: "End-Game", effect: "Alloy Bar + Ceramic Casing → Superconductor (×3.0)", desc: "Combines an alloy bar and a ceramic casing to create a superconductor at ×3.0 combined value — one of the highest multipliers in the game. Primarily used as a Power Core ingredient (Casing + SC + Electromagnet → PC ×3.5). Requires Alloy Furnace for alloy bars and Clay Mixer + Ceramic Furnace for ceramic casings. Introduced in Stage 8." },
+  { name: "Quality Assurance Machine", price: 2000000, cat: "Upgrade", effect: "Adds 20% to untested items", desc: "Tests and certifies finished products, adding +20% value to any untested item (tagged 'QA Tested'). Always apply LAST on your most expensive finished product for maximum gain. Items can only be QA'd once. At $2M it's expensive, but the +20% on Power Cores, Tablets, concrete bricks, and gems pays for itself rapidly. Introduced in Stage 9." },
+  { name: "Amulet Maker", price: 2000000, cat: "End-Game", effect: "Ring + Frame + Prismatic Gem → Amulet (×2.0)", desc: "Combines a ring, a metal frame, and a prismatic gem to produce an amulet at ×2.0 combined value. Consumes 4 ores (2 for ring inputs, 2 for frame) plus 2 gems (merged into prismatic). Can be further enhanced with the Glider (Filigree + Amulet → ×1.5). Only worthwhile with high-value gems." },
+  { name: "Tablet Factory", price: 2500000, cat: "End-Game", effect: "Casing + Glass + Circuit → Tablet (×3.0)", desc: "Combines a metal casing, a glass sheet, and a circuit to craft a tablet at ×3.0 combined value — the second-best $/ore product in the game. Tablets can be tuned by the Electronic Tuner (+$50 → +$60 after QA) for extra value. Consumes 5 ores total. Introduced in Stage 9." },
+  { name: "Blasting Powder Refiner", price: 2500000, cat: "Explosives", effect: "Blasting Powder + Metal Dust → +$15 value", desc: "Enhances blasting powder by combining it with metal dust, adding +$15 value. At $2.5M for a tiny flat bonus, this is one of the least cost-effective machines in the game. The metal dust could be sifted for better returns. Only relevant if you're committed to the Explosives chain." },
+  { name: "Laser Maker", price: 3500000, cat: "End-Game", effect: "Optics + Gem + Circuit → Laser (×2.75)", desc: "Combines optics, a gem, and a circuit to create a laser at ×2.75 combined value — the highest gem multiplier in the game. Requires an extensive setup: Lens Cutter + Optics Machine for optics, Coiler + Kiln for circuit, and a high-value cut gem. Best with Diamond+ gems where the ×2.75 multiplier yields massive returns." },
+  { name: "Power Core Assembler", price: 4500000, cat: "End-Game", effect: "Casing + Superconductor + Electromagnet → Power Core (×3.5)", desc: "Merges a metal casing, a superconductor, and an electromagnet to produce a power core at ×3.5 combined value — the BEST $/ore product in the game. Consumes 11 ores worth of inputs. The most expensive single machine at $4.5M, but the ×3.5 multiplier on already-multiplied components produces the highest per-ore returns." },
   // --- Prestige Machines (Medal cost, not $) ---
-  { name: "Nano Sifter", price: 0, cat: "Prestige", effect: "⭐ 1 Medal — 16.6% sift rate, produces rarer ores (up to Iridium/Palladium)" },
-  { name: "Philosopher's Stone", price: 0, cat: "Prestige", effect: "⭐ 3 Medals — ×1.25 ore value (once per ore, before other processing)" },
-  { name: "Ore Upgrader", price: 0, cat: "Prestige", effect: "⭐ 3 Medals — Upgrades ore to next tier (max Mithril). Once per ore." },
-  { name: "Gem→Bar Transmuter", price: 0, cat: "Prestige", effect: "⭐ 4 Medals — Converts gems into bars of equal value" },
-  { name: "Bar→Gem Transmuter", price: 0, cat: "Prestige", effect: "⭐ 4 Medals — Converts bars into gems of equal value" },
-  { name: "Duplicator", price: 0, cat: "Prestige", effect: "⭐ 8 Medals — Duplicates items at half value. Once per item." },
+  { name: "Nano Sifter", price: 0, cat: "Prestige", effect: "⭐ 1 Medal — 16.6% sift rate, produces rarer ores (up to Iridium/Palladium)", desc: "Upgraded prestige version of the Sifter. 16.6% chance (vs regular 10%) to produce an ore from dust, and can produce rarer ores including Iridium and Palladium. Strictly superior to the regular Sifter in every way. Cheapest prestige machine — get this first for immediate recycling value from all dust in your factory." },
+  { name: "Philosopher's Stone", price: 0, cat: "Prestige", effect: "⭐ 3 Medals — ×1.25 ore value (once per ore, before other processing)", desc: "Multiplies ore value by ×1.25 (25% boost). Applied once per ore before any other processing. Place BEFORE the Ore Cleaner and Polisher so the +25% compounds through all subsequent multipliers (Clean, Polish, Smelt, Temper, etc.). The compounding effect makes this one of the best prestige machines." },
+  { name: "Ore Upgrader", price: 0, cat: "Prestige", effect: "⭐ 3 Medals — Upgrades ore to next tier (max Mithril). Once per ore.", desc: "Upgrades any ore to the next tier in the ore hierarchy (max Mithril at $2,000). Once per ore, cannot be used on duplicated ores. Massive ROI on lower-tier ores — Tin ($10) becomes Iron ($20) for a ×2.0 boost! Apply BEFORE Philosopher's Stone for maximum value stacking." },
+  { name: "Gem→Bar Transmuter", price: 0, cat: "Prestige", effect: "⭐ 4 Medals — Converts gems into bars of equal value", desc: "Converts gems into metal bars of equivalent value. The resulting bar can be processed through the full metalwork chain (Temper, Plate, Casing, etc.). Useful when gem processing chains are maxed but metalwork multipliers offer more. A Diamond ($1,500) becomes a $1,500 bar that tempers to $3,000." },
+  { name: "Bar→Gem Transmuter", price: 0, cat: "Prestige", effect: "⭐ 4 Medals — Converts bars into gems of equal value", desc: "Converts metal bars into gems of equivalent value. The resulting gem can go through jewelcrafting chains (Polish, Cut, Ring, Amulet, Laser). Useful when you have surplus bars but need gems for Lasers or Amulets. A tempered Gold bar ($840) becomes an $840 gem for cutting." },
+  { name: "Duplicator", price: 0, cat: "Prestige", effect: "⭐ 8 Medals — Duplicates items at half value. Once per item.", desc: "Duplicates any item, creating a copy at half the original's value. Items can only be duplicated once; derived items from duplicated inputs can't be duplicated again. Best used on ores BEFORE processing — you get 2 ores at 50% value each, both going through the full chain. Most expensive prestige machine (8 medals)." },
   // --- Transport ---
-  { name: "Conveyor", price: 10, cat: "Transport", effect: "Moves items horizontally between machines" },
-  { name: "Splitter", price: 50, cat: "Transport", effect: "Splits item flow: Left/Right, Three-Way, or Overflow variants" },
+  { name: "Conveyor", price: 10, cat: "Transport", effect: "Moves items horizontally between machines", desc: "Basic horizontal transport belt that moves items between machines. Rotatable in Build Mode. Belt speed is fixed — each segment handles one item at a time. Use parallel lines for high-throughput setups. Minimize belt length to reduce transit time." },
+  { name: "Splitter", price: 50, cat: "Transport", effect: "Splits item flow: Left/Right, Three-Way, or Overflow variants", desc: "Splits item flow into multiple paths. Left/Right Splitter: items alternate between side and straight. Three-Way Splitter: items split evenly left, right, and straight. Overflow Splitter: items go straight unless blocked, then divert to side. Essential for complex multi-product factories and preventing jams." },
 ];
 
 function fmt(n) {
@@ -2378,7 +2419,8 @@ function fmtDollar(n) {
     const tr = document.createElement('tr');
     const c = catColors[b.cat] || 'var(--text)';
     var priceStr = b.cat === 'Prestige' ? '⭐ Medals' : '$' + fmt(b.price);
-    tr.innerHTML = '<td style="font-weight:600;">' + b.name + '</td><td style="color:var(--gold);">' + priceStr + '</td><td style="color:' + c + ';">' + b.cat + '</td><td style="color:var(--muted);font-size:0.9em;">' + b.effect + '</td>';
+    var descHtml = b.desc ? '<br><span style="color:var(--text);font-size:0.85em;opacity:0.8;line-height:1.4;display:inline-block;margin-top:4px;">' + b.desc + '</span>' : '';
+    tr.innerHTML = '<td style="font-weight:600;">' + b.name + '</td><td style="color:var(--gold);">' + priceStr + '</td><td style="color:' + c + ';">' + b.cat + '</td><td style="color:var(--muted);font-size:0.9em;"><strong>' + b.effect + '</strong>' + descHtml + '</td>';
     tbody.appendChild(tr);
   });
 })();
