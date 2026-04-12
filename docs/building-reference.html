@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Building Reference — Assembly Line Game Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0f1117; --surface: #1a1d27; --surface2: #242836;
+  --border: #2e3345; --text: #e2e4eb; --muted: #8b8fa3;
+  --accent: #6c8cff; --gold: #f5c542; --green: #4ade80;
+  --red: #f87171; --orange: #fb923c; --cyan: #22d3ee;
+  --purple: #c084fc; --pink: #f472b6; --radius: 12px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.65; padding: 20px; max-width: 1200px; margin: 0 auto; }
+h1 { color: var(--gold); margin-bottom: 8px; }
+h2 { color: var(--cyan); margin: 32px 0 12px; font-size: 1.3em; }
+h3 { color: var(--accent); margin: 20px 0 8px; }
+h4 { margin-bottom: 6px; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+p { margin-bottom: 12px; }
+.back-link { display: inline-block; margin-bottom: 20px; padding: 6px 14px; background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; font-size: 0.85em; }
+table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.88em; }
+th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border); }
+th { background: var(--surface2); color: var(--muted); font-weight: 600; text-transform: uppercase; font-size: 0.78em; letter-spacing: 0.6px; }
+tr:hover td { background: rgba(108,140,255,0.05); }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 20px; margin-bottom: 16px; }
+.tip { background: var(--surface); border-left: 4px solid var(--accent); border-radius: 0 var(--radius) var(--radius) 0; padding: 14px 18px; margin: 14px 0; font-size: 0.95em; }
+.tip.warn { border-left-color: var(--orange); }
+.tip.good { border-left-color: var(--green); }
+.sub { color: var(--muted); font-size: 0.85em; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 14px; margin: 14px 0; }
+.status { display: inline-flex; padding: 2px 8px; border-radius: 5px; font-size: 0.72em; font-weight: 700; text-transform: uppercase; }
+.s-core { background: rgba(74,222,128,0.12); color: var(--green); border: 1px solid rgba(74,222,128,0.3); }
+.s-useful { background: rgba(108,140,255,0.12); color: var(--accent); border: 1px solid rgba(108,140,255,0.3); }
+.s-situational { background: rgba(251,146,60,0.12); color: var(--orange); border: 1px solid rgba(251,146,60,0.3); }
+.s-trap { background: rgba(248,113,113,0.12); color: var(--red); border: 1px solid rgba(248,113,113,0.3); }
+.s-prestige { background: rgba(251,146,60,0.12); color: var(--orange); border: 1px solid rgba(251,146,60,0.3); }
+@media (max-width: 768px) { body { padding: 12px; } .grid { grid-template-columns: 1fr; } th, td { padding: 8px 10px; font-size: 0.8em; } }
+</style>
+</head>
+<body>
+<a href="../index.html" class="back-link">← Back to Main Guide</a>
+<h1>🏗️ Complete Building Reference</h1>
+<p class="sub">All buildings sorted by price. Prestige machines and transport listed separately at the end.</p>
+
+<div class="tip good">
+  <strong>💡 Tip:</strong> Prices shown are wiki-verified. Focus on Core machines first, then expand into Combination and End-Game tiers as income grows.
+</div>
+
+<h2>Upgrade Machines</h2>
+<table>
+<thead><tr><th>Name</th><th>Price</th><th>Effect</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td>Ore Cleaner</td><td>$80</td><td>+$10 to uncleaned ores</td><td>First upgrade you should buy. Cleans ores before smelting to increase bar value.</td></tr>
+<tr><td>Polisher</td><td>$250</td><td>+$10 to any unpolished item</td><td>Universal value boost. Use on ores before smelting and on finished products.</td></tr>
+<tr><td>Electronic Tuner</td><td>$8,500</td><td>+$50 to untuned electronics</td><td>Applies to circuits, tablets, and other electronic items.</td></tr>
+<tr><td>Tempering Forge</td><td>$50,000</td><td>Doubles bar value (×2)</td><td>Massive upgrade for bars. Apply after cleaning and polishing ores, then smelt.</td></tr>
+<tr><td>QA Machine</td><td>$2,000,000</td><td>+20% to untested items</td><td>Final multiplier — always apply last in any processing chain.</td></tr>
+</tbody>
+</table>
+
+<h2>Smelting</h2>
+<table>
+<thead><tr><th>Name</th><th>Price</th><th>Effect</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td>Ore Smelter</td><td>$380</td><td>Ore → Bar (×1.2) + Stone (1 per 2 ores)</td><td>Core smelter. Produces a stone byproduct every other ore.</td></tr>
+<tr><td>Blast Furnace</td><td>$25,000</td><td>Ore → Bar (×0.9) + Stone (1 per ore) ❌</td><td><span class="status s-trap">TRAP</span> Lower bar multiplier than Ore Smelter. Only advantage is 1 stone per ore instead of 1 per 2.</td></tr>
+</tbody>
+</table>
+
+<h2>Processing</h2>
+<table>
+<thead><tr><th>Name</th><th>Price</th><th>Effect</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td>Crusher</td><td>$1,750</td><td>Destroys items → Dust ($1)</td><td>Converts any item into dust worth $1. Essential for stone processing chains.</td></tr>
+</tbody>
+</table>
+
+<h2>Bar Processing</h2>
+<table>
+<thead><tr><th>Name</th><th>Price</th><th>Effect</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td>Coiler</td><td>$1,750</td><td>Bar → Coil (+$20)</td><td>Flat bonus. Used in circuits, rings, and electromagnets.</td></tr>
+<tr><td>Bolt Machine</td><td>$2,800</td><td>Bar → Bolts (+$5)</td><td>Small flat bonus. Bolts are needed for frames and casings.</td></tr>
+<tr><td>Plate Stamper</td><td>$3,000</td><td>Bar → Plate (+$20)</td><td>Same flat bonus as coiler. Plates feed pipes, mech parts, filigree, and casings.</td></tr>
+</tbody>
+</table>
+
+<h2>Plate Processing</h2>
+<table>
+<thead><tr><th>Name</th><th>Price</th><th>Effect</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td>Pipe Maker</td><td>$4,000</td><td>Plate → Pipe (+$20)</td><td>Pipes are used in optics and engines.</td></tr>
+<tr><td>Mech Parts Maker</td><td>$8,000</td><td>Plate → Mech Parts (+$30)</td><td>Mech parts feed into engines.</td></tr>
+<tr><td>Filigree Cutter</td><td>$50,000</td><td>Plate → Filigree (+20%)</td><td>Percentage-based bonus. Used in gliders.</td></tr>
+</tbody>
+</table>
+
+<h2>Stone Processing</h2>
+<table>
+<thead><tr><th>Name</th><th>Price</th><th>Effect</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td>Brick Mold</td><td>$2,500</td><td>Dust → Brick ($25) or Cement → Concrete Brick ($100)</td><td>Dual-purpose. The concrete brick path is much more profitable.</td></tr>
+<tr><td>Sifter</td><td>$4,000</td><td>10% Dust → random ore</td><td>Chance to recover an ore from dust. Dust is not destroyed on failure.</td></tr>
+<tr><td>Kiln</td><td>$4,750</td><td>Dust → Glass ($30), Bricks ×1.2</td><td>Fires bricks for bonus value and converts dust to glass.</td></tr>
+<tr><td>Cement Mixer</td><td>$10,000</td><td>Dust + Stone → Cement ($30)</td><td>Combines dust and stone into cement for the concrete brick chain.</td></tr>
+<tr><td>Clay Mixer</td><td>$20,000</td><td>2 Dust → Clay ($50)</td><td>Combines two dust into clay for ceramic casings.</td></tr>
+<tr><td>Ceramic Furnace</td><td>$30,000</td><td>Clay → Ceramic Casing ($150)</td><td>Fires clay into ceramic casings used in superconductors.</td></tr>
+</tbody>
+</table>
+
+<h2>Glass Processing</h2>
+<table>
+<thead><tr><th>Name</th><th>Price</th><th>Effect</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td>Lens Cutter</td><td>$75,000</td><td>Glass → Lens (+$50)</td><td>Converts glass to lenses for the optics chain.</td></tr>
+</tbody>
+</table>
+
+<h2>Gems</h2>
+<table>
+<thead><tr><th>Name</th><th>Price</th><th>Effect</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td>Topaz Prospector</td><td>$2,000</td><td>5% Stone → Topaz ($75)</td><td>First and cheapest prospector. Stack all 5 for 22.6% total hit rate.</td></tr>
+<tr><td>Emerald Prospector</td><td>$5,000</td><td>5% Stone → Emerald ($200)</td><td>Each prospector checks remaining stones after the previous one.</td></tr>
+<tr><td>Sapphire Prospector</td><td>$8,000</td><td>5% Stone → Sapphire ($250)</td><td>Mid-tier gem with decent value.</td></tr>
+<tr><td>Ruby Prospector</td><td>$15,000</td><td>5% Stone → Ruby ($300)</td><td>High-value gem. Worth the investment.</td></tr>
+<tr><td>Diamond Prospector</td><td>$30,000</td><td>5% Stone → Diamond ($1,500)</td><td>Most valuable prospector. Pays for itself in ~350 stones.</td></tr>
+<tr><td>Gem Cutter</td><td>$20,000</td><td>Uncut Gem → Cut Gem (×1.4)</td><td>Always polish gems before cutting for maximum value.</td></tr>
+<tr><td>Prismatic Gem Crucible</td><td>$100,000</td><td>2 Gems → Prismatic (×1.15)</td><td>Combines two gems. Marginal gain — only use with cheap surplus gems.</td></tr>
+</tbody>
+</table>
+
+<h2>Combination Machines</h2>
+<table>
+<thead><tr><th>Name</th><th>Price</th><th>Effect</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td>Frame Maker</td><td>$10,000</td><td>Bar + Bolts → Frame (×1.25)</td><td>Combines bar and bolts into frames for casings.</td></tr>
+<tr><td>Ring Maker</td><td>$15,000</td><td>Gem + Coil → Ring (×1.7)</td><td>Excellent multiplier. Combines a gem with a coil.</td></tr>
+<tr><td>Circuit Maker</td><td>$20,000</td><td>Glass + Coil → Circuit (×2.0)</td><td>Strong multiplier. Circuits feed into tablets and lasers.</td></tr>
+<tr><td>Casing Machine</td><td>$50,000</td><td>Frame + Bolts + Plate → Casing (×1.30)</td><td>Three inputs. Casings are used in many end-game recipes.</td></tr>
+<tr><td>Alloy Furnace</td><td>$100,000</td><td>2 Bars → Alloy (×1.2)</td><td>Combines two bars. Alloy is used in superconductors.</td></tr>
+<tr><td>Magnetic Machine</td><td>$120,000</td><td>Coil + Casing → Electromagnet (×1.5)</td><td>Used in power cores. Solid multiplier.</td></tr>
+<tr><td>Optics Machine</td><td>$300,000</td><td>Lens + Pipe → Optics (×1.25)</td><td>Combines lens and pipe for the laser chain.</td></tr>
+<tr><td>Glider</td><td>$500,000</td><td>Filigree + Amulet → Glider (×1.5)</td><td>Late-game combination product.</td></tr>
+</tbody>
+</table>
+
+<h2>Explosives</h2>
+<table>
+<thead><tr><th>Name</th><th>Price</th><th>Effect</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td>Blasting Powder Chamber</td><td>$15,000</td><td>Metal Dust + Stone Dust → Blasting Powder ($52)</td><td>Requires dedicated dust production lines.</td></tr>
+<tr><td>Explosives Maker</td><td>$15,000</td><td>Blasting Powder + Casing → Explosives (×1.5)</td><td>Consumes a casing. Generally not worth the casing investment.</td></tr>
+<tr><td>Blasting Powder Refiner</td><td>$2,500,000</td><td>Blasting Powder + Metal Dust → +$15</td><td>Minor improvement to explosives chain.</td></tr>
+</tbody>
+</table>
+
+<h2>End-Game</h2>
+<table>
+<thead><tr><th>Name</th><th>Price</th><th>Effect</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td>Engine Factory</td><td>$1,000,000</td><td>Mech Parts + Pipe + Casing → Engine (×2.5)</td><td>Strong multiplier. Requires three processed inputs.</td></tr>
+<tr><td>Superconductor Constructor</td><td>$1,000,000</td><td>Alloy + Ceramic → Superconductor (×3.0)</td><td>Highest multiplier. Uses alloy and ceramic casing.</td></tr>
+<tr><td>Amulet Maker</td><td>$2,000,000</td><td>Ring + Frame + Prismatic Gem → Amulet (×2.0)</td><td>Combines ring, frame, and prismatic gem.</td></tr>
+<tr><td>QA Machine</td><td>$2,000,000</td><td>+20% to untested items</td><td>Apply as the very last step in any chain.</td></tr>
+<tr><td>Tablet Factory</td><td>$2,500,000</td><td>Casing + Glass + Circuit → Tablet (×3.0)</td><td>Tied for highest multiplier. Electronic item — tune it.</td></tr>
+<tr><td>Blasting Powder Refiner</td><td>$2,500,000</td><td>Blasting Powder + Metal Dust → +$15</td><td>Explosives chain refinement.</td></tr>
+<tr><td>Laser Maker</td><td>$3,500,000</td><td>Optics + Gem + Circuit → Laser (×1.75)</td><td>Expensive but versatile. Electronic item — tune it.</td></tr>
+<tr><td>Power Core Assembler</td><td>$4,500,000</td><td>Casing + SC + Electromagnet → Power Core (×2.5)</td><td>Top-tier product requiring superconductor and electromagnet.</td></tr>
+</tbody>
+</table>
+
+<h2>⭐ Prestige Machines</h2>
+<p class="sub">Purchased with prestige medals, not cash.</p>
+<table>
+<thead><tr><th>Name</th><th>Cost</th><th>Effect</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td>Nano Sifter</td><td>⭐ 1 Medal</td><td>16.6% sift, rarer ores</td><td>Replaces the regular Sifter. Higher chance and better ore distribution.</td></tr>
+<tr><td>Philosopher's Stone</td><td>⭐ 3 Medals</td><td>×1.25 ore value</td><td>Passive multiplier on all ore values.</td></tr>
+<tr><td>Ore Upgrader</td><td>⭐ 3 Medals</td><td>Next tier ore (max Mithril)</td><td>Upgrades ore to the next rarity tier. Caps at Mithril.</td></tr>
+<tr><td>Gem→Bar Transmuter</td><td>⭐ 4 Medals</td><td>Gem → Bar equal value</td><td>Converts gems into bars of equivalent value.</td></tr>
+<tr><td>Bar→Gem Transmuter</td><td>⭐ 4 Medals</td><td>Bar → Gem equal value</td><td>Converts bars into gems of equivalent value.</td></tr>
+<tr><td>Duplicator</td><td>⭐ 8 Medals</td><td>Copy item at half value</td><td>Creates a duplicate of any item at 50% value.</td></tr>
+</tbody>
+</table>
+
+<h2>🚚 Transport</h2>
+<table>
+<thead><tr><th>Name</th><th>Price</th><th>Effect</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td>Conveyor</td><td>$10</td><td>Moves items horizontally</td><td>Basic item transport. Place between machines.</td></tr>
+<tr><td>Splitter</td><td>$50</td><td>Splits item flow</td><td>Available in L/R, Three-Way, and Overflow variants.</td></tr>
+</tbody>
+</table>
+
+</body>
+</html>

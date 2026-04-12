@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Transport & Infrastructure — Assembly Line Game Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0f1117; --surface: #1a1d27; --surface2: #242836;
+  --border: #2e3345; --text: #e2e4eb; --muted: #8b8fa3;
+  --accent: #6c8cff; --gold: #f5c542; --green: #4ade80;
+  --red: #f87171; --orange: #fb923c; --cyan: #22d3ee;
+  --purple: #c084fc; --pink: #f472b6; --radius: 12px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.65; padding: 20px; max-width: 1200px; margin: 0 auto; }
+h1 { color: var(--gold); margin-bottom: 8px; }
+h2 { color: var(--cyan); margin: 32px 0 12px; font-size: 1.3em; }
+h3 { color: var(--accent); margin: 20px 0 8px; }
+h4 { margin-bottom: 6px; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+p { margin-bottom: 12px; }
+.back-link { display: inline-block; margin-bottom: 20px; padding: 6px 14px; background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; font-size: 0.85em; }
+table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.88em; }
+th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border); }
+th { background: var(--surface2); color: var(--muted); font-weight: 600; text-transform: uppercase; font-size: 0.78em; letter-spacing: 0.6px; }
+tr:hover td { background: rgba(108,140,255,0.05); }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 20px; margin-bottom: 16px; }
+.tip { background: var(--surface); border-left: 4px solid var(--accent); border-radius: 0 var(--radius) var(--radius) 0; padding: 14px 18px; margin: 14px 0; font-size: 0.95em; }
+.tip.warn { border-left-color: var(--orange); }
+.tip.good { border-left-color: var(--green); }
+.sub { color: var(--muted); font-size: 0.85em; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 14px; margin: 14px 0; }
+.status { display: inline-flex; padding: 2px 8px; border-radius: 5px; font-size: 0.72em; font-weight: 700; text-transform: uppercase; }
+.s-core { background: rgba(74,222,128,0.12); color: var(--green); border: 1px solid rgba(74,222,128,0.3); }
+.s-useful { background: rgba(108,140,255,0.12); color: var(--accent); border: 1px solid rgba(108,140,255,0.3); }
+.s-situational { background: rgba(251,146,60,0.12); color: var(--orange); border: 1px solid rgba(251,146,60,0.3); }
+.s-trap { background: rgba(248,113,113,0.12); color: var(--red); border: 1px solid rgba(248,113,113,0.3); }
+.s-prestige { background: rgba(251,146,60,0.12); color: var(--orange); border: 1px solid rgba(251,146,60,0.3); }
+@media (max-width: 768px) { body { padding: 12px; } .grid { grid-template-columns: 1fr; } th, td { padding: 8px 10px; font-size: 0.8em; } }
+</style>
+</head>
+<body>
+<a href="../index.html" class="back-link">← Back to Main Guide</a>
+<h1>🚚 Transport &amp; Infrastructure Guide</h1>
+<p class="sub">Unloaders, conveyors, splitters, and factory layout optimization.</p>
+
+<h2>Unloader Levels</h2>
+<p>Unloaders determine how many items per minute your mine produces. Upgrading unloaders is one of the most impactful investments.</p>
+<table>
+<thead><tr><th>Level</th><th>Items/min</th><th>Cost</th><th>Cost per +Item</th></tr></thead>
+<tbody>
+<tr><td>Lv 1</td><td>12</td><td>Free</td><td>—</td></tr>
+<tr><td>Lv 2</td><td>36</td><td>$1,000</td><td>$41.67</td></tr>
+<tr><td>Lv 3</td><td>108</td><td>$20,000</td><td>$277.78</td></tr>
+<tr><td>Lv 4</td><td>162</td><td>$400,000</td><td>$7,407.41</td></tr>
+<tr><td>Lv 5</td><td>216</td><td>$8,000,000</td><td>$148,148.15</td></tr>
+</tbody>
+</table>
+<div class="tip">
+  <strong>📊 Strategy:</strong> Unloader upgrades have diminishing returns on cost-efficiency. Lv 2 and Lv 3 are excellent value. Lv 4 and Lv 5 are late-game investments when you have excess cash.
+</div>
+
+<h2>Extra Output Belts</h2>
+<p>Additional output belts from your mine allow parallel processing lines.</p>
+<table>
+<thead><tr><th>Belt</th><th>Cost</th><th>Total Belts</th></tr></thead>
+<tbody>
+<tr><td>1st (default)</td><td>Free</td><td>1</td></tr>
+<tr><td>2nd belt</td><td>$100,000</td><td>2</td></tr>
+<tr><td>3rd belt</td><td>$1,000,000</td><td>3</td></tr>
+<tr><td>4th belt</td><td>$5,000,000</td><td>4</td></tr>
+</tbody>
+</table>
+<p class="sub">Each additional belt lets you run a fully independent processing line, dramatically increasing throughput.</p>
+
+<h2>Transport Components</h2>
+<div class="grid">
+  <div class="card">
+    <h4>Conveyor — $10</h4>
+    <p>Moves items horizontally between machines. The basic building block of every factory.</p>
+    <p class="sub">Place between any two machines to transfer items.</p>
+  </div>
+  <div class="card">
+    <h4>Splitter — $50</h4>
+    <p>Divides item flow into multiple paths. Three variants available:</p>
+    <p><strong>L/R Splitter:</strong> Alternates items left and right (50/50 split)</p>
+    <p><strong>Three-Way:</strong> Distributes items across three outputs (33/33/33)</p>
+    <p><strong>Overflow:</strong> Sends items to secondary output only when primary is backed up</p>
+  </div>
+  <div class="card">
+    <h4>Filter</h4>
+    <p>Routes items based on type. Essential after prospectors to separate gems from stones, or to sort different bar types.</p>
+    <p class="sub">Place after any machine that outputs mixed item types.</p>
+  </div>
+  <div class="card">
+    <h4>Elevator</h4>
+    <p>Moves items between floors. Required for multi-story factory designs.</p>
+    <p class="sub">Vertical transport — connect upper and lower production floors.</p>
+  </div>
+  <div class="card">
+    <h4>Gate Belt</h4>
+    <p>Controlled conveyor that can be toggled on/off. Useful for managing item flow timing and preventing backups.</p>
+  </div>
+</div>
+
+<h2>Factory Layout Tips</h2>
+<div class="tip good">
+  <strong>💡 Key Principles:</strong>
+</div>
+
+<div class="grid">
+  <div class="card">
+    <h4>🔀 Smelters Split Automatically</h4>
+    <p>Ore Smelters output bars on one side and stones on another. Plan your layout to accommodate both outputs flowing to different processing lines.</p>
+  </div>
+  <div class="card">
+    <h4>🔍 Filter After Prospectors</h4>
+    <p>Place filters after your prospector chain to separate gems from surviving stones. Gems go to polish → cut line; stones continue to crusher → brick/concrete line.</p>
+  </div>
+  <div class="card">
+    <h4>🏗️ Build Vertically</h4>
+    <p>Use elevators to create multi-floor factories. Put ore processing on top, bar processing in the middle, and stone/byproduct lines on the bottom floor.</p>
+  </div>
+  <div class="card">
+    <h4>🔄 Use Overflow Splitters</h4>
+    <p>Overflow splitters prevent backups. If a machine is full, items flow to an alternative path instead of clogging the line. Essential for high-throughput factories.</p>
+  </div>
+</div>
+
+<h2>Optimal Layouts by Stage</h2>
+
+<h3>Early Game (Levels 1–4): Single Floor Linear</h3>
+<div class="card">
+  <p><strong>Layout:</strong> Mine → Ore Cleaner → Polisher → Ore Smelter → sell bars</p>
+  <p><strong>Stone line:</strong> Smelter stone output → Prospectors → Filter → Crusher → Brick Mold → Kiln → sell</p>
+  <p class="sub">Keep it simple. One straight line for bars, one for stones. No splitters needed yet.</p>
+</div>
+
+<h3>Mid Game (Levels 5–6): Two-Floor Split</h3>
+<div class="card">
+  <p><strong>Top floor:</strong> Mine → Clean → Polish → Smelt → Temper → bar products (coil/plate/bolt lines)</p>
+  <p><strong>Bottom floor:</strong> Stone line → Prospectors → Filter gems/stones → Cement Mixer → Concrete Bricks → Kiln → Polish → QA</p>
+  <p class="sub">Split bar processing into dedicated lines: one for coils (circuits, rings), one for plates (pipes, mech parts), one for bolts (frames).</p>
+</div>
+
+<h3>Late Game (Levels 7–10): Three-Floor Multi-Line</h3>
+<div class="card">
+  <p><strong>Top floor:</strong> Ore processing → Multiple smelter lines → Tempering → Dedicated bar product lines</p>
+  <p><strong>Middle floor:</strong> Combination machines (frames, casings, circuits, alloys) → End-game products</p>
+  <p><strong>Bottom floor:</strong> Full stone processing (prospectors, concrete bricks, glass, ceramic) + gem processing</p>
+  <p class="sub">Use multiple output belts (2nd, 3rd, 4th) to run parallel processing. Each belt can feed a completely independent factory line.</p>
+</div>
+
+<h2>Concrete Brick Pairing Pattern</h2>
+<div class="card">
+  <h4>The Pairing Problem</h4>
+  <p>Concrete bricks require both dust (from crushed stone) and a whole stone in the Cement Mixer. You need to pair stones: crush one, keep one whole.</p>
+  <h4>Solution: Alternating Splitter</h4>
+  <p><strong>1.</strong> Post-prospector stones → L/R Splitter</p>
+  <p><strong>2.</strong> Left: → Crusher → dust output to Cement Mixer input A</p>
+  <p><strong>3.</strong> Right: → Conveyor → direct stone to Cement Mixer input B</p>
+  <p><strong>4.</strong> Cement Mixer → Brick Mold → Kiln → Polish → QA → sell</p>
+  <p class="sub">The L/R splitter ensures a 50/50 split, perfectly pairing dust and stone for cement production.</p>
+</div>
+
+<h2>Throughput Optimization</h2>
+<div class="grid">
+  <div class="card">
+    <h4>⚡ Avoid Bottlenecks</h4>
+    <p>If a machine processes slower than items arrive, place multiple copies in parallel. Use splitters before and mergers after.</p>
+  </div>
+  <div class="card">
+    <h4>📏 Belt Length Matters</h4>
+    <p>Shorter conveyor runs = faster throughput. Minimize distance between machines. Don't route belts around obstacles when you can rearrange machines.</p>
+  </div>
+  <div class="card">
+    <h4>🔄 Balance Your Lines</h4>
+    <p>If you split into 3 bar product lines (coil/plate/bolt), ensure each line has enough machines to handle its share of throughput.</p>
+  </div>
+  <div class="card">
+    <h4>📦 Buffer Zones</h4>
+    <p>A few extra conveyors between high-throughput machines act as buffers, absorbing brief surges and preventing stalls.</p>
+  </div>
+</div>
+
+<div class="tip">
+  <strong>🎯 Rule of thumb:</strong> When your seller is always busy, you need more sellers or higher-value products. When your machines are idle, you need more unloader capacity or better item routing.
+</div>
+
+</body>
+</html>

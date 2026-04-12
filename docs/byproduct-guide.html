@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Byproduct Optimization — Assembly Line Game Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0f1117; --surface: #1a1d27; --surface2: #242836;
+  --border: #2e3345; --text: #e2e4eb; --muted: #8b8fa3;
+  --accent: #6c8cff; --gold: #f5c542; --green: #4ade80;
+  --red: #f87171; --orange: #fb923c; --cyan: #22d3ee;
+  --purple: #c084fc; --pink: #f472b6; --radius: 12px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.65; padding: 20px; max-width: 1200px; margin: 0 auto; }
+h1 { color: var(--gold); margin-bottom: 8px; }
+h2 { color: var(--cyan); margin: 32px 0 12px; font-size: 1.3em; }
+h3 { color: var(--accent); margin: 20px 0 8px; }
+h4 { margin-bottom: 6px; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+p { margin-bottom: 12px; }
+.back-link { display: inline-block; margin-bottom: 20px; padding: 6px 14px; background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; font-size: 0.85em; }
+table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.88em; }
+th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border); }
+th { background: var(--surface2); color: var(--muted); font-weight: 600; text-transform: uppercase; font-size: 0.78em; letter-spacing: 0.6px; }
+tr:hover td { background: rgba(108,140,255,0.05); }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 20px; margin-bottom: 16px; }
+.tip { background: var(--surface); border-left: 4px solid var(--accent); border-radius: 0 var(--radius) var(--radius) 0; padding: 14px 18px; margin: 14px 0; font-size: 0.95em; }
+.tip.warn { border-left-color: var(--orange); }
+.tip.good { border-left-color: var(--green); }
+.sub { color: var(--muted); font-size: 0.85em; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 14px; margin: 14px 0; }
+.status { display: inline-flex; padding: 2px 8px; border-radius: 5px; font-size: 0.72em; font-weight: 700; text-transform: uppercase; }
+.s-core { background: rgba(74,222,128,0.12); color: var(--green); border: 1px solid rgba(74,222,128,0.3); }
+.s-useful { background: rgba(108,140,255,0.12); color: var(--accent); border: 1px solid rgba(108,140,255,0.3); }
+.s-situational { background: rgba(251,146,60,0.12); color: var(--orange); border: 1px solid rgba(251,146,60,0.3); }
+.s-trap { background: rgba(248,113,113,0.12); color: var(--red); border: 1px solid rgba(248,113,113,0.3); }
+.s-prestige { background: rgba(251,146,60,0.12); color: var(--orange); border: 1px solid rgba(251,146,60,0.3); }
+@media (max-width: 768px) { body { padding: 12px; } .grid { grid-template-columns: 1fr; } th, td { padding: 8px 10px; font-size: 0.8em; } }
+</style>
+</head>
+<body>
+<a href="../index.html" class="back-link">← Back to Main Guide</a>
+<h1>🪨 Byproduct Optimization Guide</h1>
+<p class="sub">How to maximize value from stone byproducts and dust processing.</p>
+
+<div class="tip warn">
+  <strong>⚠️ Critical Correction:</strong> The Ore Smelter produces <strong>1 stone per 2 ores</strong> (not 1 per 1). The Blast Furnace produces 1 stone per ore but has a worse bar multiplier (×0.9 vs ×1.2). This affects all stone-dependent calculations.
+</div>
+
+<h2>Stone Production Rates</h2>
+<table>
+<thead><tr><th>Smelter</th><th>Bar Multiplier</th><th>Stone Rate</th><th>Stones per 100 Ores</th></tr></thead>
+<tbody>
+<tr><td>Ore Smelter</td><td>×1.2</td><td>1 per 2 ores</td><td><strong>50 stones</strong></td></tr>
+<tr><td>Blast Furnace</td><td>×0.9</td><td>1 per ore</td><td><strong>100 stones</strong></td></tr>
+</tbody>
+</table>
+<p class="sub">Use Ore Smelter for better bars. The Blast Furnace's extra stones rarely compensate for the 25% bar value loss.</p>
+
+<h2>Stone Priority Order</h2>
+<div class="card">
+  <p>Process stones in this exact order for maximum value:</p>
+  <p><strong>1. 🔍 Prospect through all 5 prospectors</strong> — EV $141.03/stone</p>
+  <p><strong>2. 🧱 Pair surviving stones for concrete bricks</strong> — $78/stone</p>
+  <p><strong>3. 🔥 Odd stone → fired brick or glass</strong> — $48/stone (brick) or $30/stone (glass)</p>
+  <p><strong>4. 💎 Process any gems found</strong> — Polish → Cut → use in products</p>
+</div>
+
+<div class="tip good">
+  <strong>💡 Never sell raw stones!</strong> Even the simplest processing (crush → brick → kiln) turns a near-worthless stone into a $30 kilned brick.
+</div>
+
+<h2>Byproduct Value Comparison</h2>
+<p>All paths start from stone (post-prospecting survivors). Values are per stone input.</p>
+
+<h3>1. Concrete Bricks — $78/stone <span class="status s-core">Best</span></h3>
+<div class="card">
+  <p><strong>Path:</strong> 2 stones → crush both → dust ($1 ea) + 1 stone → Cement Mixer (dust + stone) → Cement ($30) → Brick Mold → Concrete Brick ($100) → Kiln (×1.2) → Kilned Concrete ($120) → Polish (+$10) → $130 → QA (×1.2) → <strong>$156</strong></p>
+  <p class="sub">Requires 2 stones: 1 crushed to dust, 1 used whole in cement mixer. Per-stone value: $156 ÷ 2 = <strong>$78/stone</strong></p>
+  <table>
+  <thead><tr><th>Step</th><th>Output</th><th>Value</th></tr></thead>
+  <tbody>
+  <tr><td>Cement Mixer (dust + stone)</td><td>Cement</td><td>$30</td></tr>
+  <tr><td>Brick Mold (cement)</td><td>Concrete Brick</td><td>$100</td></tr>
+  <tr><td>Kiln (×1.2)</td><td>Kilned Concrete Brick</td><td>$120</td></tr>
+  <tr><td>Polish (+$10)</td><td>Polished Kilned Concrete</td><td>$130</td></tr>
+  <tr><td>QA (×1.2)</td><td>QA Concrete Brick</td><td>$156</td></tr>
+  </tbody>
+  </table>
+</div>
+
+<h3>2. Ceramic Casing — $75/stone</h3>
+<div class="card">
+  <p><strong>Path:</strong> 2 stones → crush both → 2 dust → Clay Mixer → Clay ($50) → Ceramic Furnace → Ceramic Casing ($150)</p>
+  <p class="sub">Per-stone value: $150 ÷ 2 = <strong>$75/stone</strong></p>
+  <p>Note: Ceramic casings are also needed for superconductors (×3.0), so the true value may be higher in that chain.</p>
+</div>
+
+<h3>3. Fired Bricks — $48/stone</h3>
+<div class="card">
+  <p><strong>Path:</strong> 1 stone → crush → Dust ($1) → Brick Mold → Brick ($25) → Kiln (×1.2) → Kilned Brick ($30) → Polish (+$10) → $40 → QA (×1.2) → <strong>$48</strong></p>
+  <table>
+  <thead><tr><th>Step</th><th>Output</th><th>Value</th></tr></thead>
+  <tbody>
+  <tr><td>Crusher</td><td>Dust</td><td>$1</td></tr>
+  <tr><td>Brick Mold (dust)</td><td>Brick</td><td>$25</td></tr>
+  <tr><td>Kiln (×1.2)</td><td>Kilned Brick</td><td>$30</td></tr>
+  <tr><td>Polish (+$10)</td><td>Polished Kilned Brick</td><td>$40</td></tr>
+  <tr><td>QA (×1.2)</td><td>QA Kilned Brick</td><td>$48</td></tr>
+  </tbody>
+  </table>
+</div>
+
+<h3>4. Glass Sheets — $30/stone</h3>
+<div class="card">
+  <p><strong>Path:</strong> 1 stone → crush → Dust ($1) → Kiln → Glass ($30)</p>
+  <p class="sub">Per-stone value: <strong>$30/stone</strong>. Simple and fast. Glass feeds circuits and tablets.</p>
+</div>
+
+<h3>5. Polished Dust — $11/stone</h3>
+<div class="card">
+  <p><strong>Path:</strong> 1 stone → crush → Dust ($1) → Polish (+$10) → <strong>$11</strong></p>
+  <p class="sub">Per-stone value: <strong>$11/stone</strong>. Minimum viable processing. Only do this if you have no other machines yet.</p>
+</div>
+
+<h2>Value Summary Table</h2>
+<table>
+<thead><tr><th>Path</th><th>Stones Used</th><th>Final Value</th><th>Value per Stone</th><th>Machines Required</th></tr></thead>
+<tbody>
+<tr style="color: var(--green);"><td><strong>QA Concrete Brick</strong></td><td>2</td><td>$156</td><td><strong>$78</strong></td><td>Crusher, Cement Mixer, Brick Mold, Kiln, Polisher, QA</td></tr>
+<tr><td>Ceramic Casing</td><td>2</td><td>$150</td><td>$75</td><td>Crusher, Clay Mixer, Ceramic Furnace</td></tr>
+<tr><td>QA Fired Brick</td><td>1</td><td>$48</td><td>$48</td><td>Crusher, Brick Mold, Kiln, Polisher, QA</td></tr>
+<tr><td>Glass Sheet</td><td>1</td><td>$30</td><td>$30</td><td>Crusher, Kiln</td></tr>
+<tr><td>Polished Dust</td><td>1</td><td>$11</td><td>$11</td><td>Crusher, Polisher</td></tr>
+</tbody>
+</table>
+
+<h2>Sifting: Bonus Ore Recovery</h2>
+<div class="grid">
+  <div class="card">
+    <h4>Regular Sifter</h4>
+    <p><strong>$4,000</strong> — 10% chance to convert dust into a random ore</p>
+    <p class="sub">Dust is <strong>not destroyed</strong> on failure. The 90% that fail continue as dust for brick/glass processing.</p>
+  </div>
+  <div class="card">
+    <h4>Nano Sifter <span class="status s-prestige">Prestige</span></h4>
+    <p><strong>⭐ 1 Medal</strong> — 16.6% chance, rarer ore distribution</p>
+    <p class="sub">Direct upgrade. Higher success rate and better chance of valuable ore types.</p>
+  </div>
+</div>
+
+<div class="tip">
+  <strong>📊 Sifting placement:</strong> Place the sifter after the crusher but before any dust processing (brick mold, kiln, clay mixer). Dust that fails the sift continues through the line normally.
+</div>
+
+<h2>Gem Prospecting EV Breakdown</h2>
+<p>With all 5 prospectors, the expected value from gem finds per stone processed:</p>
+<table>
+<thead><tr><th>Gem</th><th>Effective Rate</th><th>Value (P+C)</th><th>EV per Stone</th></tr></thead>
+<tbody>
+<tr><td>Topaz</td><td>5.00%</td><td>$119</td><td>$5.95</td></tr>
+<tr><td>Emerald</td><td>4.75%</td><td>$294</td><td>$13.97</td></tr>
+<tr><td>Sapphire</td><td>4.51%</td><td>$364</td><td>$16.42</td></tr>
+<tr><td>Ruby</td><td>4.29%</td><td>$434</td><td>$18.61</td></tr>
+<tr><td>Diamond</td><td>4.07%</td><td>$2,114</td><td>$86.08</td></tr>
+<tr style="border-top: 2px solid var(--accent);"><td><strong>Total</strong></td><td><strong>22.62%</strong></td><td>—</td><td><strong>$141.03</strong></td></tr>
+</tbody>
+</table>
+<p class="sub">Gem EV alone ($141.03) exceeds even the best stone processing path ($78). This is why prospecting comes first.</p>
+
+<h2>Complete Stone Workflow</h2>
+<div class="card">
+  <h4>Optimal Flow for Every Stone</h4>
+  <p><strong>Step 1:</strong> Stone → Prospectors (all 5) → 22.62% become gems → process gems (polish → cut)</p>
+  <p><strong>Step 2:</strong> Surviving stones (77.38%) → pair up for concrete bricks</p>
+  <p><strong>Step 3:</strong> Unpaired odd stone → crush → brick mold → kiln → polish → QA ($48)</p>
+  <p><strong>Step 4:</strong> If you need glass/circuits: divert some dust to kiln for glass ($30)</p>
+</div>
+
+<h2>Per-Ore Stone Economics</h2>
+<div class="card">
+  <p>Since the Ore Smelter produces 1 stone per 2 ores, the per-ore contribution from stone byproducts is:</p>
+  <p><strong>Gem EV per ore:</strong> $141.03 × 0.5 = <strong>$70.52</strong></p>
+  <p><strong>Concrete brick per ore:</strong> $78 × 0.5 × 0.7738 = <strong>$30.17</strong> (only survivors)</p>
+  <p><strong>Total byproduct EV per ore:</strong> ≈ <strong>$100.69</strong></p>
+  <p class="sub">This is in addition to bar value from the main smelting line.</p>
+</div>
+
+</body>
+</html>

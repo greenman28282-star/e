@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gem Strategy — Assembly Line Game Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0f1117; --surface: #1a1d27; --surface2: #242836;
+  --border: #2e3345; --text: #e2e4eb; --muted: #8b8fa3;
+  --accent: #6c8cff; --gold: #f5c542; --green: #4ade80;
+  --red: #f87171; --orange: #fb923c; --cyan: #22d3ee;
+  --purple: #c084fc; --pink: #f472b6; --radius: 12px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.65; padding: 20px; max-width: 1200px; margin: 0 auto; }
+h1 { color: var(--gold); margin-bottom: 8px; }
+h2 { color: var(--cyan); margin: 32px 0 12px; font-size: 1.3em; }
+h3 { color: var(--accent); margin: 20px 0 8px; }
+h4 { margin-bottom: 6px; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+p { margin-bottom: 12px; }
+.back-link { display: inline-block; margin-bottom: 20px; padding: 6px 14px; background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; font-size: 0.85em; }
+table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.88em; }
+th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border); }
+th { background: var(--surface2); color: var(--muted); font-weight: 600; text-transform: uppercase; font-size: 0.78em; letter-spacing: 0.6px; }
+tr:hover td { background: rgba(108,140,255,0.05); }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 20px; margin-bottom: 16px; }
+.tip { background: var(--surface); border-left: 4px solid var(--accent); border-radius: 0 var(--radius) var(--radius) 0; padding: 14px 18px; margin: 14px 0; font-size: 0.95em; }
+.tip.warn { border-left-color: var(--orange); }
+.tip.good { border-left-color: var(--green); }
+.sub { color: var(--muted); font-size: 0.85em; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 14px; margin: 14px 0; }
+.status { display: inline-flex; padding: 2px 8px; border-radius: 5px; font-size: 0.72em; font-weight: 700; text-transform: uppercase; }
+.s-core { background: rgba(74,222,128,0.12); color: var(--green); border: 1px solid rgba(74,222,128,0.3); }
+.s-useful { background: rgba(108,140,255,0.12); color: var(--accent); border: 1px solid rgba(108,140,255,0.3); }
+.s-situational { background: rgba(251,146,60,0.12); color: var(--orange); border: 1px solid rgba(251,146,60,0.3); }
+.s-trap { background: rgba(248,113,113,0.12); color: var(--red); border: 1px solid rgba(248,113,113,0.3); }
+.s-prestige { background: rgba(251,146,60,0.12); color: var(--orange); border: 1px solid rgba(251,146,60,0.3); }
+@media (max-width: 768px) { body { padding: 12px; } .grid { grid-template-columns: 1fr; } th, td { padding: 8px 10px; font-size: 0.8em; } }
+</style>
+</head>
+<body>
+<a href="../index.html" class="back-link">← Back to Main Guide</a>
+<h1>💎 Gem Strategy Guide</h1>
+<p class="sub">Complete guide to gem prospecting, processing, and maximizing gem value.</p>
+
+<div class="tip good">
+  <strong>💡 Golden Rule:</strong> Always polish gems before cutting. Polish adds a flat +$10 first, then cutting multiplies the total by ×1.4. This order maximizes final value.
+</div>
+
+<h2>Complete Gem Value Table</h2>
+<table>
+<thead><tr><th>Gem</th><th>Base Value</th><th>Polished (+$10)</th><th>Cut (×1.4)</th><th>Polished + Cut</th></tr></thead>
+<tbody>
+<tr><td>💛 Topaz</td><td>$75</td><td>$85</td><td>$105</td><td>$119</td></tr>
+<tr><td>💚 Emerald</td><td>$200</td><td>$210</td><td>$280</td><td>$294</td></tr>
+<tr><td>💙 Sapphire</td><td>$250</td><td>$260</td><td>$350</td><td>$364</td></tr>
+<tr><td>❤️ Ruby</td><td>$300</td><td>$310</td><td>$420</td><td>$434</td></tr>
+<tr><td>💠 Diamond</td><td>$1,500</td><td>$1,510</td><td>$2,100</td><td>$2,114</td></tr>
+<tr><td>🔮 Poudretteite</td><td>$1,700</td><td>$1,710</td><td>$2,380</td><td>$2,394</td></tr>
+<tr><td>✨ Zultanite</td><td>$2,300</td><td>$2,310</td><td>$3,220</td><td>$3,234</td></tr>
+<tr><td>🌊 Grandidierite</td><td>$4,500</td><td>$4,510</td><td>$6,300</td><td>$6,314</td></tr>
+<tr><td>🪨 Musgravite</td><td>$5,800</td><td>$5,810</td><td>$8,120</td><td>$8,134</td></tr>
+<tr><td>🔥 Painite</td><td>$12,000</td><td>$12,010</td><td>$16,800</td><td>$16,814</td></tr>
+</tbody>
+</table>
+<p class="sub">Polished + Cut = (Base + $10) × 1.4. Always process in this order for maximum value.</p>
+
+<h2>Prospector Details</h2>
+<table>
+<thead><tr><th>Prospector</th><th>Price</th><th>Gem</th><th>Base Gem Value</th><th>Hit Rate</th></tr></thead>
+<tbody>
+<tr><td>Topaz Prospector</td><td>$2,000</td><td>Topaz</td><td>$75</td><td>5%</td></tr>
+<tr><td>Emerald Prospector</td><td>$5,000</td><td>Emerald</td><td>$200</td><td>5%</td></tr>
+<tr><td>Sapphire Prospector</td><td>$8,000</td><td>Sapphire</td><td>$250</td><td>5%</td></tr>
+<tr><td>Ruby Prospector</td><td>$15,000</td><td>Ruby</td><td>$300</td><td>5%</td></tr>
+<tr><td>Diamond Prospector</td><td>$30,000</td><td>Diamond</td><td>$1,500</td><td>5%</td></tr>
+</tbody>
+</table>
+<p class="sub">Total investment: $60,000 for all 5 prospectors.</p>
+
+<h2>Prospector Stacking Math</h2>
+<p>Each prospector has a 5% independent chance. Stones that pass one prospector move to the next. The effective rates when stacking all 5:</p>
+
+<table>
+<thead><tr><th>Prospector</th><th>Stones Reaching</th><th>Effective Rate</th><th>Gem Value (P+C)</th><th>EV per Stone</th></tr></thead>
+<tbody>
+<tr><td>Topaz (1st)</td><td>100%</td><td>5.00%</td><td>$119</td><td>$5.95</td></tr>
+<tr><td>Emerald (2nd)</td><td>95.00%</td><td>4.75%</td><td>$294</td><td>$13.97</td></tr>
+<tr><td>Sapphire (3rd)</td><td>90.25%</td><td>4.51%</td><td>$364</td><td>$16.42</td></tr>
+<tr><td>Ruby (4th)</td><td>85.74%</td><td>4.29%</td><td>$434</td><td>$18.61</td></tr>
+<tr><td>Diamond (5th)</td><td>81.45%</td><td>4.07%</td><td>$2,114</td><td>$86.08</td></tr>
+<tr style="border-top: 2px solid var(--accent);"><td><strong>Total</strong></td><td>—</td><td><strong>22.62%</strong></td><td>—</td><td><strong>$141.03</strong></td></tr>
+</tbody>
+</table>
+
+<div class="card">
+  <h4>Key Takeaways</h4>
+  <p>• <strong>22.62%</strong> of stones become gems (hit rate)</p>
+  <p>• <strong>77.38%</strong> of stones survive all 5 prospectors</p>
+  <p>• Expected gem value: <strong>$141.03 per stone</strong> processed</p>
+  <p>• Diamond alone accounts for <strong>61%</strong> of total gem EV ($86.08 / $141.03)</p>
+</div>
+
+<h2>Diamond Prospector Payback</h2>
+<div class="card">
+  <h4>How fast does the Diamond Prospector pay for itself?</h4>
+  <p>Cost: $30,000. Per-stone Diamond EV: $86.08.</p>
+  <p>Payback: $30,000 ÷ $86.08 ≈ <strong>~349 stones</strong></p>
+  <p class="sub">With Ore Smelter producing 1 stone per 2 ores, that's ~698 ores to break even. Very fast payback.</p>
+</div>
+
+<h2>Gem Processing Chain</h2>
+<div class="card">
+  <h3>Optimal Processing Order</h3>
+  <p><strong>1.</strong> Prospect stone → Gem found</p>
+  <p><strong>2.</strong> Polish gem (+$10)</p>
+  <p><strong>3.</strong> Cut gem (×1.4)</p>
+  <p><strong>4.</strong> Use in product OR sell directly</p>
+</div>
+
+<div class="tip warn">
+  <strong>⚠️ Don't cut before polishing!</strong> Cutting first gives (Base × 1.4) + $10. Polishing first gives (Base + $10) × 1.4. The difference is $4 per gem (×1.4 × $10 − $10 = $4). Small but consistent.
+</div>
+
+<h2>Gem Product Comparisons</h2>
+<p>Gems can be used in several end-game products. Here's how they compare:</p>
+
+<table>
+<thead><tr><th>Product</th><th>Machine</th><th>Recipe</th><th>Multiplier</th><th>Notes</th></tr></thead>
+<tbody>
+<tr><td>Cut Gem</td><td>Gem Cutter</td><td>Gem alone</td><td>×1.4</td><td>Baseline. No other inputs needed.</td></tr>
+<tr><td>Prismatic Gem</td><td>Prismatic Crucible</td><td>2 Gems</td><td>×1.15</td><td>Marginal. Only ×1.15 for consuming 2 gems.</td></tr>
+<tr><td>Ring</td><td>Ring Maker</td><td>Gem + Coil</td><td>×1.7</td><td>Great multiplier. Feeds amulets.</td></tr>
+<tr><td>Laser</td><td>Laser Maker</td><td>Optics + Gem + Circuit</td><td>×1.75</td><td>End-game electronic. Tune for +$50.</td></tr>
+<tr><td>Amulet</td><td>Amulet Maker</td><td>Ring + Frame + Prismatic</td><td>×2.0</td><td>Best gem end-product multiplier.</td></tr>
+<tr><td>Glider</td><td>Glider</td><td>Filigree + Amulet</td><td>×1.5</td><td>Builds on amulet. Additional ×1.5 layer.</td></tr>
+</tbody>
+</table>
+
+<div class="tip good">
+  <strong>💡 Best gem path:</strong> Gem → Polish → Cut → Ring (Gem + Coil, ×1.7) → Amulet (Ring + Frame + Prismatic, ×2.0) → Glider (×1.5). This maximizes the value chain from each gem.
+</div>
+
+<h2>Prospecting Priority</h2>
+<div class="tip">
+  <strong>🏆 Always prospect stones before any other stone processing.</strong> The expected $141.03/stone from gem prospecting far exceeds the value of converting stones to bricks, glass, or other stone products directly. Process surviving stones (77.38%) through your stone processing chain after prospecting.
+</div>
+
+<h3>Prospector Order Doesn't Matter (Much)</h3>
+<p>Mathematically, the order you place prospectors doesn't change total EV. However, placing the cheapest gems first means you "use up" stones on lower-value gems first, saving higher-value checks for remaining stones. The conventional order (Topaz → Emerald → Sapphire → Ruby → Diamond) works fine.</p>
+
+<h2>Rare Gems (Poudretteite and Beyond)</h2>
+<p>Gems rarer than Diamond (Poudretteite, Zultanite, Grandidierite, Musgravite, Painite) come from the Ore Upgrader prestige machine or special mechanics. They follow the same Polish → Cut processing chain but have dramatically higher base values, making them extremely lucrative when found.</p>
+
+</body>
+</html>

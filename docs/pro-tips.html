@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pro Tips & Quick Reference — Assembly Line Game Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0f1117; --surface: #1a1d27; --surface2: #242836;
+  --border: #2e3345; --text: #e2e4eb; --muted: #8b8fa3;
+  --accent: #6c8cff; --gold: #f5c542; --green: #4ade80;
+  --red: #f87171; --orange: #fb923c; --cyan: #22d3ee;
+  --purple: #c084fc; --pink: #f472b6; --radius: 12px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.65; padding: 20px; max-width: 1200px; margin: 0 auto; }
+h1 { color: var(--gold); margin-bottom: 8px; }
+h2 { color: var(--cyan); margin: 32px 0 12px; font-size: 1.3em; }
+h3 { color: var(--accent); margin: 20px 0 8px; }
+h4 { margin-bottom: 6px; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+p { margin-bottom: 12px; }
+.back-link { display: inline-block; margin-bottom: 20px; padding: 6px 14px; background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; font-size: 0.85em; }
+table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.88em; }
+th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border); }
+th { background: var(--surface2); color: var(--muted); font-weight: 600; text-transform: uppercase; font-size: 0.78em; letter-spacing: 0.6px; }
+tr:hover td { background: rgba(108,140,255,0.05); }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 20px; margin-bottom: 16px; }
+.tip { background: var(--surface); border-left: 4px solid var(--accent); border-radius: 0 var(--radius) var(--radius) 0; padding: 14px 18px; margin: 14px 0; font-size: 0.95em; }
+.tip.warn { border-left-color: var(--orange); }
+.tip.good { border-left-color: var(--green); }
+.sub { color: var(--muted); font-size: 0.85em; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 14px; margin: 14px 0; }
+.status { display: inline-flex; padding: 2px 8px; border-radius: 5px; font-size: 0.72em; font-weight: 700; text-transform: uppercase; }
+.s-core { background: rgba(74,222,128,0.12); color: var(--green); border: 1px solid rgba(74,222,128,0.3); }
+.s-useful { background: rgba(108,140,255,0.12); color: var(--accent); border: 1px solid rgba(108,140,255,0.3); }
+.s-situational { background: rgba(251,146,60,0.12); color: var(--orange); border: 1px solid rgba(251,146,60,0.3); }
+.s-trap { background: rgba(248,113,113,0.12); color: var(--red); border: 1px solid rgba(248,113,113,0.3); }
+.s-prestige { background: rgba(251,146,60,0.12); color: var(--orange); border: 1px solid rgba(251,146,60,0.3); }
+.golden-rule { background: linear-gradient(135deg, rgba(245,197,66,0.08), rgba(245,197,66,0.02)); border: 1px solid rgba(245,197,66,0.3); border-radius: var(--radius); padding: 16px 20px; margin-bottom: 12px; }
+.golden-rule h4 { color: var(--gold); }
+@media (max-width: 768px) { body { padding: 12px; } .grid { grid-template-columns: 1fr; } th, td { padding: 8px 10px; font-size: 0.8em; } }
+</style>
+</head>
+<body>
+<a href="../index.html" class="back-link">← Back to Main Guide</a>
+<h1>🏆 Pro Tips &amp; Quick Reference</h1>
+<p class="sub">Essential rules, key numbers, and optimization insights for experienced players.</p>
+
+<h2>⭐ The Golden Rules</h2>
+
+<div class="golden-rule">
+  <h4>Rule 0: Always Prospect Stones</h4>
+  <p>Run every stone through all 5 gem prospectors. Expected value: <strong>$141.03 per stone</strong>. This is more valuable than any stone processing path. Never skip prospecting.</p>
+</div>
+
+<div class="golden-rule">
+  <h4>Rule 1: Clean + Polish Before Smelting</h4>
+  <p>Ore Cleaner (+$10) and Polisher (+$10) add flat bonuses to ore value. These bonuses carry through the Ore Smelter's ×1.2 multiplier. Always upgrade ores before smelting.</p>
+  <p class="sub">Order: Mine → Clean → Polish → Smelt. The +$20 raw becomes +$24 after ×1.2 smelting.</p>
+</div>
+
+<div class="golden-rule">
+  <h4>Rule 2: QA Last</h4>
+  <p>The QA Machine applies +20% to item value. As a percentage-based multiplier, it gives the most when applied as the final step after all flat bonuses and other processing.</p>
+</div>
+
+<div class="golden-rule">
+  <h4>Rule 3: Never Sell Raw Stones</h4>
+  <p>Raw stones have minimal value. Even basic processing (crush → brick → kiln = $30) is a massive improvement. With full processing, stones are worth $48–$78 each, plus $141 EV from gem prospecting.</p>
+</div>
+
+<h2>⚠️ Critical: Stone Production Rate</h2>
+<div class="tip warn">
+  <strong>The Ore Smelter produces 1 stone per 2 ores (not 1 per 1).</strong> This means your stone processing line handles half the throughput of your ore line. Plan your factory layout accordingly — the stone side needs half the capacity of the ore side.
+</div>
+<table>
+<thead><tr><th>Smelter</th><th>Bar Mult</th><th>Stone Rate</th><th>Recommendation</th></tr></thead>
+<tbody>
+<tr><td>Ore Smelter</td><td>×1.2</td><td>1 per 2 ores</td><td>✅ Always use this</td></tr>
+<tr><td>Blast Furnace</td><td>×0.9</td><td>1 per ore</td><td>❌ Trap — worse bars</td></tr>
+</tbody>
+</table>
+
+<h2>💎 Diamond Prospector Payback</h2>
+<div class="card">
+  <p>The Diamond Prospector costs $30,000 and contributes $86.08 EV per stone (after polish + cut).</p>
+  <p><strong>Payback period:</strong> $30,000 ÷ $86.08 = <strong>~349 stones</strong></p>
+  <p>With Ore Smelter (1 stone per 2 ores): ~698 ores to break even.</p>
+  <p class="sub">At Unloader Lv 3 (108 items/min), that's under 7 minutes of play. Extremely fast ROI.</p>
+</div>
+
+<h2>📊 Why Plates Over Coils for Main Line</h2>
+<div class="card">
+  <p>Both Plate Stamper and Coiler add +$20 to bars. So why prefer plates on your main production line?</p>
+  <p><strong>Plates feed more products:</strong></p>
+  <table>
+  <thead><tr><th>Product</th><th>From Plate</th><th>From Coil</th></tr></thead>
+  <tbody>
+  <tr><td>Pipe (+$20)</td><td>✅</td><td>—</td></tr>
+  <tr><td>Mech Parts (+$30)</td><td>✅</td><td>—</td></tr>
+  <tr><td>Filigree (+20%)</td><td>✅</td><td>—</td></tr>
+  <tr><td>Casing (×1.30)</td><td>✅ (input)</td><td>—</td></tr>
+  <tr><td>Circuit (×2.0)</td><td>—</td><td>✅</td></tr>
+  <tr><td>Ring (×1.7)</td><td>—</td><td>✅</td></tr>
+  <tr><td>Electromagnet (×1.5)</td><td>—</td><td>✅</td></tr>
+  </tbody>
+  </table>
+  <p>Plates are needed for <strong>4 downstream products</strong> including the critical casing (used in engines, power cores, tablets, and explosives). Coils serve 3 products. Dedicate your main (highest-throughput) line to plates, and a secondary line to coils.</p>
+</div>
+
+<h2>📐 Per-Ore Metric Explained</h2>
+<div class="card">
+  <h4>What is "per-ore value"?</h4>
+  <p>The per-ore metric captures the total value generated from a single ore, including:</p>
+  <p><strong>1. Bar value:</strong> The ore's processed bar (cleaned, polished, smelted, tempered, etc.)</p>
+  <p><strong>2. Stone byproduct value:</strong> Half a stone per ore (Ore Smelter rate), including gem EV and stone processing</p>
+  <p><strong>3. Downstream product value:</strong> The multiplier gained from combining bars into end-game products</p>
+  <p class="sub">When comparing strategies, always think in per-ore terms. A machine that doubles output on 10% of items may be worse than one that adds $5 to every item.</p>
+</div>
+
+<h2>🔢 Key Numbers at a Glance</h2>
+<table>
+<thead><tr><th>Metric</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>Gem prospecting EV per stone</td><td><strong>$141.03</strong></td></tr>
+<tr><td>Gem hit rate (all 5 prospectors)</td><td><strong>22.62%</strong></td></tr>
+<tr><td>Stone survival rate</td><td><strong>77.38%</strong></td></tr>
+<tr><td>Best stone processing (concrete brick)</td><td><strong>$78/stone</strong></td></tr>
+<tr><td>Ore Smelter stone rate</td><td><strong>1 per 2 ores</strong></td></tr>
+<tr><td>Dust value (from Crusher)</td><td><strong>$1</strong></td></tr>
+<tr><td>Brick value (from Brick Mold)</td><td><strong>$25</strong></td></tr>
+<tr><td>Concrete Brick value</td><td><strong>$100</strong></td></tr>
+<tr><td>Cement value</td><td><strong>$30</strong></td></tr>
+<tr><td>QA Concrete Brick (full chain)</td><td><strong>$156</strong></td></tr>
+<tr><td>QA Fired Brick (full chain)</td><td><strong>$48</strong></td></tr>
+<tr><td>Tempering Forge multiplier</td><td><strong>×2</strong></td></tr>
+<tr><td>Best end-game multipliers</td><td><strong>×3.0</strong> (SC, Tablet)</td></tr>
+</tbody>
+</table>
+
+<h2>🎯 Quick Decision Guide</h2>
+<div class="grid">
+  <div class="card">
+    <h4>Should I buy this machine?</h4>
+    <p><strong>Yes if:</strong> It's on the critical path (ore → bar → product) or enables a new recipe chain you'll use.</p>
+    <p><strong>No if:</strong> It's a Blast Furnace (trap), or a Prismatic Crucible (only ×1.15 for 2 gems).</p>
+  </div>
+  <div class="card">
+    <h4>Should I upgrade unloader?</h4>
+    <p><strong>Yes if:</strong> Your machines are often idle (waiting for items). More throughput = more money.</p>
+    <p><strong>No if:</strong> Items are backing up at machines. Fix processing bottlenecks first.</p>
+  </div>
+  <div class="card">
+    <h4>What to buy next?</h4>
+    <p><strong>Priority:</strong> Ore Cleaner → Polisher → Ore Smelter → Crusher → Brick Mold → Kiln → Prospectors → Coiler/Plate Stamper → Tempering Forge → Combination machines → End-game</p>
+  </div>
+  <div class="card">
+    <h4>Blast Furnace vs Ore Smelter?</h4>
+    <p><strong>Always Ore Smelter.</strong> ×1.2 bars + fewer stones beats ×0.9 bars + more stones. The bar value loss is never worth the extra stones.</p>
+  </div>
+</div>
+
+<h2>🚫 Common Mistakes</h2>
+<div class="grid">
+  <div class="card">
+    <h4>❌ Selling raw stones</h4>
+    <p>Stones are worth almost nothing raw but $141+ with prospecting. Always process them.</p>
+  </div>
+  <div class="card">
+    <h4>❌ Smelting before cleaning/polishing</h4>
+    <p>Flat bonuses before multipliers = more value. Always clean and polish ores first.</p>
+  </div>
+  <div class="card">
+    <h4>❌ QA before other upgrades</h4>
+    <p>QA is +20%. Apply it last after all other processing for maximum effect.</p>
+  </div>
+  <div class="card">
+    <h4>❌ Cutting gems before polishing</h4>
+    <p>Polish (+$10) before cut (×1.4). Wrong order loses $4 per gem.</p>
+  </div>
+  <div class="card">
+    <h4>❌ Using Blast Furnace as primary smelter</h4>
+    <p>×0.9 bars lose 25% value vs ×1.2 from Ore Smelter. Extra stones don't compensate.</p>
+  </div>
+  <div class="card">
+    <h4>❌ Ignoring stone byproducts</h4>
+    <p>Stone processing adds ~$100+ per ore in byproduct value. It's a huge portion of total income.</p>
+  </div>
+</div>
+
+<h2>📋 Processing Order Cheat Sheet</h2>
+<div class="card">
+  <h4>Ore Line</h4>
+  <p>Mine → <strong>Clean</strong> (+$10) → <strong>Polish</strong> (+$10) → <strong>Smelt</strong> (×1.2) → <strong>Temper</strong> (×2) → Convert to product → <strong>QA</strong> (+20%) → Sell</p>
+</div>
+<div class="card">
+  <h4>Stone Line</h4>
+  <p>Smelter stone output → <strong>Prospect</strong> (all 5) → Filter → Gems: <strong>Polish</strong> → <strong>Cut</strong> (×1.4) → Product → <strong>QA</strong></p>
+  <p>Surviving stones → Pair for <strong>Concrete Bricks</strong> ($100) → <strong>Kiln</strong> (×1.2) → <strong>Polish</strong> (+$10) → <strong>QA</strong> (+20%) → Sell</p>
+</div>
+<div class="card">
+  <h4>Remember</h4>
+  <p>Flat bonuses first (Clean, Polish, Tuner) → Multiplicative bonuses (Smelt, Temper, Cut) → Combination (Frame, Casing, etc.) → QA last</p>
+</div>
+
+</body>
+</html>
