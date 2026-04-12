@@ -341,23 +341,6 @@
   .tip-box.gem { border-left-color: var(--purple); }
   .tip-box strong { color: var(--gold); }
 
-  .byprod-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-    gap: 16px;
-    margin: 16px 0;
-  }
-  .byprod-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 20px;
-    box-shadow: var(--shadow);
-    transition: border-color var(--transition), transform var(--transition);
-  }
-  .byprod-card:hover { border-color: rgba(108,140,255,0.3); transform: translateY(-2px); }
-  .byprod-card h4 { color: var(--cyan); margin-bottom: 8px; font-weight: 700; }
-  .byprod-card .val { color: var(--gold); font-weight: 700; }
   .sub { color: var(--muted); font-size: 0.85em; }
   .gem-ev-box {
     background: linear-gradient(135deg, #2a1a2a, #3b1a3b);
@@ -441,7 +424,6 @@
     .flow-diagram { padding: 12px; font-size: 0.9em; }
     .nav { padding: 8px 12px; gap: 4px; }
     .nav a { padding: 5px 10px; font-size: 0.75em; }
-    .byprod-grid { grid-template-columns: 1fr; }
     .comp-table th, .comp-table td { padding: 8px 10px; font-size: 0.8em; }
     .calc-box { padding: 16px; }
     .calc-box select { width: 100%; }
@@ -477,28 +459,6 @@
   .status-situational { background: rgba(251,146,60,0.12); color: var(--orange); border: 1px solid rgba(251,146,60,0.3); }
   .status-trap { background: rgba(248,113,113,0.12); color: var(--red); border: 1px solid rgba(248,113,113,0.3); }
   .status-obsolete { background: rgba(139,143,163,0.12); color: var(--muted); border: 1px solid rgba(139,143,163,0.3); text-decoration: line-through; }
-  .status-prestige { background: rgba(251,146,60,0.12); color: var(--orange); border: 1px solid rgba(251,146,60,0.3); }
-
-  .machine-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 16px 20px;
-    transition: border-color var(--transition);
-  }
-  .machine-card:hover { border-color: rgba(108,140,255,0.3); }
-  .machine-card h4 { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 6px; }
-  .machine-card .feeds { color: var(--muted); font-size: 0.82em; margin-top: 6px; }
-  .machine-card .feeds strong { color: var(--cyan); }
-  .machine-card .obsolete-note { color: var(--orange); font-size: 0.85em; margin-top: 6px; font-weight: 600; }
-
-  .machine-group { margin-bottom: 28px; }
-  .machine-group > h3 { color: var(--cyan); margin-bottom: 12px; font-size: 1.15em; display: flex; align-items: center; gap: 8px; }
-  .machine-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-    gap: 12px;
-  }
 
   .transport-tip {
     background: rgba(34,211,238,0.06);
@@ -519,8 +479,8 @@
     body { background: #fff; color: #000; }
     .nav, .back-to-top, .stage-collapse-btn, .toggle-switch, .toggle-label { display: none !important; }
     .container { max-width: 100%; padding: 0; }
-    section, .stage-card, .byprod-card, .tip-box, .machine-card { break-inside: avoid; border-color: #ccc !important; background: #fff !important; color: #000 !important; }
-    .stage-card, .byprod-card, .tip-box, .machine-card { box-shadow: none; }
+    section, .stage-card, .tip-box { break-inside: avoid; border-color: #ccc !important; background: #fff !important; color: #000 !important; }
+    .stage-card, .tip-box { box-shadow: none; }
     .collapsible { max-height: none !important; opacity: 1 !important; }
     h1, h2, h3, h4, .stage-title, .val, .per-ore { color: #000 !important; }
     a { color: #333 !important; text-decoration: underline; }
@@ -534,9 +494,9 @@
 <body>
 
 <div class="hero">
-  <h1>⚙️ Factory Optimization Guide</h1>
-  <p>Optimal production setups for every stage of the game, with prospector gem income and prestige machines calculated into every stage.</p>
-  <div class="src">Data sourced from the <a href="https://umt.miraheze.org/wiki/Ultimate_Mining_Tycoon_Wiki" target="_blank">UMT Wiki</a></div>
+  <h1>⛏️ UMT Factory Guide</h1>
+  <p>Stage-by-stage factory layouts for Ultimate Mining Tycoon. All values update live with ore selection and prestige toggles.</p>
+  <div class="src">Data from <a href="https://umt.miraheze.org/wiki/Ultimate_Mining_Tycoon_Wiki" target="_blank">UMT Wiki</a> (v0.5.10, April 2026)</div>
 </div>
 
 <nav class="nav">
@@ -544,13 +504,10 @@
   <a href="#stages">📈 Stage Guide</a>
   <a href="#endgame">🏆 End-Game</a>
   <a href="#comparison">📊 Comparison</a>
-  <a href="#prestige">⭐ Prestige</a>
   <a href="docs/machine-logic.html">🔧 Machine Logic</a>
-  <a href="docs/transport-guide.html">🚂 Transport</a>
-  <a href="docs/byproduct-guide.html">♻️ Byproducts</a>
-  <a href="docs/gem-strategy.html">💎 Gems</a>
-  <a href="docs/pro-tips.html">💡 Pro Tips</a>
   <a href="docs/building-reference.html">🏭 Buildings</a>
+  <a href="docs/gem-strategy.html">💎 Gems</a>
+  <a href="docs/pro-tips.html">💡 Tips</a>
 </nav>
 
 <div class="container">
@@ -1054,11 +1011,11 @@
     </div>
 
     <div class="tip-box good" style="margin-bottom: 12px;">
-      <strong>✅ Keep your Stage 6 lines running!</strong> Your tempered mech parts line ($<span class="v-s6-mech3">170</span>/ore) and concrete brick byproduct line stay active. Casings are <em>not</em> a direct upgrade — they're a new parallel production chain that you build <em>in addition to</em> your existing setup. You'll stockpile casings now and use them in end-game recipes (Power Cores, Tablets, Engines) where their value multiplies dramatically.
+      <strong>✅ Keep Stage 6 running!</strong> Casings are a new parallel line (not a replacement). Your tempered mech parts ($<span class="v-s6-mech3">170</span>/ore) + concrete bricks stay active. Casings feed end-game recipes (Power Cores, Tablets, Engines).
     </div>
 
     <div class="tip-box" style="margin-bottom: 12px;">
-      <strong>🔗 Circuit Maker + Electronic Tuner:</strong> The Circuit Maker combines Glass (from Kiln) + Coil → Circuit (×2.0). Circuits are required for <strong>Tablets</strong> (2nd best product!) and <strong>Lasers</strong>. The Electronic Tuner adds a flat +$50 to Tablets before QA (+$60 effective after QA's ×1.2). Buy both now — you'll need them as soon as you unlock the Tablet Factory. <strong>Reactivate your Coiler</strong> from Stage 1 — it's needed again for circuits and electromagnets.
+      <strong>🔗 Circuits + Coiler:</strong> Glass (Kiln) + Coil → Circuit (×2.0). Required for Tablets and Lasers. Reactivate Coiler from Stage 1. E-Tuner adds +$50 to Tablets (+$60 after QA).
     </div>
 
     <p>Metal casings are the foundation of end-game products. A casing needs 4 ores (1 bar + 1 bolt → frame, then frame + 1 bolt + 1 plate). The Circuit Maker prepares for Tablet production by combining glass + coils. Save casings and circuits for end-game recipes. ~2 stones from these 4 ores run through prospectors first (Smelter: 1 stone per 2 ores).</p>
@@ -1125,7 +1082,7 @@
     </div>
 
     <div class="tip-box good" style="margin-bottom: 12px;">
-      <strong>✅ What stays from earlier stages:</strong> Your Stage 6 mech parts line, Stage 7 casing + circuit lines all remain active. Stage 8 adds <em>another</em> parallel chain — alloy bars and ceramic casings — which combine into superconductors. You're still expanding, not replacing. Eventually these chains all feed into the end-game assemblers (Power Cores, Tablets, etc.).
+      <strong>✅ All earlier lines stay active.</strong> Stage 8 adds alloy + ceramic chains that combine into superconductors. Eventually these feed into Power Cores and Tablets.
     </div>
 
     <p>Alloy bars merge 2 tempered bars (+20%). Ceramic casings from clay ($150). Superconductors combine alloy + ceramic for ×3 value! Stones that survive prospectors now split: some for ceramics, rest for concrete bricks.</p>
@@ -1187,7 +1144,7 @@
     </div>
 
     <div class="tip-box good" style="margin-bottom: 12px;">
-      <strong>🚀 Tablets are the 2nd best $/ore product in the game!</strong> You already have everything else from earlier stages — Circuit Maker (Stage 7), Casing line (Stage 7), Kiln for glass (Stage 3), Coiler (Stage 1). The QA Machine alone transforms your entire factory by adding +20% to ALL final products (tablets, bricks, gems). This is a massive investment but the QA Machine pays for itself quickly.
+      <strong>🚀 Tablets = 2nd best $/ore product!</strong> Everything needed is from earlier stages. QA Machine adds +20% to ALL final products — tablets, bricks, gems.
     </div>
 
     <p>Tablets combine Casing + Glass + Circuit with ×3.0 multiplier, then Electronic Tuner adds +$50, then QA adds +20%. Uses 5 ores total. ~2.5 stones from smelting (0.5/ore) get prospected first.</p>
@@ -1302,7 +1259,7 @@
   <p class="desc">All stone byproducts run through 5 prospectors first. Gem EV is included in all totals.</p>
 
   <div class="tip-box" style="margin-bottom: 24px;">
-    <strong>🧩 How it all comes together:</strong> End-game products combine the components you've been building in stages 6–10. Your mech parts line (Stage 6), casing + circuit lines (Stage 7), superconductor/alloy line (Stage 8), tablet line (Stage 9), and engine line (Stage 10) all feed into the assemblers below. Nothing was wasted — every chain you built is an ingredient. The recipes below show exactly which components each product needs, so you can scale whichever lines are required.
+    <strong>🧩 How it comes together:</strong> Every chain from stages 6–10 feeds into the assemblers below. Nothing was wasted — each component is an ingredient in the final products.
   </div>
 
   <!-- POWER CORE -->
@@ -1311,7 +1268,7 @@
       <div class="stage-title" style="color: var(--gold);">👑 Power Core (THE BEST)</div>
       <div class="stage-cost">Power Core Assembler: $4.5M (cumulative with Stages 1–10: ~$11.5M+)</div>
     </div>
-    <p style="margin-bottom: 16px;">The Power Core combines casing + superconductor + electromagnet with ×2.5 value increase. The 11 ores produce ~5.5 stones (Smelter: 1 per 2 ores) — all prospected first. Requires the Power Core Assembler ($4.5M) — the most expensive single machine in the game.</p>
+    <p style="margin-bottom: 16px;">Casing + Superconductor + Electromagnet → Power Core (×2.5). 11 ores → ~5.5 stones, all prospected. Power Core Assembler ($4.5M) is the most expensive machine.</p>
 
     <div class="flow-diagram">
       <div style="margin-bottom: 4px; color: var(--muted); font-size: 0.8em; font-weight: 600;">POWER CORE RECIPE (11 ores → ~5.5 stones prospected):</div>
@@ -1371,7 +1328,7 @@
   <p class="desc">All values include QA (+20%), prospector gem EV (at 0.5 stones/ore), and concrete brick byproducts. Based on ore value $<span class="v-ore3">30</span>. Products that consume gems (Laser, Amulet, Glider) show net gem EV after subtracting the consumed gem's value.</p>
 
   <div class="tip-box" style="margin-bottom: 20px;">
-    <strong>⚡ Throughput vs $/ore tradeoff:</strong> This table ranks by <em>value per ore consumed</em>, which is ideal for maximizing income per ore. However, simpler products (like Tempered Mech Parts) process much faster — a 1-ore recipe runs at full belt speed, while an 11-ore Power Core factory has many bottlenecks. <strong>If your factory throughput is low, a simpler product at higher volume can out-earn a complex one.</strong> Consider your actual ores/minute when choosing what to build.
+    <strong>⚡ Throughput vs $/ore:</strong> Ranked by value per ore. Simpler products process faster — if throughput is low, high-volume simple products can out-earn complex ones.
   </div>
 
   <div style="overflow-x: auto;">
@@ -1392,147 +1349,7 @@
   </div>
 </section>
 
-<!-- PRESTIGE -->
-<section id="prestige">
-  <h2><span class="icon">⭐</span> Prestige Machines</h2>
-  <p class="desc">Prestige machines are unlocked with Medals earned by reaching $20M+ before resetting. They are <strong>kept permanently</strong> across all future prestiges. Data from the <a href="https://umt.miraheze.org/wiki/Prestige" target="_blank" style="color: var(--accent);">UMT Wiki</a>.</p>
 
-  <div class="tip-box warn" style="margin-bottom: 24px;">
-    <strong>⚠️ Prestige resets:</strong> Money, factory machines, vehicles, and most equipment. You <strong>keep</strong> cosmetics, Robux purchases, and all Medal-bought prestige machines. First prestige requires $20,000,000.
-  </div>
-
-  <div class="byprod-grid">
-    <div class="byprod-card" style="border-color: var(--orange);">
-      <h4 style="color: var(--orange);">⭐ Philosopher's Stone — 3 Medals</h4>
-      <p>Multiplies ore value by <strong class="val">×1.25</strong> (25% boost). Works on ores only, once per ore, before any other processing.</p>
-      <p class="sub" style="margin-top: 8px;">📐 Size: 5×3 blocks | Apply BEFORE cleaning/polishing so the +25% compounds through all subsequent multipliers.</p>
-      <div class="gem-ev-box" style="margin-top: 8px;">
-        With your current ore ($<span class="v-ore5">30</span>): the ×1.25 boost compounds to +$<span class="v-ps-lead-gain">18</span> per ore at the end of a full tempered bar chain.
-      </div>
-    </div>
-
-    <div class="byprod-card" style="border-color: var(--orange);">
-      <h4 style="color: var(--orange);">⭐ Ore Upgrader — 3 Medals</h4>
-      <p>Upgrades ore to the <strong>next tier</strong> (max Mithril). Once per ore. Cannot be used on duplicated ores.</p>
-      <p class="sub" style="margin-top: 8px;">📐 Size: 3×3 blocks | Massive boost on cheap ores! Tin→Iron = 2×, Iron→Lead = 1.5×, Lead→Cobalt = 1.67×</p>
-      <div style="overflow-x: auto; margin-top: 8px;">
-        <table class="comp-table" style="font-size: 0.85em;">
-          <thead><tr><th>From</th><th>To</th><th>Value Change</th><th>Multiplier</th></tr></thead>
-          <tbody>
-            <tr><td>Tin ($10)</td><td>Iron ($20)</td><td>+$10</td><td style="color:var(--gold);">×2.00</td></tr>
-            <tr><td>Iron ($20)</td><td>Lead ($30)</td><td>+$10</td><td style="color:var(--gold);">×1.50</td></tr>
-            <tr><td>Lead ($30)</td><td>Cobalt ($50)</td><td>+$20</td><td style="color:var(--gold);">×1.67</td></tr>
-            <tr><td>Cobalt ($50)</td><td>Aluminium ($65)</td><td>+$15</td><td style="color:var(--gold);">×1.30</td></tr>
-            <tr><td>Aluminium ($65)</td><td>Silver ($150)</td><td>+$85</td><td style="color:var(--gold);">×2.31</td></tr>
-            <tr><td>Silver ($150)</td><td>Uranium ($180)</td><td>+$30</td><td style="color:var(--gold);">×1.20</td></tr>
-            <tr><td>Uranium ($180)</td><td>Vanadium ($240)</td><td>+$60</td><td style="color:var(--gold);">×1.33</td></tr>
-            <tr><td>Vanadium ($240)</td><td>Tungsten ($300)</td><td>+$60</td><td style="color:var(--gold);">×1.25</td></tr>
-            <tr><td>Tungsten ($300)</td><td>Gold ($350)</td><td>+$50</td><td style="color:var(--gold);">×1.17</td></tr>
-            <tr><td>Gold ($350)</td><td>Titanium ($400)</td><td>+$50</td><td style="color:var(--gold);">×1.14</td></tr>
-            <tr><td>Titanium ($400)</td><td>Molybdenum ($600)</td><td>+$200</td><td style="color:var(--gold);">×1.50</td></tr>
-            <tr><td>Molybdenum ($600)</td><td>Plutonium ($1K)</td><td>+$400</td><td style="color:var(--gold);">×1.67</td></tr>
-            <tr><td>Plutonium ($1K)</td><td>Palladium ($1.2K)</td><td>+$200</td><td style="color:var(--gold);">×1.20</td></tr>
-            <tr><td>Palladium ($1.2K)</td><td>Mithril ($2K)</td><td>+$800</td><td style="color:var(--gold);">×1.67</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <div class="byprod-card" style="border-color: var(--orange);">
-      <h4 style="color: var(--orange);">⭐ Nano Sifter — 1 Medal</h4>
-      <p>Upgraded Sifter: <strong class="val">16.6% chance</strong> to produce an ore from dust (vs regular Sifter's 10%). Produces rarer ores including Iridium and Palladium.</p>
-      <p class="sub" style="margin-top: 8px;">📐 Size: 3×3 blocks | Cheapest prestige machine. Get this first for free recycling value from dust.</p>
-    </div>
-
-    <div class="byprod-card" style="border-color: var(--orange);">
-      <h4 style="color: var(--orange);">⭐ Duplicator — 8 Medals</h4>
-      <p>Duplicates any item, but each copy is worth <strong class="val">half value</strong>. Items can only be duplicated once. Derived items from duplicated inputs can't be duplicated again.</p>
-      <p class="sub" style="margin-top: 8px;">📐 Most expensive prestige machine. Best used to duplicate high-value ores/bars early in the chain. Since v0.5.4, duplicated dust returns to $1 value (not $0.5).</p>
-      <div class="tip-box" style="margin-top: 8px;">
-        <strong>💡 Optimal Duplicator placement:</strong> Duplicate the ore BEFORE processing. You get 2 ores at half value each, but both go through the full processing chain separately. Net result: 2 items at 50% value each = 100% of original value, but doubled throughput through your factory — effectively 2× the output rate.
-      </div>
-    </div>
-
-    <div class="byprod-card" style="border-color: var(--orange);">
-      <h4 style="color: var(--orange);">⭐ Gem→Bar Transmuter — 4 Medals</h4>
-      <p>Converts gems into metal bars of <strong>equivalent value</strong>. The bar can then be processed through metalwork chains (temper, plate, casing, etc.).</p>
-      <p class="sub" style="margin-top: 8px;">Useful when gem chains are maxed but metalwork multipliers are higher. A Diamond ($1,500) becomes a $1,500 bar that can be tempered to $3,000!</p>
-    </div>
-
-    <div class="byprod-card" style="border-color: var(--orange);">
-      <h4 style="color: var(--orange);">⭐ Bar→Gem Transmuter — 4 Medals</h4>
-      <p>Converts metal bars into gems of <strong>equivalent value</strong>. The gem can then go through jewelcrafting chains (cutting, rings, amulets, lasers).</p>
-      <p class="sub" style="margin-top: 8px;">Useful when you have surplus bars but need gems for Lasers or Amulets. A tempered Gold bar ($840) becomes an $840 gem for cutting!</p>
-    </div>
-  </div>
-
-  <div class="stage-card" style="border-color: var(--orange); margin-top: 20px;">
-    <div class="stage-title" style="margin-bottom: 12px;">⭐ Recommended Prestige Medal Priority</div>
-    <div class="flow-diagram">
-      <div class="flow-row">
-        <span class="flow-item fi-sell" style="border-color:var(--orange);color:var(--orange);">1st: Nano Sifter (1M)</span>
-        <span class="flow-arrow">→</span>
-        <span class="flow-item fi-sell" style="border-color:var(--orange);color:var(--orange);">2nd: Ore Upgrader (3M)</span>
-        <span class="flow-arrow">→</span>
-        <span class="flow-item fi-sell" style="border-color:var(--orange);color:var(--orange);">3rd: Phil. Stone (3M)</span>
-        <span class="flow-arrow">→</span>
-        <span class="flow-item fi-sell" style="border-color:var(--orange);color:var(--orange);">4th: Transmuters (4M ea)</span>
-        <span class="flow-arrow">→</span>
-        <span class="flow-item fi-sell" style="border-color:var(--orange);color:var(--orange);">Last: Duplicator (8M)</span>
-      </div>
-    </div>
-    <p style="margin-top: 12px; color: var(--muted); font-size: 0.9em;">
-      <strong>Nano Sifter first</strong> — cheapest (1 medal), immediate recycling value from dust. 
-      <strong>Ore Upgrader next</strong> — massive ROI on lower-tier ores. 
-      <strong>Philosopher's Stone</strong> — guaranteed ×1.25 on every ore, compounds through all chains. 
-      <strong>Transmuters</strong> — unlock cross-chain flexibility late-game. 
-      <strong>Duplicator last</strong> — costs 8 medals but the half-value penalty limits early usefulness.
-    </p>
-  </div>
-
-  <div class="stage-card" style="border-color: var(--orange); margin-top: 20px;">
-    <div class="stage-title" style="margin-bottom: 12px;">⏰ When to Prestige</div>
-    <div class="tip-box good" style="margin-bottom: 12px;">
-      <strong>🎯 First prestige: as soon as you hit $20M.</strong> Don't delay — the Nano Sifter (1 medal) immediately adds recycling value to every dust in your factory. Each subsequent prestige gets faster because your prestige machines carry over.
-    </div>
-    <p style="color: var(--muted); font-size: 0.9em;">
-      <strong>Prestige threshold:</strong> $20,000,000 cash to unlock the prestige button.<br>
-      <strong>Medal calculation:</strong> You earn 1 Medal per prestige. The more money you have when you prestige, the more medals you can earn in later prestiges.<br>
-      <strong>Strategy:</strong> Your first few prestiges should be fast — rush to $20M with a simple Tempered Mech Parts factory, prestige, repeat. Each time your prestige machines make the next run faster. Aim for Nano Sifter (1M) → Ore Upgrader (3M) → Philosopher's Stone (3M) in your first 7 medals.<br>
-      <strong>When to stop prestiging:</strong> Once you have all the prestige machines you want, there's no further benefit to resetting. Focus on building your ultimate factory.
-    </p>
-  </div>
-
-  <div class="stage-card" style="border-color: var(--gold); margin-top: 20px;">
-    <div class="stage-title" style="margin-bottom: 12px;">⭐ Prestige + Full Chain: How Values Stack</div>
-    <p>With Philosopher's Stone + Ore Upgrader both active, processing <span class="v-ore">Lead</span> ($<span class="v-ore4">30</span>):</p>
-    <div class="flow-diagram">
-      <div style="margin-bottom: 4px; color: var(--muted); font-size: 0.8em; font-weight: 600;">OPTIMAL PRESTIGE ORDER:</div>
-      <div class="flow-row">
-        <span class="flow-item fi-ore">Lead ($30)</span>
-        <span class="flow-arrow">→</span>
-        <span class="flow-item fi-machine" style="border-color:var(--orange);color:var(--orange);">⭐ Ore Upgrader → Cobalt ($50)</span>
-        <span class="flow-arrow">→</span>
-        <span class="flow-item fi-machine" style="border-color:var(--orange);color:var(--orange);">⭐ Phil. Stone (×1.25) → $62.50</span>
-        <span class="flow-arrow">→</span>
-        <span class="flow-item fi-machine">Clean+Polish (+$20) → $82.50</span>
-        <span class="flow-arrow">→</span>
-        <span class="flow-item fi-machine">Smelt (×1.2) → $99</span>
-        <span class="flow-arrow">→</span>
-        <span class="flow-item fi-machine">Temper (×2) → $198</span>
-      </div>
-      <div style="margin-top: 8px; color: var(--muted); font-size: 0.85em;">
-        Without prestige: Lead ($30) → Clean+Polish ($50) → Smelt ($60) → Temper ($120). <strong>Prestige = $198 vs $120 = +65% boost!</strong>
-      </div>
-    </div>
-
-    <div class="value-result" style="margin-top: 16px;">
-      <span class="val">Power Core per ore with prestige: $<span class="v-prestige-pc-perore">—</span></span>
-      <span class="sub"> vs without: $<span class="v-eg-perore3">—</span></span>
-      <br><span class="per-ore">📈 Prestige boost: +<span class="v-prestige-pct">—</span>% per ore!</span>
-    </div>
-  </div>
-</section>
 
 
 </div>
@@ -1541,12 +1358,15 @@
   <div class="footer-links">
     <a href="https://umt.miraheze.org/wiki/Ultimate_Mining_Tycoon_Wiki" target="_blank">📖 UMT Wiki</a>
     <a href="https://umt.miraheze.org/wiki/Machines" target="_blank">🏭 Machines</a>
-    <a href="https://umt.miraheze.org/wiki/Ores" target="_blank">⛏️ Ores</a>
-    <a href="https://umt.miraheze.org/wiki/Gems" target="_blank">💎 Gems</a>
     <a href="https://umt.miraheze.org/wiki/Prestige" target="_blank">⭐ Prestige</a>
+    <a href="docs/building-reference.html">📋 Building Reference</a>
+    <a href="docs/machine-logic.html">🔧 Machine Logic</a>
+    <a href="docs/gem-strategy.html">💎 Gem Strategy</a>
+    <a href="docs/byproduct-guide.html">♻️ Byproducts</a>
+    <a href="docs/transport-guide.html">🚂 Transport</a>
+    <a href="docs/pro-tips.html">💡 Pro Tips</a>
   </div>
-  <p>Factory Optimization Guide for Ultimate Mining Tycoon. All data sourced from the <a href="https://umt.miraheze.org/wiki/Ultimate_Mining_Tycoon_Wiki" target="_blank">UMT Wiki</a>.</p>
-  <p style="margin-top: 6px; opacity: 0.6;">Calculations update live — change ore type or toggle prestige machines above.</p>
+  <p>All data sourced from the <a href="https://umt.miraheze.org/wiki/Ultimate_Mining_Tycoon_Wiki" target="_blank">UMT Wiki</a>. Calculations update live.</p>
 </footer>
 
 <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0})" aria-label="Back to top">↑</button>
@@ -1584,64 +1404,6 @@ function gemEVPerStone(numProspectors, hasPolish, hasCut) {
   return { ev: ev, survivalRate: survival };
 }
 
-// === BUILDING DATA ===
-const buildings = [
-  { name: "Polisher", price: 250, cat: "Upgrade", effect: "Adds $10 value to any unpolished item", desc: "A multipurpose machine that polishes any unpolished item passing through it on a conveyor, adding a flat +$10 value. Works on ores, gems, bricks, dust, and electronics. Each item can only be polished once (tagged 'Polished'). Use on ores before smelting so the +$10 compounds through all multipliers, and on gems before cutting for maximum value." },
-  { name: "Ore Cleaner", price: 80, cat: "Upgrade", effect: "Adds $10 value to uncleaned ores", desc: "Strips dirt from raw ores, adding a flat +$10 value to each uncleaned ore processed. Typically the first machine in any processing chain. Each ore can only be cleaned once (tagged 'Cleaned'). The pole part has no collision, so it can be creatively placed to save space. Combine with Polisher for +$20 total before smelting." },
-  { name: "Ore Smelter", price: 380, cat: "Smelting", effect: "Ore → Bar (×1.2 value) + Stone (1 per 2 ores)", desc: "Smelts ores into metal bars, increasing value by ×1.2, and produces a Stone byproduct (1 stone per 2 ores smelted). Bars are tagged 'Smelted' and cannot be re-smelted. Stone must be removed (via filter or conveyor) or the machine jams and stops working. The stone byproduct is critical — it feeds prospectors for gems and cement/brick processing." },
-  { name: "Crusher", price: 1750, cat: "Processing", effect: "Destroys items into Dust ($1), removing most effects", desc: "Crushes any material into dust, resetting its value to $1 and removing most applied tags. The resulting dust is the foundation of all stone processing — it feeds into Brick Mold, Kiln (for glass), Cement Mixer, Clay Mixer, Sifter, and Ring Maker. Always process stones through prospectors before crushing." },
-  { name: "Coiler", price: 1750, cat: "Bar Processing", effect: "Bar → Coil (+$20)", desc: "Converts metal bars into coils by drawing them through a die, adding +$20 value. Coils are tagged 'Drawn' and cannot be re-coiled. Best early-game product from bars. Later becomes critical as an ingredient for Circuits (×2.0), Rings (×1.7), and Electromagnets (×1.5). Reactivate this machine in Stage 7 when circuits become relevant." },
-  { name: "Topaz Prospector", price: 2000, cat: "Gems", effect: "5% chance: Stone → Topaz ($75)", desc: "A gem prospector with a 5% chance to convert any stone passing through it into a Topaz gem worth $75. Stones that fail the check pass through unharmed. Stack with other prospectors — each checks independently. The cheapest prospector and the first gem income source." },
-  { name: "Brick Mold", price: 2500, cat: "Stone Processing", effect: "Dust → Brick ($25) or Cement → Concrete Brick ($100)", desc: "Shapes dust into bricks or cement into concrete bricks. Dust input produces a Brick (set value $25); Cement input produces a Concrete Brick (set value $100). Both can be further processed by the Kiln (+20%) and Polisher (+$10). The same machine handles both inputs — route the correct material to it." },
-  { name: "Bolt Machine", price: 2800, cat: "Bar Processing", effect: "Bar → Bolts (+$5)", desc: "Converts metal bars into bolts, adding +$5 value. Bolts are essential components for Frame Maker (Bar + Bolts → Frame) and Casing Machine (Frame + Bolts + Plate → Casing). Since every casing-based end-game product needs bolts, this $2.8K machine is critical despite its modest value-add." },
-  { name: "Plate Stamper", price: 3000, cat: "Bar Processing", effect: "Bar → Plate (+$20)", desc: "Stamps metal bars into flat plates, adding +$20 value. Plates are the foundation of the entire metalwork chain — they feed into Pipes, Mechanical Parts, Filigree, and Casings (via Frames). The plate path has more branches and higher total value potential than any other bar processing route." },
-  { name: "Sifter", price: 4000, cat: "Stone Processing", effect: "10% chance: Dust → random ore (Tin/Iron/etc). Dust kept.", desc: "Sifts dust with a 10% chance to produce a random low-tier ore (Tin, Iron, Cobalt, Uranium, or Gold). The dust is NOT destroyed on failure and continues down the conveyor for further processing. Each dust can only be sifted once per sifter. Replaced by the strictly superior Nano Sifter (prestige, 16.6% rate + rarer ores)." },
-  { name: "Pipe Maker", price: 4000, cat: "Plate Processing", effect: "Plate → Pipe (+$20)", desc: "Converts metal plates into pipes, adding +$20 value. Lower value-add than Mechanical Parts (+$30), but pipes are a required ingredient for Engines (Mech Parts + Pipe + Casing) and Optics (Lens + Pipe). Keep this machine even after switching your main line to Mech Parts — you'll reactivate it for Engines in Stage 10." },
-  { name: "Kiln", price: 4750, cat: "Stone Processing", effect: "Dust → Glass ($30) or Bricks/Concrete Blocks ×1.2 value", desc: "A multipurpose heat-treatment machine. Melts dust into Glass Sheets (set value $30, needed for Circuits and Tablets). Also fires bricks and concrete bricks, increasing their value by ×1.2 (applied to base value before polish). Glass, fired bricks, and kilned concrete bricks are all critical products. Polish bricks after kilning for best results." },
-  { name: "Emerald Prospector", price: 5000, cat: "Gems", effect: "5% chance: Stone → Emerald ($200)", desc: "A gem prospector with a 5% chance to convert stone into an Emerald worth $200. Checks independently after the Topaz Prospector — the stone must survive previous prospectors first. With 2 prospectors active, cumulative gem chance is 9.75% per stone." },
-  { name: "Mechanical Parts Maker", price: 8000, cat: "Plate Processing", effect: "Plate → Mech Parts (+$30)", desc: "Converts metal plates into mechanical parts, adding +$30 value — the highest flat value-add per plate for direct selling. Mechanical parts are also a required ingredient for Engines (Mech Parts + Pipe + Casing → Engine). Replaces Pipe Maker as the primary plate product for selling, but both are needed long-term." },
-  { name: "Sapphire Prospector", price: 8000, cat: "Gems", effect: "5% chance: Stone → Sapphire ($250)", desc: "A gem prospector with a 5% chance to convert stone into a Sapphire worth $250. Third in the prospector chain. With 3 prospectors active, cumulative gem chance is 14.26% per stone." },
-  { name: "Electronic Tuner", price: 8500, cat: "Upgrade", effect: "Adds $50 to untuned electronics", desc: "Adds a flat +$50 value to any electronic item that hasn't been tuned yet (tagged 'Tuned'). Applies to Circuits, Electromagnets, Tablets, and Power Cores. Place between the Tablet Factory and QA Machine for maximum effect — the +$50 becomes +$60 effective after QA's ×1.2 multiplier. Introduced in Stage 7." },
-  { name: "Cement Mixer", price: 10000, cat: "Stone Processing", effect: "Dust + Stone → Cement ($30)", desc: "Combines one dust and one raw stone to produce Cement (set value $30). The cement then feeds into Brick Mold to create Concrete Bricks ($100) — the single biggest upgrade in the game. Requires two simultaneous inputs; use a L/R Splitter to pair stones. The stone input must be unprocessed (not crushed)." },
-  { name: "Frame Maker", price: 10000, cat: "Combination", effect: "Bar + Bolts → Frame (×1.25)", desc: "Combines one metal bar and one set of bolts to produce a metal frame, increasing their combined value by ×1.25. Frames are an intermediate product — they feed into the Casing Machine (Frame + Bolts + Plate → Casing) and the Amulet Maker (Ring + Frame + Prismatic Gem → Amulet)." },
-  { name: "Ruby Prospector", price: 15000, cat: "Gems", effect: "5% chance: Stone → Ruby ($300)", desc: "A gem prospector with a 5% chance to convert stone into a Ruby worth $300. Fourth in the prospector chain. With 4 prospectors active, cumulative gem chance is 18.55% per stone." },
-  { name: "Ring Maker", price: 15000, cat: "Combination", effect: "Gem + Coil → Ring (×1.7)", desc: "A jewelcrafting machine that combines a gem and a coil to produce a ring, increasing their combined value by ×1.7. Rings are used in the Amulet Maker recipe (Ring + Frame + Prismatic Gem → Amulet ×2.0)." },
-  { name: "Blasting Powder Chamber", price: 15000, cat: "Explosives", effect: "Metal Dust + Stone Dust → Blasting Powder ($52)", desc: "Combines metal dust and stone dust to create blasting powder. The blasting powder can be enhanced by the Blasting Powder Refiner (+$15) or combined with a casing in the Explosives Maker. Also applies powder to ceramics and ceramic casings to improve their value. Generally a niche machine — casings are better used in Power Cores." },
-  { name: "Explosives Maker", price: 15000, cat: "Explosives", effect: "Blasting Powder + Casing → Explosives (×1.5)", desc: "Combines blasting powder with either a metal casing or ceramic casing to make explosives at ×1.5 combined value. The problem: using a casing here yields only ×1.5, whereas the same casing in a Power Core yields ×2.5. Only worthwhile if you have surplus ceramic casings not needed for Superconductors." },
-  { name: "Circuit Maker", price: 20000, cat: "Combination", effect: "Glass + Coil → Circuit (×2.0)", desc: "Combines a glass sheet and a metal coil to create an electronic circuit, doubling their combined value (×2.0). Circuits are required for Tablets (Casing + Glass + Circuit → ×3.0) and Lasers (Optics + Gem + Circuit → ×1.75). The glass comes from Kiln (dust → glass); the coil from the Coiler. Introduced in Stage 7." },
-  { name: "Clay Mixer", price: 20000, cat: "Stone Processing", effect: "2 Dust → Clay Block ($50)", desc: "Mixes two units of dust together to form a clay block (set value $50). Clay blocks are used exclusively as input for the Ceramic Furnace, which converts them into Ceramic Casings ($150) for the Superconductor recipe. Not to be confused with the Cement Mixer." },
-  { name: "Gem Cutter", price: 20000, cat: "Gems", effect: "Uncut Gem → Cut Gem (×1.4)", desc: "Cuts any uncut gem, increasing its value by ×1.4 (40% boost). This is a multiplier on ALL prospector output — every gem should be polished first (+$10), then cut. A polished Diamond ($1,510) becomes $2,114 after cutting. Cut gems can be further merged in the Prismatic Gem Crucible or used directly in Laser/Amulet recipes." },
-  { name: "Blast Furnace", price: 25000, cat: "Smelting", effect: "Ore → Bar (×0.9 value) + Stone (1 per ore) ⚠️ WORSE", desc: "Smelts ore into bars at ×0.9 value — 10% LESS valuable than the Ore Smelter's ×1.2, despite costing ~17× more. Also produces 1 stone per ore (vs Ore Smelter's 1 per 2). There is no scenario where this machine is better than the Ore Smelter. NEVER BUY — this is a trap for new players." },
-  { name: "Ceramic Furnace", price: 30000, cat: "Stone Processing", effect: "Clay Block → Ceramic Casing ($150)", desc: "Fires clay blocks into ceramic casings with a set value of $150 regardless of input quality. Ceramic casings are used exclusively as an ingredient in the Superconductor Constructor (Alloy Bar + Ceramic Casing → Superconductor ×3.0). Each ceramic casing requires 2 dust worth of clay from the Clay Mixer." },
-  { name: "Diamond Prospector", price: 30000, cat: "Gems", effect: "5% chance: Stone → Diamond ($1,500)", desc: "A gem prospector with a 5% chance to convert stone into a Diamond worth $1,500 — the highest-value prospector gem by far. Fifth and final in the prospector chain. With all 5 prospectors active, cumulative gem chance is 22.62% per stone. Diamond alone contributes ~$86 of the ~$141 total prospector EV per stone." },
-  { name: "Tempering Forge", price: 50000, cat: "Upgrade", effect: "Doubles untempered bar value (×2)", desc: "Tempers and strengthens metal bars or alloy bars, doubling their value (×2.0 multiplier). Only applies to untempered items (tagged 'Tempered'). Place AFTER the Ore Smelter but BEFORE any bar processing (Plate, Coil, Bolt). The ×2 multiplier compounds through all subsequent processing, making this the single most impactful bar upgrade." },
-  { name: "Casing Machine", price: 50000, cat: "Combination", effect: "Frame + Bolts + Plate → Casing (×1.30)", desc: "Produces a metal casing by combining a frame, bolts, and a plate, boosting the combined value by ×1.30. Casings are the most-used intermediate product in the game — they're required for Power Cores, Tablets, Engines, Electromagnets, and Explosives. Each casing consumes 4 ores worth of tempered bar inputs." },
-  { name: "Filigree Cutter", price: 50000, cat: "Plate Processing", effect: "Plate → Filigree (+20% value)", desc: "Cuts decorative patterns into metal plates, increasing value by +20%. Filigree is used exclusively as an ingredient in the Glider machine (Filigree + Amulet → Glider ×1.5). Only worth buying if you're pursuing the Amulet→Glider gem-product chain. Otherwise, Mech Parts give more value per plate." },
-  { name: "Lens Cutter", price: 75000, cat: "Glass Processing", effect: "Glass → Lens (+$50)", desc: "Cuts glass sheets into precision lenses, adding +$50 value. Lenses are used exclusively as input for the Optics Machine (Lens + Pipe → Optics ×1.25), which feeds into the Laser Maker. Only worth buying if you're pursuing the Laser production chain. At $75K, it's a steep investment for a niche upgrade." },
-  { name: "Prismatic Gem Crucible", price: 100000, cat: "Gems", effect: "2 Gems → Prismatic Gem (×1.15 combined)", desc: "Merges two different cut gems into a single Prismatic Gem, increasing their combined value by ×1.15. Prismatic gems are required for Amulets (Ring + Frame + Prismatic Gem → ×2.0) and can be used in Lasers. For direct selling, the +15% on two consumed gems is only worthwhile with high-value gems. Best used as an ingredient in end-game recipes." },
-  { name: "Alloy Furnace", price: 100000, cat: "Combination", effect: "2 Bars → Alloy Bar (×1.2 combined)", desc: "Combines two metal bars (same or different types) into an alloy bar, increasing their combined value by ×1.2. Alloy bars can replace regular bars in most recipes except the Alloy Furnace itself. Used primarily to create high-value bars for the Superconductor Constructor (Alloy + Ceramic → SC ×3.0). Does NOT replace single bars — you still need those for Plates/Coils/Bolts." },
-  { name: "Magnetic Machine", price: 120000, cat: "Combination", effect: "Coil + Metal Casing → Electromagnet (×1.5)", desc: "Combines a metal coil and a metal casing to create an electromagnet, increasing their combined value by ×1.5. Electromagnets are a required ingredient for Power Cores (Casing + Superconductor + Electromagnet → ×2.5). Each electromagnet consumes 5 ores total (1 for coil + 4 for casing)." },
-  { name: "Optics Machine", price: 300000, cat: "Combination", effect: "Lens + Pipe → Optics (×1.25)", desc: "Combines a lens and a pipe to create optical components, increasing their combined value by ×1.25. Optics are used exclusively as input for the Laser Maker (Optics + Gem + Circuit → Laser ×1.75). Requires both a Lens Cutter and Pipe Maker to be active. Part of the Laser production chain." },
-  { name: "Glider", price: 500000, cat: "Combination", effect: "Filigree + Jewellery → Glider (×1.5)", desc: "Combines filigree with an amulet to create a glider, applying a ×1.5 multiplier on top of the Amulet's ×2.0. This stacked multiplier can be powerful with high-value gems, but the complex setup (4 ores + 2 gems + filigree plate) makes it niche. Only worthwhile with Diamond+ gems where the compounding multipliers justify the complexity." },
-  { name: "Engine Factory", price: 1000000, cat: "End-Game", effect: "Mech Parts + Pipe + Casing → Engine (×2.5)", desc: "Combines mechanical parts, a metal pipe, and a metal casing to construct an engine at ×2.5 combined value. Consumes 6 ores total (1 mech parts + 1 pipe + 4 casing). A decent mid-tier end-game product with lower $/ore than Tablets or Power Cores but simpler throughput. Reactivates the Pipe Maker from Stage 2. Introduced in Stage 10." },
-  { name: "Superconductor Constructor", price: 1000000, cat: "End-Game", effect: "Alloy Bar + Ceramic Casing → Superconductor (×3.0)", desc: "Combines an alloy bar and a ceramic casing to create a superconductor at ×3.0 combined value — one of the highest multipliers in the game. Primarily used as a Power Core ingredient (Casing + SC + Electromagnet → PC ×2.5). Requires Alloy Furnace for alloy bars and Clay Mixer + Ceramic Furnace for ceramic casings. Introduced in Stage 8." },
-  { name: "Quality Assurance Machine", price: 2000000, cat: "Upgrade", effect: "Adds 20% to untested items", desc: "Tests and certifies finished products, adding +20% value to any untested item (tagged 'QA Tested'). Always apply LAST on your most expensive finished product for maximum gain. Items can only be QA'd once. At $2M it's expensive, but the +20% on Power Cores, Tablets, concrete bricks, and gems pays for itself rapidly. Introduced in Stage 9." },
-  { name: "Amulet Maker", price: 2000000, cat: "End-Game", effect: "Ring + Frame + Prismatic Gem → Amulet (×2.0)", desc: "Combines a ring, a metal frame, and a prismatic gem to produce an amulet at ×2.0 combined value. Consumes 4 ores (2 for ring inputs, 2 for frame) plus 2 gems (merged into prismatic). Can be further enhanced with the Glider (Filigree + Amulet → ×1.5). Only worthwhile with high-value gems." },
-  { name: "Tablet Factory", price: 2500000, cat: "End-Game", effect: "Casing + Glass + Circuit → Tablet (×3.0)", desc: "Combines a metal casing, a glass sheet, and a circuit to craft a tablet at ×3.0 combined value — the second-best $/ore product in the game. Tablets can be tuned by the Electronic Tuner (+$50 → +$60 after QA) for extra value. Consumes 5 ores total. Introduced in Stage 9." },
-  { name: "Blasting Powder Refiner", price: 2500000, cat: "Explosives", effect: "Blasting Powder + Metal Dust → +$15 value", desc: "Enhances blasting powder by combining it with metal dust, adding +$15 value. At $2.5M for a tiny flat bonus, this is one of the least cost-effective machines in the game. The metal dust could be sifted for better returns. Only relevant if you're committed to the Explosives chain." },
-  { name: "Laser Maker", price: 3500000, cat: "End-Game", effect: "Optics + Gem + Circuit → Laser (×1.75)", desc: "Combines optics, a gem, and a circuit to create a laser at ×1.75 combined value — the highest gem multiplier in the game. Requires an extensive setup: Lens Cutter + Optics Machine for optics, Coiler + Kiln for circuit, and a high-value cut gem. Best with Diamond+ gems where the ×1.75 multiplier yields massive returns." },
-  { name: "Power Core Assembler", price: 4500000, cat: "End-Game", effect: "Casing + Superconductor + Electromagnet → Power Core (×2.5)", desc: "Merges a metal casing, a superconductor, and an electromagnet to produce a power core at ×2.5 combined value — the BEST $/ore product in the game. Consumes 11 ores worth of inputs. The most expensive single machine at $4.5M, but the ×2.5 multiplier on already-multiplied components produces the highest per-ore returns." },
-  // --- Prestige Machines (Medal cost, not $) ---
-  { name: "Nano Sifter", price: 0, cat: "Prestige", effect: "⭐ 1 Medal — 16.6% sift rate, produces rarer ores (up to Iridium/Palladium)", desc: "Upgraded prestige version of the Sifter. 16.6% chance (vs regular 10%) to produce an ore from dust, and can produce rarer ores including Iridium and Palladium. Strictly superior to the regular Sifter in every way. Cheapest prestige machine — get this first for immediate recycling value from all dust in your factory." },
-  { name: "Philosopher's Stone", price: 0, cat: "Prestige", effect: "⭐ 3 Medals — ×1.25 ore value (once per ore, before other processing)", desc: "Multiplies ore value by ×1.25 (25% boost). Applied once per ore before any other processing. Place BEFORE the Ore Cleaner and Polisher so the +25% compounds through all subsequent multipliers (Clean, Polish, Smelt, Temper, etc.). The compounding effect makes this one of the best prestige machines." },
-  { name: "Ore Upgrader", price: 0, cat: "Prestige", effect: "⭐ 3 Medals — Upgrades ore to next tier (max Mithril). Once per ore.", desc: "Upgrades any ore to the next tier in the ore hierarchy (max Mithril at $2,000). Once per ore, cannot be used on duplicated ores. Massive ROI on lower-tier ores — Tin ($10) becomes Iron ($20) for a ×2.0 boost! Apply BEFORE Philosopher's Stone for maximum value stacking." },
-  { name: "Gem→Bar Transmuter", price: 0, cat: "Prestige", effect: "⭐ 4 Medals — Converts gems into bars of equal value", desc: "Converts gems into metal bars of equivalent value. The resulting bar can be processed through the full metalwork chain (Temper, Plate, Casing, etc.). Useful when gem processing chains are maxed but metalwork multipliers offer more. A Diamond ($1,500) becomes a $1,500 bar that tempers to $3,000." },
-  { name: "Bar→Gem Transmuter", price: 0, cat: "Prestige", effect: "⭐ 4 Medals — Converts bars into gems of equal value", desc: "Converts metal bars into gems of equivalent value. The resulting gem can go through jewelcrafting chains (Polish, Cut, Ring, Amulet, Laser). Useful when you have surplus bars but need gems for Lasers or Amulets. A tempered Gold bar ($840) becomes an $840 gem for cutting." },
-  { name: "Duplicator", price: 0, cat: "Prestige", effect: "⭐ 8 Medals — Duplicates items at half value. Once per item.", desc: "Duplicates any item, creating a copy at half the original's value. Items can only be duplicated once; derived items from duplicated inputs can't be duplicated again. Best used on ores BEFORE processing — you get 2 ores at 50% value each, both going through the full chain. Most expensive prestige machine (8 medals)." },
-  // --- Transport ---
-  { name: "Conveyor", price: 10, cat: "Transport", effect: "Moves items horizontally between machines", desc: "Basic horizontal transport belt that moves items between machines. Rotatable in Build Mode. Belt speed is fixed — each segment handles one item at a time. Use parallel lines for high-throughput setups. Minimize belt length to reduce transit time." },
-  { name: "Splitter", price: 50, cat: "Transport", effect: "Splits item flow: Left/Right, Three-Way, or Overflow variants", desc: "Splits item flow into multiple paths. Left/Right Splitter: items alternate between side and straight. Three-Way Splitter: items split evenly left, right, and straight. Overflow Splitter: items go straight unless blocked, then divert to side. Essential for complex multi-product factories and preventing jams." },
-];
 
 function fmt(n) {
   return n >= 1000000 ? (n / 1000000).toFixed(2) + 'M' :
@@ -1755,7 +1517,6 @@ function recalc() {
   setAll('.v-ore', fmtDollar(V));
   setAll('.v-ore2', fmtDollar(V));
   setAll('.v-ore3', fmtDollar(V));
-  setAll('.v-ore5', fmtDollar(V));
 
   // === STAGE 1 ===
   var s1Coil = bar + 20;
@@ -1880,7 +1641,6 @@ function recalc() {
   var s8TotalPerOre = scPerOre + s8Gem2Stones / 2 + s8BrickValue / 2;
   setAll('.v-s8-sc', fmtDollar(sc));
   setAll('.v-s8-sc2', fmtDollar(sc));
-  setAll('.v-s8-em', fmtDollar(em));
   setAll('.v-s8-gem-ev', fmtD(gem5.ev));
   setAll('.v-s8-sc-perore', fmtDollar(scPerOre));
   setAll('.v-s8-gem-2stones', fmtDollar(s8Gem2Stones));
@@ -1920,7 +1680,6 @@ function recalc() {
   setAll('.v-eg-gem-per', fmtD(gem5.ev));
   setAll('.v-eg-grand', fmtDollar(pcGrand));
   setAll('.v-eg-perore', fmtDollar(pcPerOre));
-  setAll('.v-eg-perore2', fmtDollar(pcPerOre));
 
   // === TABLET ===
   var glass = 30;
@@ -1945,7 +1704,6 @@ function recalc() {
   setAll('.v-tab-final2', fmtDollar(tabletQA));
   setAll('.v-tab-gem-total', fmtDollar(totalGemEV5));
   setAll('.v-tab-perore', fmtDollar(tabPerOre));
-  setAll('.v-tab-perore2', fmtDollar(tabPerOre));
 
   // === ENGINE ===
   var mech = temperedBar + 50;
@@ -2031,10 +1789,6 @@ function recalc() {
   var gliderGrand = gliderQA + gliderBrickValue + gliderNetGemEV;
   var gliderPerOre = gliderGrand / gliderOres;
 
-  // Gem EV display
-  setAll('.v-gem-ev-total', fmtD(gem5.ev));
-  setAll('.v-tip-gem-ev', fmtDollar(gem5.ev));
-
   // === COMPARISON TABLE ===
   var compData = [
     { name: "Power Core + QA", ores: 11, product: pcQA, gems: totalGemEV11, bricks: brickValue, total: pcGrand },
@@ -2068,48 +1822,7 @@ function recalc() {
     tbody.appendChild(tr);
   });
 
-  // === PRESTIGE SECTION DYNAMIC VALUES ===
-  // Calculate what Power Core per ore would be WITHOUT prestige for comparison
-  var barNoPrestige = (V + 20) * 1.2;
-  var temperedNoPrestige = barNoPrestige * 2;
-  var boltNP = temperedNoPrestige + 5;
-  var plateNP = temperedNoPrestige + 20;
-  var frameNP = (temperedNoPrestige + boltNP) * 1.25;
-  var casingNP = (frameNP + boltNP + plateNP) * 1.30;
-  var alloyNP = (temperedNoPrestige + temperedNoPrestige) * 1.2;
-  var coilNP = temperedNoPrestige + 20;
-  var scNP = (alloyNP + 150) * 3.0;
-  var emNP = (coilNP + casingNP) * 1.5;
-  var pcNP = (casingNP + scNP + emNP) * 2.5;
-  var pcQANP = pcNP * 1.2;
-  var totalGemEV11NP = 11 * STONE_RATE * gem5.ev;
-  var expectedSurvNP = 11 * STONE_RATE * gem5.survivalRate;
-  var survBricksNP = Math.max(0, expectedSurvNP - 2);
-  var brickPairsNP = Math.floor(survBricksNP / 2);
-  var oddNP = survBricksNP - brickPairsNP * 2;
-  var brickValNP = brickPairsNP * concreteBrickPairQA + (oddNP > 0.5 ? firedBrickQA : 0);
-  var pcGrandNP = pcQANP + brickValNP + totalGemEV11NP;
-  var pcPerOreNP = pcGrandNP / 11;
-
-  setAll('.v-eg-perore3', fmtDollar(pcPerOreNP));
-  setAll('.v-prestige-pc-perore', fmtDollar(pcPerOre));
-
-  if (pcPerOreNP > 0) {
-    var prestigePct = ((pcPerOre - pcPerOreNP) / pcPerOreNP) * 100;
-    setAll('.v-prestige-pct', fmtD(Math.max(0, prestigePct)));
-  } else {
-    setAll('.v-prestige-pct', '0');
-  }
-
-  // Philosopher's Stone gain example — uses CURRENT ore, not hardcoded Lead
-  var psOreBar = (V * 1.25 + 20) * 1.2;
-  var psOreTempered = psOreBar * 2;
-  var noOreBar = (V + 20) * 1.2;
-  var noOreTempered = noOreBar * 2;
-  setAll('.v-ps-lead-gain', fmtDollar(psOreTempered - noOreTempered));
-  setAll('.v-ore4', fmtDollar(V));
-
-  // Ore Upgrader: show target tier name in prestige summary
+  // === PRESTIGE SUMMARY ===
   var ORE_NAMES = ['Tin','Iron','Lead','Cobalt','Aluminium','Silver','Uranium','Vanadium','Tungsten','Gold','Titanium','Molybdenum','Plutonium','Palladium','Mithril'];
   var upgraderFrom = '';
   var upgraderTo = '';
@@ -2117,8 +1830,6 @@ function recalc() {
     if (V <= ORE_TIERS[u]) { upgraderFrom = ORE_NAMES[u] || '$' + ORE_TIERS[u]; upgraderTo = ORE_NAMES[u + 1] || '$' + ORE_TIERS[u + 1]; break; }
   }
   if (V >= ORE_TIERS[ORE_TIERS.length - 1]) { upgraderFrom = 'Mithril'; upgraderTo = 'MAX'; }
-  setAll('.v-upgrader-from', upgraderFrom);
-  setAll('.v-upgrader-to', upgraderTo);
 
   // Update prestige summary with upgrader target tier
   if (summaryEl) {
@@ -2183,7 +1894,7 @@ recalc();
 
 // Section reveal on scroll
 (function() {
-  var reveals = document.querySelectorAll('section, .stage-card, .byprod-card, .tip-box');
+  var reveals = document.querySelectorAll('section, .stage-card, .tip-box');
   if (!reveals.length || !('IntersectionObserver' in window)) return;
   reveals.forEach(function(el) { el.classList.add('reveal'); });
   var observer = new IntersectionObserver(function(entries) {
