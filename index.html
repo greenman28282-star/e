@@ -990,7 +990,7 @@ const ORES = {
   gold:     { name: 'Gold',     value: 40,  next: 'platinum' },
   platinum: { name: 'Platinum', value: 80,  next: 'titanium' },
   titanium: { name: 'Titanium', value: 150, next: 'mithril' },
-  mithril:  { name: 'Mithril',  value: 300, next: 'mithril' }
+  mithril:  { name: 'Mithril',  value: 300, next: null }
 };
 
 /* Gem prospecting expected values (polished + cut) */
@@ -1029,7 +1029,7 @@ function recalc() {
     baseVal = parseFloat($('custom-ore').value) || 10;
   } else {
     let ore = ORES[oreKey];
-    baseVal = hasUpgrader ? ORES[ore.next].value : ore.value;
+    baseVal = (hasUpgrader && ore.next) ? ORES[ore.next].value : ore.value;
   }
   if (hasPhilo) baseVal = baseVal * 1.25;
 
